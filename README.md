@@ -1,1 +1,1 @@
-# ProgAlgo
+# ProgAlgo : projet Thomas was alone
