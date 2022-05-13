@@ -84,18 +84,6 @@ bool Quadtree::est_feuille(){
     return false;
 }
 
-/*bool Quadtree::intersection_non_nulle(Rectangle r1, Rectangle r2){
-    //si r1 est completemnt a gauche de r2 OU completement en dessous OU completement a droite OU completement audessus
-    //+ negation du resultat si dessus ->donne indication s'il y a zone commune entre r1 et r2 même cote a cote
-    return !(r1.getX() + r1.getWidth() < r2.getX() || r1.getY() + r1.getHeight() < r2.getY() || r1.getX() > r2.getX() + r2.getWidth() || r1.getY() > r2.getY() + r2.getHeight());
-}*/
-
-//Detection Collision
-bool Quadtree::intersection_non_nulle(Rectangle r1, Rectangle r2){
-    //si r1 est a gauche de r2 (ou à la limite respectivement gauche de r2) OU en dessous OU a droite OU au dessus
-    //+ negation du resultat si dessus -> donne indication s'il y a zone commune entre r1 et r2 mais pas cote a cote
-    return !(r1.getX() + r1.getWidth() <= r2.getX() || r1.getY() + r1.getHeight() <= r2.getY() || r1.getX() >= r2.getX() + r2.getWidth() || r1.getY() >= r2.getY() + r2.getHeight());
-}
 //insere l'index de l'entite dans le quadtree
 void Quadtree::insert_id_entite(int indexTab){
 

@@ -8,6 +8,8 @@ typedef struct {
     int y;
 } Point2D;
 
+const Point2D POINT2DNUL= {0,0};
+
 typedef struct {
     int r;
     int v;

@@ -17,8 +17,6 @@ private :
     void separer();
     int donnePartieQuad(Rectangle rect);
     int donneNbEntites();
-    list<int> recupIdToutesEntites(list<int> l_id_entites);
-    
 
 public:
     Quadtree();
@@ -33,6 +31,7 @@ public:
     list<Quadtree> recupere_noeuds(list<Quadtree> noeuds_recup, Rectangle rect);
     //recupere une liste d'index des entites succeptibles d'avoir une collision avec le rectangle
     list<int> recupere_id_entites(list<int> l_entites_recup, Rectangle rect);
+    list<int> recupIdToutesEntites(list<int> l_id_entites);
     void supprime_id_entite(int index_ent);
 };  
 

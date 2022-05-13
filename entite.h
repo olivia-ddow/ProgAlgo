@@ -41,11 +41,23 @@ public:
 
 class Plateforme : public Entite {
 private:
+  int vitesse_h; //horizontale
+  int vitesse_v; //verticale
   Point2D posarrivee;
 
 public:
+    Plateforme();
     Plateforme(int x, int y, int l, int h, Color3f c);
+
     const int quisuisje();
+    int GetXarrivee();
+    int GetYarrivee();
+    void PutXarrivee(int x);
+    void PutYarrivee(int y);
+    int GetVitesseH();
+    int GetVitesseV();
+    void PutVitesseH(int vitesse);
+    void PutVitesseV(int vitesse);
 };
  
 #endif

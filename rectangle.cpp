@@ -17,8 +17,16 @@ int Rectangle::getX(){
     return poscourante.x;
 }
 
+void Rectangle::putX(int x){
+    poscourante.x = x;
+}
+
 int Rectangle::getY(){
     return poscourante.y;
+}
+
+void Rectangle::putY(int y){
+    poscourante.y = y;
 }
 
 int Rectangle::getWidth(){
