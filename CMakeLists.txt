@@ -33,7 +33,7 @@ add_executable(${TARGET_NAME})
 
 
 # Get source files
-file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS "*.cpp")
+file(GLOB SRC_FILES CONFIGURE_DEPENDS "./*.cpp")
 # link files to project target
 target_sources(${TARGET_NAME} PRIVATE ${SRC_FILES})
 # target_include_directories(${TARGET_NAME} PRIVATE "src/")
@@ -65,4 +65,15 @@ if (OpenGL_FOUND)
     target_link_libraries(${TARGET_NAME} PRIVATE ${OPENGL_LIBRARIES})
 else()
     message(FATAL_ERROR "OpenGL was not found on the system")
+endif()
+
+
+find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS})
+
+if (SDL2_FOUND)
+    target_include_directories(${TARGET_NAME} PRIVATE ${OPENGL_INCLUDE_DIRS})
+    target_link_libraries(${TARGET_NAME} PRIVATE ${SDL2_LIBRARIES})
+else()
+    message(FATAL_ERROR "SDL2 was not found on the system")
 endif()

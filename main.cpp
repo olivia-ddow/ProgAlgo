@@ -1,7 +1,7 @@
 #include "quadtree.h"
 #include "entite.h"
 #include "structs_gen.h"
-#include "test.cpp"
+#include "test.h"
 #include "var_globales.h"
 
 #include <SDL2/SDL.h>
@@ -16,12 +16,12 @@
 using namespace std;
 
 /* Dimensions initiales et titre de la fenetre */
-static const unsigned int WINDOW_WIDTH = 800;
-static const unsigned int WINDOW_HEIGHT = 600;
+static const unsigned int WINDOW_WIDTH = 1920;
+static const unsigned int WINDOW_HEIGHT = 1080;
 static const char WINDOW_TITLE[] = "TD03 Minimal";
 
 /* Espace fenetre virtuelle */
-static const float GL_VIEW_SIZE = 250.;
+static const float GL_VIEW_SIZE = 300.;
 
 /* Subdivisions cercle */
 static const int CIRCLE_SUBDIVS = 2<<5;
@@ -31,12 +31,13 @@ static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
 vector<Entite> liste_ent;
 Quadtree qtree;
-    
+
+float aspectRatio ;
 
 
 void onWindowResized(unsigned int width, unsigned int height)
 { 
-    float aspectRatio = width / (float) height;
+     aspectRatio = width / (float) height;
 
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
@@ -266,6 +267,9 @@ int main(int argc, char** argv)
         glMatrixMode(GL_MODELVIEW);
 
         glLoadIdentity();
+        glTranslatef((-GL_VIEW_SIZE / 2. * aspectRatio),(-GL_VIEW_SIZE / 2.), 0.0);
+
+        test();
 
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapWindow(window);
