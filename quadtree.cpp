@@ -1,5 +1,6 @@
 #include "quadtree.h"
 #include "var_globales.h"
+#include "fonctions.h"
 
 Quadtree::Quadtree(){
 
@@ -9,10 +10,16 @@ Quadtree::Quadtree(Rectangle cont){
    conteneur = cont;
 }
 
+//definit le conteneur du quadtree
 void Quadtree::definir_rect(Rectangle cont){
     conteneur = cont;
 }
 
+void Quadtree::initialiser_quadtree(){
+    effacer_fils();
+    liste_index_entite.clear();
+    conteneur = RECTNUL;
+}
 
 //efface les enfants du Quadtree
 void Quadtree::effacer_fils() {
@@ -21,6 +28,7 @@ void Quadtree::effacer_fils() {
             fils[i]->liste_index_entite.clear();
             fils[i]->effacer_fils();
             delete fils[i];
+            fils[i]=nullptr;
         }
     }
 }
@@ -77,6 +85,7 @@ int Quadtree::donnePartieQuad(Rectangle rect){
     return index;
 }
 
+//renvoie si le noeud est une feuille
 bool Quadtree::est_feuille(){
     if (fils[0] == nullptr){
         return true;
@@ -132,26 +141,12 @@ list<Quadtree> Quadtree::recupere_noeuds(list<Quadtree> l_noeuds_recup, Rectangl
         }
     } else {
         for (int i = 0; i < 4; i++){
-            fils[i]->recupere_noeuds(l_noeuds_recup, rect);
+            if (intersection_non_nulle(rect, fils[i]->conteneur)){
+                fils[i]->recupere_noeuds(l_noeuds_recup, rect);
+            }
         }
     }
     return l_noeuds_recup;
-}
-
-//recupere une liste d'index des entites succeptibles d'avoir une collision avec le rectangle
-list<int> Quadtree::recupere_id_entites(list<int> l_entites_recup, Rectangle rect){
-    if (est_feuille()){
-        if (intersection_non_nulle(rect, conteneur)){
-            for (auto j: liste_index_entite){
-                l_entites_recup.push_back(j);
-            }
-        }
-    } else {
-        for (int i = 0; i < 4; i++){
-            fils[i]->recupere_id_entites(l_entites_recup, rect);
-        }
-    }
-    return l_entites_recup;
 }
 
 //recupère la liste des index de toutes les entites à partir du noeud
@@ -168,6 +163,25 @@ list<int> Quadtree::recupIdToutesEntites(list<int> l_id_entites){
     return l_id_entites;
 }
 
+//recupere une liste d'index des entites succeptibles d'avoir une collision avec le rectangle
+list<int> Quadtree::recupere_id_entites(list<int> l_entites_recup, Rectangle rect){
+    if (est_feuille()){
+        if (intersection_non_nulle(rect, conteneur)){
+            for (auto j: liste_index_entite){
+                l_entites_recup.push_back(j);
+            }
+        }
+    } else {
+        for (int i = 0; i < 4; i++){
+            if (intersection_non_nulle(rect, fils[i]->conteneur)){
+                fils[i]->recupere_id_entites(l_entites_recup, rect);
+            }
+        }
+    }
+    return l_entites_recup;
+}
+
+
 //renvoie le nb d'entites
 int Quadtree::donneNbEntites(){
     int cpt = 0;
@@ -181,6 +195,7 @@ int Quadtree::donneNbEntites(){
     return cpt;
 }
 
+//Supprime l'id d'une entite du quadtree
 void Quadtree::supprime_id_entite(int index_ent){
     if (est_feuille()){
         liste_index_entite.remove(index_ent);

@@ -1,0 +1,5 @@
+#include "gestion_frame.h"
+
+void afficher_frame() {
+    //TODO NE PAS OUBLIER DE METTRE A JOUR LA POSITION COURANTE DES PERS ET PLATEFORMES A LA FIN DU TRAITEMENT
+}

@@ -1,0 +1,30 @@
+#dimension du jeu (puissance de 2)
+D <largeur_map> <largeur_map>
+#gravite, frottement, vitesse max personnages
+A <val_accel_g> <val_accel_f> <val_max_vitesse_h> <val_max_vitesse_v>
+#nombre de personnages
+O <NB_PERS>
+#liste des personnages
+P <posX> <posY> <largeur> <hauteur> <rouge> <vert> <bleu> <val_accel_h> <val_accel_v>
+....
+.... 
+P <posX> <posY> <largeur> <hauteur> <rouge> <vert> <bleu> <val_accel_h> <val_accel_v>
+#nombre de plateformes
+L <NB_PLAT>
+#liste des plateformes
+M <posX> <posY> <largeur> <hauteur> <rouge> <vert> <bleu> <vitesse_h> <vitesse_v>
+....
+....
+M <posX> <posY> <largeur> <hauteur> <rouge> <vert> <bleu> <vitesse_h> <vitesse_v>
+#nombre de rectangles statiques comprenant aussi les portails (ENT)
+Q <NB_ENT>
+#liste des rectangles statiques
+R <posX> <posY> <largeur> <hauteur> <rouge> <vert> <bleu>
+....
+....
+R <posX> <posY> <largeur> <hauteur> <rouge> <vert> <bleu>
+#pour les portails
+T <posX> <posY> <largeur> <hauteur> <rouge> <vert> <bleu>
+....
+....
+T <posX> <posY> <largeur> <hauteur> <rouge> <vert> <bleu>

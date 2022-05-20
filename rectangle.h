@@ -18,7 +18,8 @@ public:
     void putY(int y);
     int getWidth();
     int getHeight();
-    //draw_rectangle();
+    //draw_rectangle(); TODO
 };
 
+const Rectangle RECTNUL = {0,0,0,0};
 #endif

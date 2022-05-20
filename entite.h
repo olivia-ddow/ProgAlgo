@@ -3,6 +3,7 @@
 #include "rectangle.h"
 using namespace std;
 
+/****CLASSE ENTITE******/
 class Entite : public Rectangle {
 
 private:
@@ -12,24 +13,64 @@ public:
     Entite();
     Entite(int x, int y, int l, int h, Color3f c);
     virtual const int quisuisje();
+    float GetColorR();
 };
 
+/****CLASSE DECORS******/
 class Decors : public Entite{
 public:
     Decors(int x, int y, int l, int h, Color3f c);
     const int quisuisje();
 };
 
+
+/****CLASSE PERSONNAGE***/
 class Personnage : public Entite{
 
 private:
+    //var a lire dans le fichier txt
+    int val_accel_h;
+    int val_accel_v; //equivalent constante 
+
+    //var calculees
     Point2D posarrivee;
+    int vitesse_h; //horizontale
+    int vitesse_v; //verticale
+    int acceleration_h;
+    int acceleration_v;
+    bool dans_portail;
+    int id_plateforme_dessus;
+
 
 public:
     Personnage(int x, int y, int l, int h, Color3f c);
     const int quisuisje();
+    int GetXarrivee();
+    int GetYarrivee();
+    void PutXarrivee(int x);
+    void PutYarrivee(int y);
+    int GetVitesseH();
+    int GetVitesseV();
+    void PutVitesseH(int vitesse);
+    void PutVitesseV(int vitesse);
+    int GetAccelerationH();
+    int GetAccelerationV();
+    void PutAccelerationH(int acceleration);
+    void PutAccelerationV(int acceleration);
+    int GetValAccelH();
+    int GetValAccelV();
+    void PutValAccelH(int acceleration);
+    void PutValAccelV(int acceleration);
+    bool est_dans_portail();
+    void PutDansPortail(bool val);
+    int GetIdPlateformeDessus();
+    void PutIdPlateformeDessus(int id); 
+    bool EstSurPlateforme();
+    void AnnuleIdPlateformeDessus();
+    Rectangle RendRectArrivee();
 };
 
+/****CLASSE PORTAIL***/
 class Portail : public Entite {
 private:
     Point2D posarrivee;
@@ -39,11 +80,14 @@ public:
     const int quisuisje();
 };
 
+
+/****CLASSE PLATEFORME***/
 class Plateforme : public Entite {
 private:
   int vitesse_h; //horizontale
   int vitesse_v; //verticale
   Point2D posarrivee;
+  int id_pers_sur_plateforme;
 
 public:
     Plateforme();
@@ -58,6 +102,11 @@ public:
     int GetVitesseV();
     void PutVitesseH(int vitesse);
     void PutVitesseV(int vitesse);
+    int GetIdPersSurPlateforme();
+    void PutIdPersSurPlateforme(int id);
+    bool PersEstSurPlateforme();
+    void AnnuleIdPersDessus();
+    Rectangle RendRectArrivee();
 };
  
 #endif
