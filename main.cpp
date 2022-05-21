@@ -1,7 +1,7 @@
 #include "quadtree.h"
 #include "entite.h"
 #include "structs_gen.h"
-#include "test.cpp"
+#include "test.h"
 #include "var_globales.h"
 #include "niveau_manager.h"
 #include "fonctions.h"

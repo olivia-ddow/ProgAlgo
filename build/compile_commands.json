@@ -1,0 +1,52 @@
+[
+{
+  "directory": "/home/matraellix/SynsImg/Projet/ProgAlgo/build",
+  "command": "/usr/bin/g++   -I/usr/include/SDL2  -g   -Wall -Wextra -Wpedantic -pedantic-errors -std=c++17 -o CMakeFiles/ProgAlgo.dir/entite.cpp.o -c /home/matraellix/SynsImg/Projet/ProgAlgo/entite.cpp",
+  "file": "/home/matraellix/SynsImg/Projet/ProgAlgo/entite.cpp"
+},
+{
+  "directory": "/home/matraellix/SynsImg/Projet/ProgAlgo/build",
+  "command": "/usr/bin/g++   -I/usr/include/SDL2  -g   -Wall -Wextra -Wpedantic -pedantic-errors -std=c++17 -o CMakeFiles/ProgAlgo.dir/fonctions.cpp.o -c /home/matraellix/SynsImg/Projet/ProgAlgo/fonctions.cpp",
+  "file": "/home/matraellix/SynsImg/Projet/ProgAlgo/fonctions.cpp"
+},
+{
+  "directory": "/home/matraellix/SynsImg/Projet/ProgAlgo/build",
+  "command": "/usr/bin/g++   -I/usr/include/SDL2  -g   -Wall -Wextra -Wpedantic -pedantic-errors -std=c++17 -o CMakeFiles/ProgAlgo.dir/gestion_frame.cpp.o -c /home/matraellix/SynsImg/Projet/ProgAlgo/gestion_frame.cpp",
+  "file": "/home/matraellix/SynsImg/Projet/ProgAlgo/gestion_frame.cpp"
+},
+{
+  "directory": "/home/matraellix/SynsImg/Projet/ProgAlgo/build",
+  "command": "/usr/bin/g++   -I/usr/include/SDL2  -g   -Wall -Wextra -Wpedantic -pedantic-errors -std=c++17 -o CMakeFiles/ProgAlgo.dir/inter_joueur.cpp.o -c /home/matraellix/SynsImg/Projet/ProgAlgo/inter_joueur.cpp",
+  "file": "/home/matraellix/SynsImg/Projet/ProgAlgo/inter_joueur.cpp"
+},
+{
+  "directory": "/home/matraellix/SynsImg/Projet/ProgAlgo/build",
+  "command": "/usr/bin/g++   -I/usr/include/SDL2  -g   -Wall -Wextra -Wpedantic -pedantic-errors -std=c++17 -o CMakeFiles/ProgAlgo.dir/interf_graph.cpp.o -c /home/matraellix/SynsImg/Projet/ProgAlgo/interf_graph.cpp",
+  "file": "/home/matraellix/SynsImg/Projet/ProgAlgo/interf_graph.cpp"
+},
+{
+  "directory": "/home/matraellix/SynsImg/Projet/ProgAlgo/build",
+  "command": "/usr/bin/g++   -I/usr/include/SDL2  -g   -Wall -Wextra -Wpedantic -pedantic-errors -std=c++17 -o CMakeFiles/ProgAlgo.dir/main.cpp.o -c /home/matraellix/SynsImg/Projet/ProgAlgo/main.cpp",
+  "file": "/home/matraellix/SynsImg/Projet/ProgAlgo/main.cpp"
+},
+{
+  "directory": "/home/matraellix/SynsImg/Projet/ProgAlgo/build",
+  "command": "/usr/bin/g++   -I/usr/include/SDL2  -g   -Wall -Wextra -Wpedantic -pedantic-errors -std=c++17 -o CMakeFiles/ProgAlgo.dir/niveau_manager.cpp.o -c /home/matraellix/SynsImg/Projet/ProgAlgo/niveau_manager.cpp",
+  "file": "/home/matraellix/SynsImg/Projet/ProgAlgo/niveau_manager.cpp"
+},
+{
+  "directory": "/home/matraellix/SynsImg/Projet/ProgAlgo/build",
+  "command": "/usr/bin/g++   -I/usr/include/SDL2  -g   -Wall -Wextra -Wpedantic -pedantic-errors -std=c++17 -o CMakeFiles/ProgAlgo.dir/quadtree.cpp.o -c /home/matraellix/SynsImg/Projet/ProgAlgo/quadtree.cpp",
+  "file": "/home/matraellix/SynsImg/Projet/ProgAlgo/quadtree.cpp"
+},
+{
+  "directory": "/home/matraellix/SynsImg/Projet/ProgAlgo/build",
+  "command": "/usr/bin/g++   -I/usr/include/SDL2  -g   -Wall -Wextra -Wpedantic -pedantic-errors -std=c++17 -o CMakeFiles/ProgAlgo.dir/rectangle.cpp.o -c /home/matraellix/SynsImg/Projet/ProgAlgo/rectangle.cpp",
+  "file": "/home/matraellix/SynsImg/Projet/ProgAlgo/rectangle.cpp"
+},
+{
+  "directory": "/home/matraellix/SynsImg/Projet/ProgAlgo/build",
+  "command": "/usr/bin/g++   -I/usr/include/SDL2  -g   -Wall -Wextra -Wpedantic -pedantic-errors -std=c++17 -o CMakeFiles/ProgAlgo.dir/test.cpp.o -c /home/matraellix/SynsImg/Projet/ProgAlgo/test.cpp",
+  "file": "/home/matraellix/SynsImg/Projet/ProgAlgo/test.cpp"
+}
+]

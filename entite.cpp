@@ -105,7 +105,7 @@ void Personnage::PutValAccelH(int acceleration){
     val_accel_h = acceleration;
 }
 
-void Personnage::PutValAccelH(int acceleration){
+void Personnage::PutValAccelV(int acceleration){
    val_accel_v = acceleration;
 }
 
