@@ -23,9 +23,8 @@ extern int NB_ENT;
 
 
 
-//Creer avec un new liste_plat à delete à la fn du niveau
-extern Plateforme liste_plat[];
-extern Personnage liste_pers[];
-
+//clear à la fin du niveau
+extern vector<Personnage> liste_pers;
+extern vector<Plateforme> liste_plat;
 
 #endif

@@ -25,10 +25,11 @@ int NB_PLAT = 0;
 int NB_PORT = 0;
 int NB_ENT = 0;
 
-Plateforme *liste_plat = nullptr;
-Personnage *liste_pers = nullptr; 
 
 vector<Entite> liste_ent;
+vector<Personnage> liste_pers;
+vector<Plateforme> liste_plat;
+
 Quadtree qtree;
 
 int main() {
