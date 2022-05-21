@@ -14,6 +14,9 @@ public:
     Entite(int x, int y, int l, int h, Color3f c);
     virtual const int quisuisje();
     float GetColorR();
+    float GetColorV();
+    float GetColorB();
+    void draw();
 };
 
 /****CLASSE DECORS******/
