@@ -185,7 +185,8 @@ int main(int argc, char** argv)
     while (niveau_cpt != NB_NIVEAUX_MAX && choix_joueur != QUITTER_JEU){
         executer_niveau(niveau_cpt);
     }
-  
+    
+
     /* Boucle principale */
     int loop = 1;
     float alpha=45.0;
@@ -201,6 +202,11 @@ int main(int argc, char** argv)
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
         glMatrixMode(GL_MODELVIEW);
+
+
+
+
+
 
         glLoadIdentity();
         glTranslatef((-GL_VIEW_SIZE / 2. * aspectRatio),(-GL_VIEW_SIZE / 2.), 0.0);
