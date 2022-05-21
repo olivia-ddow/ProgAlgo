@@ -50,6 +50,8 @@ static const int CIRCLE_SUBDIVS = 2<<5;
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
 vector<Entite> liste_ent;
+vector<Personnage> liste_pers;
+vector<Plateforme> liste_plat;
 Quadtree qtree;
 
 float aspectRatio ;

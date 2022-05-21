@@ -1,5 +1,5 @@
 #dimension du jeu (puissance de 2)
-D <largeur_map> <largeur_map>
+D <largeur_map> <hauteur_map>
 #gravite, frottement, vitesse max personnages
 A <val_accel_g> <val_accel_f> <val_max_vitesse_h> <val_max_vitesse_v>
 #nombre de personnages

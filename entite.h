@@ -117,5 +117,5 @@ public:
     void AnnuleIdPersDessus();
     Rectangle RendRectArrivee();
 };
- 
+
 #endif

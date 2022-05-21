@@ -11,6 +11,28 @@ int niveau_cpt = 0;
 void charger_niveau(){
     //TO_DO
     //mettre les valeurs (fichier textes) des variables ici)
+
+    //Initialisation des entites
+
+    //initialisation des plateformes
+    
+    //exemple
+    /*
+    int x= 50; 
+    int y=10;
+    int l=40 ;
+    int h=70; 
+    Color3f c={0.9,0.2,0.7};
+    for(int i=0; i<NB_PLAT; i++){
+        liste_plat[i] = new Plateforme;
+        liste_plat[i].x=x;
+
+    }
+    */
+   liste_ent.push_back(Entite({0,0,512,10, {0.3,0.4,0.9}}));
+    qtree.insert_id_entite(0);
+
+    //fscanf
 }
 
 //fonction accédant aux fonctionnalités du jeu
