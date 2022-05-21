@@ -3,7 +3,7 @@
 #include "fonctions.h"
 
 Quadtree::Quadtree(){
-
+    //NORMAL QUE CE SOIT VIDE?
 }
 
 Quadtree::Quadtree(Rectangle cont){

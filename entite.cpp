@@ -2,12 +2,7 @@
 #include "var_globales.h"
 #include "quadtree.h"
 #include "rectangle.h"
-#include <SDL2/SDL.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
+
 
 /*******CLASSE ENTITE******/
 Entite::Entite(){
@@ -132,7 +127,7 @@ void Personnage::PutValAccelH(int acceleration){
     val_accel_h = acceleration;
 }
 
-void Personnage::PutValAccelH(int acceleration){
+void Personnage::PutValAccelV(int acceleration){
    val_accel_v = acceleration;
 }
 

@@ -28,4 +28,5 @@ extern Plateforme liste_plat[];
 extern Personnage liste_pers[];
 
 
+
 #endif

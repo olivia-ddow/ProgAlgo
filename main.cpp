@@ -1,7 +1,7 @@
 #include "quadtree.h"
 #include "entite.h"
 #include "structs_gen.h"
-#include "test.cpp"
+#include "test.h"
 #include "var_globales.h"
 #include "niveau_manager.h"
 #include "fonctions.h"
@@ -20,8 +20,6 @@
 using namespace std;
 
 
-
-
 int largeur_map = 0;
 int hauteur_map = 0;
 
@@ -35,8 +33,7 @@ int NB_PLAT = 0;
 int NB_PORT = 0;
 int NB_ENT = 0;
 
-Plateforme *liste_plat = nullptr;
-Personnage *liste_pers = nullptr; 
+
 
 /* Dimensions initiales et titre de la fenetre */
 static const unsigned int WINDOW_WIDTH = 1920;
