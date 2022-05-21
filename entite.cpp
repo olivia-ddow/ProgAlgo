@@ -16,6 +16,27 @@ Entite::Entite(int x, int y, int l, int h, Color3f c) :
 float Entite::GetColorR(){
     return couleur.r;
 }
+float Entite::GetColorV(){
+    return couleur.v;
+}
+float Entite::GetColorB(){
+    return couleur.b;
+}
+
+void Entite::draw(){
+        glPushMatrix();
+        glTranslatef(getX(), getY(),0.0);
+            glColor3f(GetColorR(), GetColorV(), GetColorB());
+
+            glBegin(GL_QUADS);
+                glVertex2f(0,0);
+                glVertex2f(getWidth(),0);
+                glVertex2f(getWidth(),getHeight());
+                glVertex2f(0,getHeight());
+            glEnd();
+        glPopMatrix();
+    
+}
 
 const int Entite::quisuisje() {
     return INDEFINI;
