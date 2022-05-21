@@ -92,7 +92,7 @@ void deplacer_joueur(){
             //calcul de la vitesse V avant frottement en fonction de l'acceleration verticale et de la gravite
             liste_pers[i].PutVitesseV(liste_pers[i].GetVitesseV() + liste_pers[i].GetAccelerationV() - val_accel_g);
             
-            //Si la vitesse est negative (on descend) et quel depasse la vitesse max
+            //Si la vitesse est negative (on descend) et qu'elle depasse la vitesse max
             if (liste_pers[i].GetVitesseV() < 0 && liste_pers[i].GetVitesseV() < -val_max_vitesse_v){
                 //on la ramène à la valeur max
                 liste_pers[i].PutVitesseV(-val_max_vitesse_v);
