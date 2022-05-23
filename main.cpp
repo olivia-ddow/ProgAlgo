@@ -18,13 +18,10 @@ using namespace std;
 /* Dimensions initiales et titre de la fenetre */
 static const unsigned int WINDOW_WIDTH = 1920;
 static const unsigned int WINDOW_HEIGHT = 1080;
-static const char WINDOW_TITLE[] = "TD03 Minimal";
+static const char WINDOW_TITLE[] = "Through the seasons";
 
 /* Espace fenetre virtuelle */
-static const float GL_VIEW_SIZE = 300.;
-
-/* Subdivisions cercle */
-static const int CIRCLE_SUBDIVS = 2<<5;
+static const float GL_VIEW_SIZE = 540;
 
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
@@ -99,89 +96,6 @@ void drawSquare(int filled)
     glEnd();
 }
 
-/*
-GLuint createFirstArmIDList(){
-
-    GLuint id = glGenLists(1); 
-
-    glNewList(id, GL_COMPILE);
-        glPushMatrix();
-            glScalef(20,20,0);
-            drawCircle(1);
-        glPopMatrix();
-
-        glBegin(GL_QUADS);
-            glVertex2f(60,10);
-            glVertex2f(60,-10);
-            glVertex2f(0,-20);
-            glVertex2f(0,20);
-        glEnd();
-
-        glPushMatrix();
-            glTranslatef(60,0,0);
-            glScalef(10,10,0);
-            drawCircle(1);
-        glPopMatrix();
-    glEndList();
-
-    return id;
-}
-*/
-/*
-GLuint createSecondArmIDList(){
-
-    GLuint id = glGenLists(1); 
-
-    glNewList(id, GL_COMPILE);
-        glPushMatrix();
-            glScalef(10,10,0);
-            drawSquare(1);
-        glPopMatrix();
-
-        glPushMatrix();
-            glTranslatef(25,0,0);
-            glScalef(46,6,0);
-            drawSquare(1);
-        glPopMatrix();
-
-        glPushMatrix();
-            glTranslatef(50,0,0);
-            glScalef(10,10,0);
-            drawSquare(1);
-        glPopMatrix();
-    glEndList();
-
-    return id;
-}
-
-GLuint createThirdArmIDList(){
-
-    GLuint id = glGenLists(1); 
-
-    glNewList(id, GL_COMPILE);
-        glPushMatrix();
-            glScalef(6,6,0);
-            drawSquare(1);
-        glPopMatrix();
-
-        glPushMatrix();
-            glTranslatef(20,0,0);
-            glScalef(40,4,0);
-            drawSquare(1);
-        glPopMatrix();
-
-        glPushMatrix();
-            glTranslatef(40,0,0);
-            glScalef(4,4,0);
-            drawCircle(1);
-        glPopMatrix();
-    glEndList();
-
-    return id;
-
-    
-}
-*/
 int main(int argc, char** argv) 
 {
     //* Initialisation de la SDL */
@@ -311,21 +225,76 @@ int main(int argc, char** argv)
                 case SDL_MOUSEBUTTONUP:
                     // Au clic gauche
                     if(e.button.button == SDL_BUTTON_LEFT){
-                        beta+=5;
+                        /*
+                        if((e.button.x >= 580 && e.button.x <= 870)&&(e.button.y >= 530 && e.button.y <= 720)){
+                            printf("Bravo tu commences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
+                        }else if((e.button.x >= 580 && e.button.x <= 870)&&(e.button.y >= 530 && e.button.y <= 720)){
+                            printf("Bravo tu commences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
+                        }*/
+                        // Les Y sont inversés
+                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
+                            printf("Bravo tu commences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
+
+                        };
+                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
+                            printf("Tu choisis ton niveau! clic en (%d, %d)\n", e.button.x, e.button.y);
+                        };
+                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
+                            printf("Tu quittes le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
+                            SDL_GL_DeleteContext(context);
+                            SDL_DestroyWindow(window);
+                            SDL_Quit();
+                            return EXIT_SUCCESS;
+                        }
                     }
                      // Au clic droit
                     if(e.button.button == SDL_BUTTON_RIGHT){
-                        beta-=5;
+                        
                     }
 
                     printf("clic en (%d, %d)\n", e.button.x, e.button.y);
-                    break;
-                
-                
+                    break;               
+                case SDL_MOUSEBUTTONDOWN:
+                    if(e.button.button == SDL_BUTTON_LEFT){
+
+                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
+                            printf("En train de cliquer commencer clic en (%d, %d)\n", e.button.x, e.button.y);
+
+                        };
+                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
+                            printf("En train de cliquer choisis ton niveau! clic en (%d, %d)\n", e.button.x, e.button.y);
+                        };
+                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
+                            printf("En train de cliquer le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
+                            SDL_GL_DeleteContext(context);
+                            SDL_DestroyWindow(window);
+                            SDL_Quit();
+                            return EXIT_SUCCESS;
+                        }
+                    }
+                //POUR CHANGER DE PERSO CE SERA UTILE
+                case SDL_MOUSEWHEEL:
+
+                    if(e.wheel.y >0){
+                        printf("Tu changes de personnage");
+                    }else if(e.wheel.y <0){
+                         printf("Tu changes de personnage aussi");
+                    }
 
                 /* Touche clavier */
                 case SDL_KEYDOWN:
+
                     printf("touche pressee (code = %d)\n", e.key.keysym.sym);
+                    switch(e.key.keysym.sym)
+                    {
+                        //Quand on clique sur echap on exit
+                        case 46:
+                            SDL_GL_DeleteContext(context);
+                            SDL_DestroyWindow(window);
+                            SDL_Quit();
+                            return EXIT_SUCCESS;
+                        break;
+                    }
                     break;
                     
                 default:
