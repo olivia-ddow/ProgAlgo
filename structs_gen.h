@@ -11,9 +11,9 @@ typedef struct {
 const Point2D POINT2DNUL= {0,0};
 
 typedef struct {
-    int r;
-    int v;
-    int b;
+    float r;
+    float v;
+    float b;
 } Color3f;
 
 const Color3f COLOR3FNUL = {0,0,0};
