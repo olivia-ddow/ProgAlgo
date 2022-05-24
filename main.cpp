@@ -47,8 +47,9 @@ static const float GL_VIEW_SIZE = 540;
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
 vector<Entite> liste_ent;
-vector<Personnage> liste_pers;
-vector<Plateforme> liste_plat;
+vector<Personnage> liste_pers = {Personnage(100, 50, 50, 20, {0.1,0.3,0.9})};
+
+vector<Plateforme> liste_plat = {Plateforme(10, 10, 300, 30, {0.1,0.8,0.9})};
 Quadtree qtree;
 
 float aspectRatio ;
