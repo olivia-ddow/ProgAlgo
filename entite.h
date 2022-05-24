@@ -22,7 +22,7 @@ public:
     float GetColorR();
     float GetColorV();
     float GetColorB();
-    void draw();
+    void draw(int i);
 };
 
 /****CLASSE DECORS******/

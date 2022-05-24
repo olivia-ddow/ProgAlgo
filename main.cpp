@@ -7,6 +7,7 @@
 #include "fonctions.h"
 #include "inter_joueur.h"
 #include "interf_graph.h"
+#include "fakesdlimage.h"
 
 #include <SDL2/SDL.h>
 #include <GL/gl.h>
