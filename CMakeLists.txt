@@ -41,7 +41,7 @@ target_sources(${TARGET_NAME} PRIVATE ${SRC_FILES})
 
 # Enable C++17
 set_target_properties(${TARGET_NAME} PROPERTIES
-    CXX_STANDARD 17
+    CXX_STANDARD 14
     CXX_STANDARD_REQUIRED YES
     CXX_EXTENSIONS NO
 )
@@ -68,12 +68,27 @@ else()
 endif()
 
 
-find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS})
-
-if (SDL2_FOUND)
-    target_include_directories(${TARGET_NAME} PRIVATE ${OPENGL_INCLUDE_DIRS})
-    target_link_libraries(${TARGET_NAME} PRIVATE ${SDL2_LIBRARIES})
+# ---Add SDL2---
+if (WIN32)
+    set(SDL2_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/lib/SDL2-2.0.10/include)
+    set(SDL2_LIBRARIES ${CMAKE_SOURCE_DIR}/lib/SDL2-2.0.10/lib/x64/SDL2.lib;
+                       ${CMAKE_SOURCE_DIR}/lib/SDL2-2.0.10/lib/x64/SDL2main.lib)
 else()
-    message(FATAL_ERROR "SDL2 was not found on the system")
+    find_package(SDL2 REQUIRED)
+endif()
+target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES})
+
+# Stuff
+if (UNIX)
+    target_link_libraries(${PROJECT_NAME} PRIVATE -ldl)
+endif()
+# Copy .dll to build folder
+if (WIN32)
+    add_custom_command(
+        TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${PROJECT_SOURCE_DIR}/lib/SDL2-2.0.10/lib/x64/SDL2.dll"
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>
+    )
 endif()

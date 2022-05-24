@@ -2,6 +2,9 @@
 #define ENTITE_H
 #include "rectangle.h"
 //#include <SDL2/SDL.h>
+#if defined(_WIN32)
+#include <windows.h>
+#endif
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stdlib.h>
@@ -10,7 +13,7 @@
 using namespace std;
 
 /****CLASSE ENTITE******/
-class Entite : public Rectangle {
+class Entite : public Rect {
 
 private:
     Color3f couleur;
@@ -76,7 +79,7 @@ public:
     void PutIdPlateformeDessus(int id); 
     bool EstSurPlateforme();
     void AnnuleIdPlateformeDessus();
-    Rectangle RendRectArrivee();
+    Rect RendRectArrivee();
 };
 
 /****CLASSE PORTAIL***/
@@ -115,7 +118,7 @@ public:
     void PutIdPersSurPlateforme(int id);
     bool PersEstSurPlateforme();
     void AnnuleIdPersDessus();
-    Rectangle RendRectArrivee();
+    Rect RendRectArrivee();
 };
 
 #endif

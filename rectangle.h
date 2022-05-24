@@ -2,7 +2,7 @@
 #define RECTANGLE_H
 #include "structs_gen.h"
 
-class Rectangle {
+class Rect {
 
 private:
     Point2D poscourante;
@@ -10,8 +10,8 @@ private:
     int hauteur;
 
 public:
-    Rectangle();
-    Rectangle(int x, int y, int l, int h);
+    Rect();
+    Rect(int x, int y, int l, int h);
     int getX();
     void putX(int x);
     int getY();
@@ -21,5 +21,5 @@ public:
     //draw_rectangle(); TODO
 };
 
-const Rectangle RECTNUL = {0,0,0,0};
+const Rect RECTNUL = {0,0,0,0};
 #endif
