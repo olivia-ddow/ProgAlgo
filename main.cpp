@@ -38,13 +38,10 @@ int NB_ENT = 0;
 /* Dimensions initiales et titre de la fenetre */
 static const unsigned int WINDOW_WIDTH = 1920;
 static const unsigned int WINDOW_HEIGHT = 1080;
-static const char WINDOW_TITLE[] = "TD03 Minimal";
+static const char WINDOW_TITLE[] = "Through the seasons";
 
 /* Espace fenetre virtuelle */
-static const float GL_VIEW_SIZE = 300.;
-
-/* Subdivisions cercle */
-static const int CIRCLE_SUBDIVS = 2<<5;
+static const float GL_VIEW_SIZE = 540;
 
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
