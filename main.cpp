@@ -221,6 +221,12 @@ int main(int argc, char** argv)
     GLuint thirdArmID=createThirdArmIDList();
     */
     std::cout << "Hello World" << std::endl;
+    /*
+    int UNCLICKED=0;
+    int FOCUS=1;
+    int HOVER=2;
+    int etat_texture=0;
+    */
     while(loop) 
     {
         /* Recuperation du temps au debut de la boucle */
@@ -237,7 +243,7 @@ int main(int argc, char** argv)
         
         glEnable(GL_TEXTURE_2D);
         //glBindTexture(GL_TEXTURE_2D, texture);
-        glEnable(GL_AUTO_NORMAL);
+        glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         test();
         
@@ -247,11 +253,8 @@ int main(int argc, char** argv)
         
         //drawBTN(textures[1], 0);
 
-        glBindTexture(GL_TEXTURE_2D, 0);
-        glDisable(GL_TEXTURE_2D);
-        /* Echange du front et du back buffer : mise a jour de la fenetre */
-        SDL_GL_SwapWindow(window);
-        
+
+
         /* Boucle traitant les evenements */
         SDL_Event e;
         while(SDL_PollEvent(&e)) 
@@ -298,7 +301,156 @@ int main(int argc, char** argv)
                         // Les Y sont inversés
                         if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
                             printf("Bravo tu commences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
+                            
+                        };
+                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
+                            printf("Tu choisis ton niveau! clic en (%d, %d)\n", e.button.x, e.button.y);
+                        };
+                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
+                            printf("Tu quittes le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
+                            for (int i=0; i<4; i++){
+                                SDL_FreeSurface(image[i]);
+                            }
+                            SDL_GL_DeleteContext(context);
+                            SDL_DestroyWindow(window);
+                            SDL_Quit();
+                            return EXIT_SUCCESS;
+                        }
+                    }
+                     // Au clic droit
+                    if(e.button.button == SDL_BUTTON_RIGHT){
+                        
+                    }
 
+                    printf("clic en (%d, %d)\n", e.button.x, e.button.y);
+                    break;               
+                case SDL_MOUSEBUTTONDOWN:
+                    if(e.button.button == SDL_BUTTON_LEFT){
+
+                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
+                            printf("En train de cliquer commencer clic en (%d, %d)\n", e.button.x, e.button.y);
+                            drawBTN(textures[3], 1);
+                        };
+                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
+                            printf("En train de cliquer choisis ton niveau! clic en (%d, %d)\n", e.button.x, e.button.y);
+                        };
+                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
+                            printf("En train de cliquer le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
+                            
+                        }
+                    }
+                //POUR CHANGER DE PERSO CE SERA UTILE
+                case SDL_MOUSEWHEEL:
+
+                    if(e.wheel.y >0){
+                        printf("Tu changes de personnage");
+                    }else if(e.wheel.y <0){
+                         printf("Tu changes de personnage aussi");
+                    }
+
+                /* Touche clavier */
+                case SDL_KEYDOWN:
+
+                    printf("touche pressee (code = %d)\n", e.key.keysym.sym);
+                    switch(e.key.keysym.sym)
+                    {
+                        //Quand on clique sur echap on exit
+                        case 46:
+                            for (int i=0; i<4; i++){
+                                SDL_FreeSurface(image[i]);
+                            }
+                            SDL_GL_DeleteContext(context);
+                            SDL_DestroyWindow(window);
+                            SDL_Quit();
+                            return EXIT_SUCCESS;
+                        break;
+                    }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_TEXTURE_2D);
+        /* Echange du front et du back buffer : mise a jour de la fenetre */
+        SDL_GL_SwapWindow(window);
+        
+        
+
+        /* Calcul du temps ecoule */
+        Uint32 elapsedTime = SDL_GetTicks() - startTime;
+        
+        
+        /* Si trop peu de temps s'est ecoule, on met en pause le programme */
+        if(elapsedTime < FRAMERATE_MILLISECONDS) 
+        {
+            SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
+        }
+        
+        
+
+    
+    }
+
+    /* Liberation des ressources associees a la SDL */ 
+    for (int i=0; i<4; i++){
+        SDL_FreeSurface(image[i]);
+    }
+    
+    //SDL_DestroyTexture(textures[5]);
+    SDL_GL_DeleteContext(context);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+    
+    return EXIT_SUCCESS;
+}
+/*
+void interagir(int loop){
+    SDL_Event e;
+        while(SDL_PollEvent(&e)) 
+        {*/
+            /* L'utilisateur ferme la fenetre : */
+            /*
+			if(e.type == SDL_QUIT) 
+			{
+				loop = 0;
+				break;
+			}
+		
+			if(	e.type == SDL_KEYDOWN 
+				&& (e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_ESCAPE))
+			{
+				loop = 0; 
+				break;
+			}
+            
+            switch(e.type) 
+            {
+                case SDL_WINDOWEVENT:
+                    switch (e.window.event) 
+                    {*/
+                        /* Redimensionnement fenetre */
+                        /*
+                        case SDL_WINDOWEVENT_RESIZED:
+                            onWindowResized(e.window.data1, e.window.data2);                
+                            break;
+
+                        default:
+                            break; 
+                    }
+                    break;*/
+
+                /* Clic souris */
+                /*
+                case SDL_MOUSEBUTTONUP:
+                    // Au clic gauche
+                    if(e.button.button == SDL_BUTTON_LEFT){
+                        
+                        // Les Y sont inversés
+                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
+                            printf("Bravo tu commences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
+                            drawBTN(textures[3], 3);
                         };
                         if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
                             printf("Tu choisis ton niveau! clic en (%d, %d)\n", e.button.x, e.button.y);
@@ -344,8 +496,9 @@ int main(int argc, char** argv)
                     }else if(e.wheel.y <0){
                          printf("Tu changes de personnage aussi");
                     }
-
+*/
                 /* Touche clavier */
+                /*
                 case SDL_KEYDOWN:
 
                     printf("touche pressee (code = %d)\n", e.key.keysym.sym);
@@ -368,31 +521,4 @@ int main(int argc, char** argv)
                     break;
             }
         }
-
-        /* Calcul du temps ecoule */
-        Uint32 elapsedTime = SDL_GetTicks() - startTime;
-        
-        
-        /* Si trop peu de temps s'est ecoule, on met en pause le programme */
-        if(elapsedTime < FRAMERATE_MILLISECONDS) 
-        {
-            SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
-        }
-        
-        
-
-    
-    }
-
-    /* Liberation des ressources associees a la SDL */ 
-    for (int i=0; i<4; i++){
-        SDL_FreeSurface(image[i]);
-    }
-    
-    //SDL_DestroyTexture(textures[5]);
-    SDL_GL_DeleteContext(context);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-    
-    return EXIT_SUCCESS;
-}
+}*/
