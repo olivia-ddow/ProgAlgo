@@ -3,6 +3,7 @@
 #include "structs_gen.h"
 #include "test.h"
 #include "var_globales.h"
+#include "fakesdlimage.h"
 
 #include <SDL2/SDL.h>
 #include <GL/gl.h>
@@ -96,6 +97,15 @@ void drawSquare(int filled)
     glEnd();
 }
 
+void drawBTN(GLuint texture, int i){
+
+        glBindTexture(GL_TEXTURE_2D, texture);
+        liste_ent[i].draw();
+        
+}
+
+
+
 int main(int argc, char** argv) 
 {
     //* Initialisation de la SDL */
@@ -157,13 +167,53 @@ int main(int argc, char** argv)
   
     onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
 
+    //Textures Menu
+    
+    SDL_Surface *image[5];
+    
+    char chemin[250];
+    for(int i = 1; i < 6; i++){
+
+        // CHANGER LA MANIERE DE RECUP LES IMAGES, TROP LONG
+        sprintf(chemin,"../texture/menu-%d.png",i);
+
+        image[i] = IMG_Load(chemin);
+
+        if(image[i] != NULL){
+        
+            printf("l'image a chargé\n");
+        }else{
+            printf("l'image n'a pas chargé\n");
+        }
+    }
+    /*
+    image[1]= IMG_Load("../texture/menu-1.png");
+    image[2]= IMG_Load("../texture/menu-2.png");
+    image[3]= IMG_Load("../texture/menu-3.png");
+    image[4]= IMG_Load("../texture/menu-4.png");
+    */
+    GLuint textures[5];
+    glGenTextures(5,textures);
+
+    for(int i = 1; i < 6; i++){
+
+        glBindTexture(GL_TEXTURE_2D, textures[i]);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+        
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image[i]->w, image[i]->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,image[i]->pixels);
+    
+
+    }
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    
   
+
     /* Boucle principale */
     int loop = 1;
-    float alpha=45.0;
-    float beta=-10.0;
-    float gamma = 35.0;
-    float vitesse=0.1;
 
     /*
     GLuint firstArmID=createFirstArmIDList();
@@ -183,8 +233,20 @@ int main(int argc, char** argv)
         glLoadIdentity();
         glTranslatef((-GL_VIEW_SIZE / 2. * aspectRatio),(-GL_VIEW_SIZE / 2.), 0.0);
 
+        
+        glEnable(GL_TEXTURE_2D);
+        //glBindTexture(GL_TEXTURE_2D, texture);
+        glEnable(GL_AUTO_NORMAL);
+        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         test();
-
+        /*
+        for(int i=0; i<4; i++){
+            drawBTN(textures[i+1], i);
+        }
+        */
+        drawBTN(textures[1], 0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_TEXTURE_2D);
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapWindow(window);
         
@@ -312,19 +374,14 @@ int main(int argc, char** argv)
             SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
         }
         
-        if(alpha<-45.0){
-            vitesse=0.03;
-        }
-        if(alpha>45.0){
-            vitesse=-0.03;
-        }
-        alpha+=vitesse*elapsedTime;
         
 
     
     }
 
     /* Liberation des ressources associees a la SDL */ 
+    SDL_FreeSurface(image[5]);
+    //SDL_DestroyTexture(textures[5]);
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
     SDL_Quit();

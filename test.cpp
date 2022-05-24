@@ -28,14 +28,15 @@ void test(){
     liste_ent.push_back(Entite({370,300,300,150, {0.1,0.4,0.9}}));
     qtree.insert_id_entite(2);
     */
-    liste_ent.push_back(Entite({370,250,300,70, {0.3,0.7,0.9}}));
+   liste_ent.push_back(Entite({0,0,1040,540, {0.1,0.4,0.9}}));
     qtree.insert_id_entite(0);
-    liste_ent.push_back(Entite({370,160,300,70, {0.5,0.7,0.9}}));
+    liste_ent.push_back(Entite({370,250,300,70, {0.3,0.7,0.9}}));
     qtree.insert_id_entite(1);
+    liste_ent.push_back(Entite({370,160,300,70, {0.5,0.7,0.9}}));
+    qtree.insert_id_entite(2);
     liste_ent.push_back(Entite({370,70,300,70, {0.7,0.7,0.9}}));
-    qtree.insert_id_entite(2);
-    liste_ent.push_back(Entite({320,350,400,150, {0.1,0.4,0.9}}));
-    qtree.insert_id_entite(2);
+    qtree.insert_id_entite(3);
+    
 
     /*
     liste_ent.push_back(Entite({0,0,512,10, {0.3,0.4,0.9}}));
@@ -69,10 +70,10 @@ void test(){
     qtree.insert_id_entite(9);
 
     */
-
+   /*
     for(int i=0; i<liste_ent.size(); i++){
         liste_ent[i].draw();
     }
-    
+    */
     
 }
