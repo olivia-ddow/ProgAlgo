@@ -4,13 +4,13 @@
 #include "structs_gen.h"
 
 //Detection Collision
-bool intersection_strict_non_nulle(Rectangle r1, Rectangle r2){
+bool intersection_strict_non_nulle(Rect r1, Rect r2){
     //si r1 est completemnt a gauche de r2 OU completement en dessous OU completement a droite OU completement audessus
     //+ negation du resultat si dessus ->donne indication s'il y a zone commune entre r1 et r2 même cote a cote
     return !(r1.getX() + r1.getWidth() < r2.getX() || r1.getY() + r1.getHeight() < r2.getY() || r1.getX() > r2.getX() + r2.getWidth() || r1.getY() > r2.getY() + r2.getHeight());
 }
 //Detection Collision
-bool intersection_non_nulle(Rectangle r1, Rectangle r2){
+bool intersection_non_nulle(Rect r1, Rect r2){
     //si r1 est a gauche de r2 (ou à la limite respectivement gauche de r2) OU en dessous OU a droite OU au dessus
     //+ negation du resultat si dessus -> donne indication s'il y a zone commune entre r1 et r2 mais pas cote a cote
     return !(r1.getX() + r1.getWidth() <= r2.getX() || r1.getY() + r1.getHeight() <= r2.getY() || r1.getX() >= r2.getX() + r2.getWidth() || r1.getY() >= r2.getY() + r2.getHeight());
@@ -27,7 +27,7 @@ int changer_selection(int pers_selectionne){
 }
 
 //Retourne si deux rectangles ont les memes dimensions
-bool taille_rec_est_identique(Rectangle rec1, Rectangle rec2){
+bool taille_rec_est_identique(Rect rec1, Rect rec2){
     return (rec1.getWidth()==rec2.getWidth() && rec1.getHeight()==rec2.getHeight());
 }
 

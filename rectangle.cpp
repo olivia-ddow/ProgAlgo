@@ -1,38 +1,38 @@
 #include "rectangle.h"
 
-Rectangle::Rectangle(){
+Rect::Rect(){
     poscourante.x = 0;
     poscourante.y = 0;
     largeur = 0;
     hauteur = 0 ;
 }
-Rectangle::Rectangle(int x, int y, int l, int h){
+Rect::Rect(int x, int y, int l, int h){
     poscourante.x = x;
     poscourante.y =y;
     largeur = l;
     hauteur = h;
 }
 
-int Rectangle::getX(){
+int Rect::getX(){
     return poscourante.x;
 }
 
-void Rectangle::putX(int x){
+void Rect::putX(int x){
     poscourante.x = x;
 }
 
-int Rectangle::getY(){
+int Rect::getY(){
     return poscourante.y;
 }
 
-void Rectangle::putY(int y){
+void Rect::putY(int y){
     poscourante.y = y;
 }
 
-int Rectangle::getWidth(){
+int Rect::getWidth(){
     return largeur;
 }
 
-int Rectangle::getHeight(){
+int Rect::getHeight(){
     return hauteur;
 }

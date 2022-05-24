@@ -6,12 +6,12 @@ Quadtree::Quadtree(){
     //NORMAL QUE CE SOIT VIDE?
 }
 
-Quadtree::Quadtree(Rectangle cont){
+Quadtree::Quadtree(Rect cont){
    conteneur = cont;
 }
 
 //definit le conteneur du quadtree
-void Quadtree::definir_rect(Rectangle cont){
+void Quadtree::definir_rect(Rect cont){
     conteneur = cont;
 }
 
@@ -41,17 +41,17 @@ void Quadtree::separer(){
     int y = (int)conteneur.getY();
     
     //supdroit
-    fils[0] = new Quadtree(Rectangle(x + demil, y + demih, demil, demih));
+    fils[0] = new Quadtree(Rect(x + demil, y + demih, demil, demih));
     //supgauche
-    fils[1] = new Quadtree(Rectangle(x, y + demih, demil, demih));
+    fils[1] = new Quadtree(Rect(x, y + demih, demil, demih));
     //infdroit
-    fils[2] = new Quadtree(Rectangle(x + demil, y, demil, demih));
+    fils[2] = new Quadtree(Rect(x + demil, y, demil, demih));
     //infgauche
-    fils[3] = new Quadtree(Rectangle(x, y, demil, demih));
+    fils[3] = new Quadtree(Rect(x, y, demil, demih));
 }
 
 //renvoie la partie du QuadTree dans lequel se trouve le rectangle, si le rectangle chevauche plusieurs parties retourne -1
-int Quadtree::donnePartieQuad(Rectangle rect){
+int Quadtree::donnePartieQuad(Rect rect){
     int index = -1;
     int x_milieu = conteneur.getX() + (conteneur.getWidth() / 2);
     int y_milieu = conteneur.getY() + (conteneur.getHeight() / 2);
@@ -134,7 +134,7 @@ void Quadtree::insert_id_entite(int indexTab){
 }
 
 //recupere une liste de noeuds feuille qui contiennent le rectangle cible
-list<Quadtree> Quadtree::recupere_noeuds(list<Quadtree> l_noeuds_recup, Rectangle rect){
+list<Quadtree> Quadtree::recupere_noeuds(list<Quadtree> l_noeuds_recup, Rect rect){
     if (est_feuille()){
         if (intersection_non_nulle(rect, conteneur)){
             l_noeuds_recup.push_back(*this);
@@ -164,7 +164,7 @@ list<int> Quadtree::recupIdToutesEntites(list<int> l_id_entites){
 }
 
 //recupere une liste d'index des entites succeptibles d'avoir une collision avec le rectangle
-list<int> Quadtree::recupere_id_entites(list<int> l_entites_recup, Rectangle rect){
+list<int> Quadtree::recupere_id_entites(list<int> l_entites_recup, Rect rect){
     if (est_feuille()){
         if (intersection_non_nulle(rect, conteneur)){
             for (auto j: liste_index_entite){

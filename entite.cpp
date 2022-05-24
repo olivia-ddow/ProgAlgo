@@ -10,7 +10,7 @@ Entite::Entite(){
 }
 
 Entite::Entite(int x, int y, int l, int h, Color3f c) :
-    Rectangle (x, y, l, h) {
+    Rect (x, y, l, h) {
     couleur = c;
 }
 
@@ -155,8 +155,8 @@ void Personnage::AnnuleIdPlateformeDessus(){
     id_plateforme_dessus = -1;
 }
 
-Rectangle Personnage::RendRectArrivee(){
-    return Rectangle (posarrivee.x, posarrivee.y, getWidth(), getHeight());
+Rect Personnage::RendRectArrivee(){
+    return Rect (posarrivee.x, posarrivee.y, getWidth(), getHeight());
 }
 
 
@@ -233,6 +233,6 @@ void Plateforme::AnnuleIdPersDessus(){
     id_pers_sur_plateforme = -1;
 }
 
-Rectangle Plateforme::RendRectArrivee(){
-    return Rectangle (posarrivee.x, posarrivee.y, getWidth(), getHeight());
+Rect Plateforme::RendRectArrivee(){
+    return Rect (posarrivee.x, posarrivee.y, getWidth(), getHeight());
 }
