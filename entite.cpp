@@ -24,16 +24,31 @@ float Entite::GetColorB(){
     return couleur.b;
 }
 
-void Entite::draw(){
+void Entite::draw(int i){
         glPushMatrix();
         glTranslatef(getX(), getY(),0.0);
-            glColor3f(GetColorR(), GetColorV(), GetColorB());
 
+            // si i=0 on va attribuer une couleur à notre entité, si il est égal à autre chose (1) alors on lui appliquera une texture
+            if (i==0){
+                glColor3f(GetColorR(), GetColorV(), GetColorB());
+            }
+            
             glBegin(GL_QUADS);
-                glVertex2f(0,0);
-                glVertex2f(getWidth(),0);
-                glVertex2f(getWidth(),getHeight());
+                
+                
+
+                glTexCoord2f(0,0); 
                 glVertex2f(0,getHeight());
+                
+                glTexCoord2f(0,1);
+                glVertex2f(0,0);
+
+                glTexCoord2f(1,1);
+                
+                glVertex2f(getWidth(),0);
+                glTexCoord2f(1,0);
+                
+                glVertex2f(getWidth(),getHeight());
             glEnd();
         glPopMatrix();
     
