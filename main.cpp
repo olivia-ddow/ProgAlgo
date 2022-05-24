@@ -125,7 +125,7 @@ void drawSquare(int filled)
 void drawBTN(GLuint texture, int i){
 
         glBindTexture(GL_TEXTURE_2D, texture);
-        // liste_ent[i].draw(1);
+        liste_ent[i].draw(1);
         
 }
 
@@ -197,10 +197,10 @@ int main(int argc, char** argv)
     char chemin[250];
     for(int i = 0; i < 4; i++){
 
-        // CHANGER LA MANIERE DE RECUP LES IMAGES, TROP LONG
+       
         sprintf(chemin,"../texture/menu-%d.png",i);
 
-        // image[i] = IMG_Load(chemin);
+        image[i] = IMG_Load(chemin);
 
         if(image[i] != NULL){
         
