@@ -185,6 +185,48 @@ int main(int argc, char** argv)
   
     onWindowResized(WINDOW_WIDTH, WINDOW_HEIGHT);
 
+    //Textures Menu
+    
+    SDL_Surface *image[4];
+    
+    char chemin[250];
+    for(int i = 0; i < 4; i++){
+
+        // CHANGER LA MANIERE DE RECUP LES IMAGES, TROP LONG
+        sprintf(chemin,"../texture/menu-%d.png",i);
+
+        image[i] = IMG_Load(chemin);
+
+        if(image[i] != NULL){
+        
+            printf("l'image a chargé\n");
+        }else{
+            printf("l'image n'a pas chargé\n");
+        }
+    }
+    /*
+    image[1]= IMG_Load("../texture/menu-1.png");
+    image[2]= IMG_Load("../texture/menu-2.png");
+    image[3]= IMG_Load("../texture/menu-3.png");
+    image[4]= IMG_Load("../texture/menu-4.png");
+    */
+    GLuint textures[4];
+    glGenTextures(4,textures);
+
+    for(int i = 0; i < 4; i++){
+
+        glBindTexture(GL_TEXTURE_2D, textures[i]);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+        
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image[i]->w, image[i]->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,image[i]->pixels);
+    
+
+    }
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
+
     // PEUT ETRE PAS ICI
     while (niveau_cpt != NB_NIVEAUX_MAX && choix_joueur != QUITTER_JEU){
         executer_niveau(niveau_cpt);
@@ -193,10 +235,7 @@ int main(int argc, char** argv)
 
     /* Boucle principale */
     int loop = 1;
-    float alpha=45.0;
-    float beta=-10.0;
-    float gamma = 35.0;
-    float vitesse=0.1;
+
 
     while(loop) 
     {
