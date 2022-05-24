@@ -3,6 +3,7 @@
 #include "entite.h"
 #include "quadtree.h"
 #include "var_globales.h"
+#include "niveau_manager.h"
 #include <list>
 #include <vector>
 #include "test.h"
@@ -12,6 +13,8 @@ using namespace std;
 
 
 void test(){
+    
+    /*
     liste_ent.push_back(Entite({0,0,512,10, {0.3,0.4,0.9}}));
     qtree.insert_id_entite(0);
 
@@ -44,7 +47,7 @@ void test(){
 
     for(int i=0; i<liste_ent.size(); i++){
         liste_ent[i].draw();
-    }
-    
-    
+    }*/
+
+    charger_niveau();
 }

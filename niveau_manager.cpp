@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <cstring>
+#include <string>
 #include "niveau_manager.h"
 #include "quadtree.h"
 #include "var_globales.h"
@@ -11,6 +15,46 @@ int niveau_cpt = 0;
 void charger_niveau(){
     //TO_DO
     //mettre les valeurs (fichier textes) des variables ici)
+    FILE * current_level;
+    char* result = (char*)"niveau"; 
+    std::string tmp = std::to_string(niveau_cpt);
+    char const *num_char = tmp.c_str();
+    strcat( result, num_char );
+    strcat( result, ".txt" );
+
+    current_level = fopen (result,"r");
+
+    if ( current_level == NULL ) {
+        printf( "Cannot open file %s\n");
+        exit( -1 );
+    }
+
+    fprintf(current_level,"r");
+
+    char *file_contents;
+    int countEnt=0;
+    
+    while (!feof(current_level)) {
+        fscanf(current_level, "%c"); 
+        switch ('%c')
+        {
+        case 'D':
+        case 'A':
+        case 'O':
+        case 'P':
+        case 'Q':
+        case 'R':
+            fscanf(current_level, "%c %d %d %d %d %f %f %f", file_contents);
+            liste_ent.push_back(Decors({'%d','%d','%d','%d', {'%f','%f','%f'}}));
+            qtree.insert_id_entite(countEnt);
+            countEnt++;
+            break;
+        case 'T':
+            break;
+        }
+    }
+
+    fclose(current_level);
 
     //Initialisation des entites
 
@@ -29,8 +73,6 @@ void charger_niveau(){
 
     }
     */
-   liste_ent.push_back(Entite({0,0,512,10, {0.3,0.4,0.9}}));
-    qtree.insert_id_entite(0);
 
     //fscanf
 }
