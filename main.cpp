@@ -197,10 +197,10 @@ int main(int argc, char** argv)
     char chemin[250];
     for(int i = 0; i < 4; i++){
 
-       
+        // CHANGER LA MANIERE DE RECUP LES IMAGES, TROP LONG
         sprintf(chemin,"../texture/menu-%d.png",i);
 
-        image[i] = IMG_Load(chemin);
+        // image[i] = IMG_Load(chemin);
 
         if(image[i] != NULL){
         
@@ -223,11 +223,8 @@ int main(int argc, char** argv)
         glBindTexture(GL_TEXTURE_2D, textures[i]);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
         
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image[i]->w, image[i]->h, 0, GL_RGBA, GL_UNSIGNED_BYTE,image[i]->pixels);
-    
-
     }
     
     glBindTexture(GL_TEXTURE_2D, 0);
