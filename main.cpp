@@ -10,6 +10,8 @@
 #include "fakesdlimage.h"
 
 #include <SDL2/SDL.h>
+// use lodepng instead
+// #include <SDL2/SDL_image.h>
 #if defined(_WIN32)
 #include <windows.h>
 #endif
@@ -200,7 +202,7 @@ int main(int argc, char** argv)
         // CHANGER LA MANIERE DE RECUP LES IMAGES, TROP LONG
         sprintf(chemin,"../texture/menu-%d.png",i);
 
-        // image[i] = IMG_Load(chemin);
+        image[i] = IMG_Load(chemin);
 
         if(image[i] != NULL){
         
@@ -230,9 +232,9 @@ int main(int argc, char** argv)
     glBindTexture(GL_TEXTURE_2D, 0);
 
     // PEUT ETRE PAS ICI
-    while (niveau_cpt != NB_NIVEAUX_MAX && choix_joueur != QUITTER_JEU){
+    //while (niveau_cpt != NB_NIVEAUX_MAX && choix_joueur != QUITTER_JEU){
         executer_niveau(niveau_cpt);
-    }
+    //}
     
 
     /* Boucle principale */

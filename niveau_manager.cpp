@@ -9,20 +9,28 @@
 #include "inter_joueur.h"
 #include "gestion_frame.h"
 
+#include <iostream>
+
 //Variable compteur de niveau initalisé à 0 (premier niveau)
 int niveau_cpt = 0;
 
 void charger_niveau(){
     //TO_DO
     //mettre les valeurs (fichier textes) des variables ici)
+    /*
     FILE * current_level;
     char* result = (char*)"niveau"; 
     std::string tmp = std::to_string(niveau_cpt);
     char const *num_char = tmp.c_str();
+
     strcat( result, num_char );
     strcat( result, ".txt" );
 
-    current_level = fopen (result,"r");
+    */
+    std::string levelName = "niveau" + std::to_string(niveau_cpt) + ".txt";
+
+    std::cout << levelName << std::endl;
+    FILE * current_level = fopen (levelName.c_str(),"r");
 
     if ( current_level == NULL ) {
         printf( "Cannot open file %s\n");
@@ -35,18 +43,34 @@ void charger_niveau(){
     int countEnt=0;
     
     while (!feof(current_level)) {
-        fscanf(current_level, "%c"); 
-        switch ('%c')
+        char c;
+        fscanf(current_level, "%c", &c); 
+        switch (c)
         {
         case 'D':
+            {
+            int x, y;
+            fscanf(current_level, " %d %d", &x, &y);
+            std::cout << x << " - " << y << std::endl;
+            }
+            break;
         case 'A':
+            break;
         case 'O':
+            break;
         case 'P':
+            break;
         case 'Q':
+            break;
         case 'R':
-            fscanf(current_level, "%c %d %d %d %d %f %f %f", file_contents);
-            liste_ent.push_back(Decors({'%d','%d','%d','%d', {'%f','%f','%f'}}));
-            qtree.insert_id_entite(countEnt);
+
+            int x, y, w, h;
+            float r, g, b;
+            fscanf(current_level, " %d %d %d %d %f %f %f", &x, &y, &w, &h, &r, &g, &b);
+            std::cout << x << " - " << y << " - " << w << " - " << h << " - " << r << " - " << g << " - " << b << std::endl;
+            // std::cout << x << std::endl;
+            liste_ent.push_back(Decors({x, y, w, h, {r, g, b}}));
+          //  qtree.insert_id_entite(countEnt);
             countEnt++;
             break;
         case 'T':
@@ -56,24 +80,11 @@ void charger_niveau(){
 
     fclose(current_level);
 
+    exit(0); // PROVISOIRE POUR PAS QUE JOUER NIVEAU BOUCLE POUR L'INSTANT
     //Initialisation des entites
 
     //initialisation des plateformes
     
-    //exemple
-    /*
-    int x= 50; 
-    int y=10;
-    int l=40 ;
-    int h=70; 
-    Color3f c={0.9,0.2,0.7};
-    for(int i=0; i<NB_PLAT; i++){
-        liste_plat[i] = new Plateforme;
-        liste_plat[i].x=x;
-
-    }
-    */
-
     //fscanf
 }
 
