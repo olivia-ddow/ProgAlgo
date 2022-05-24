@@ -100,7 +100,7 @@ void drawSquare(int filled)
 void drawBTN(GLuint texture, int i){
 
         glBindTexture(GL_TEXTURE_2D, texture);
-        liste_ent[i].draw();
+        liste_ent[i].draw(1);
         
 }
 
@@ -169,10 +169,10 @@ int main(int argc, char** argv)
 
     //Textures Menu
     
-    SDL_Surface *image[5];
+    SDL_Surface *image[4];
     
     char chemin[250];
-    for(int i = 1; i < 6; i++){
+    for(int i = 0; i < 4; i++){
 
         // CHANGER LA MANIERE DE RECUP LES IMAGES, TROP LONG
         sprintf(chemin,"../texture/menu-%d.png",i);
@@ -192,10 +192,10 @@ int main(int argc, char** argv)
     image[3]= IMG_Load("../texture/menu-3.png");
     image[4]= IMG_Load("../texture/menu-4.png");
     */
-    GLuint textures[5];
-    glGenTextures(5,textures);
+    GLuint textures[4];
+    glGenTextures(4,textures);
 
-    for(int i = 1; i < 6; i++){
+    for(int i = 0; i < 4; i++){
 
         glBindTexture(GL_TEXTURE_2D, textures[i]);
 
@@ -231,6 +231,7 @@ int main(int argc, char** argv)
         glMatrixMode(GL_MODELVIEW);
 
         glLoadIdentity();
+
         glTranslatef((-GL_VIEW_SIZE / 2. * aspectRatio),(-GL_VIEW_SIZE / 2.), 0.0);
 
         
@@ -239,12 +240,13 @@ int main(int argc, char** argv)
         glEnable(GL_AUTO_NORMAL);
         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         test();
-        /*
+        
         for(int i=0; i<4; i++){
-            drawBTN(textures[i+1], i);
+            drawBTN(textures[i], i);
         }
-        */
-        drawBTN(textures[1], 0);
+        
+        //drawBTN(textures[1], 0);
+
         glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_TEXTURE_2D);
         /* Echange du front et du back buffer : mise a jour de la fenetre */
@@ -303,6 +305,9 @@ int main(int argc, char** argv)
                         };
                         if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
                             printf("Tu quittes le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
+                            for (int i=0; i<4; i++){
+                                SDL_FreeSurface(image[i]);
+                            }
                             SDL_GL_DeleteContext(context);
                             SDL_DestroyWindow(window);
                             SDL_Quit();
@@ -328,10 +333,7 @@ int main(int argc, char** argv)
                         };
                         if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
                             printf("En train de cliquer le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
-                            SDL_GL_DeleteContext(context);
-                            SDL_DestroyWindow(window);
-                            SDL_Quit();
-                            return EXIT_SUCCESS;
+                            
                         }
                     }
                 //POUR CHANGER DE PERSO CE SERA UTILE
@@ -351,6 +353,9 @@ int main(int argc, char** argv)
                     {
                         //Quand on clique sur echap on exit
                         case 46:
+                            for (int i=0; i<4; i++){
+                                SDL_FreeSurface(image[i]);
+                            }
                             SDL_GL_DeleteContext(context);
                             SDL_DestroyWindow(window);
                             SDL_Quit();
@@ -380,7 +385,10 @@ int main(int argc, char** argv)
     }
 
     /* Liberation des ressources associees a la SDL */ 
-    SDL_FreeSurface(image[5]);
+    for (int i=0; i<4; i++){
+        SDL_FreeSurface(image[i]);
+    }
+    
     //SDL_DestroyTexture(textures[5]);
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);

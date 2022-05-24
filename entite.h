@@ -15,7 +15,7 @@ public:
     float GetColorR();
     float GetColorV();
     float GetColorB();
-    void draw();
+    void draw(int i);
 };
 
 class Decors : public Entite{
