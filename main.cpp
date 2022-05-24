@@ -96,7 +96,7 @@ void drawOrigin()
 
     glColor3fv(currentColor);
 }
-
+/*
 void drawSquare(int filled) 
 {
     if(filled) 
@@ -116,8 +116,13 @@ void drawSquare(int filled)
     glVertex2f( 0.5 , -0.5);
 
     glEnd();
-}
+}*/
+void drawBTN(GLuint texture, int i){
 
+        glBindTexture(GL_TEXTURE_2D, texture);
+        liste_ent[i].draw(1);
+        
+}
 
 int main(int argc, char** argv) 
 {
