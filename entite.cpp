@@ -73,9 +73,11 @@ const int Decors::quisuisje() {
 
 /*******CLASSE PERSONNAGE*******/
 
-Personnage::Personnage(int x, int y, int l, int h, Color3f c) :
+Personnage::Personnage(int x, int y, int l, int h, Color3f c, int a_h, int a_v) :
     Entite (x, y, l, h, c) {
         dans_portail = false;
+        val_accel_h = a_h;
+        val_accel_v = a_v;
 }
 
 const int Personnage::quisuisje() {

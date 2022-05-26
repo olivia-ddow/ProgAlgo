@@ -8,6 +8,7 @@
 #include "inter_joueur.h"
 #include "interf_graph.h"
 #include "fakesdlimage.h"
+#include "gestion_frame.h"
 
 #include <SDL2/SDL.h>
 // use lodepng instead
@@ -53,9 +54,10 @@ static const float GL_VIEW_SIZE = 540;
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
 vector<Entite> liste_ent;
-vector<Personnage> liste_pers = {Personnage(100, 50, 50, 20, {0.1,0.3,0.9})};
+vector<Entite> liste_btn;
+vector<Personnage> liste_pers;
 
-vector<Plateforme> liste_plat = {Plateforme(10, 10, 300, 30, {0.1,0.8,0.9})};
+vector<Plateforme> liste_plat;
 Quadtree qtree;
 
 float aspectRatio ;
@@ -127,7 +129,7 @@ void drawSquare(int filled)
 void drawBTN(GLuint texture, int i){
 
         glBindTexture(GL_TEXTURE_2D, texture);
-        liste_ent[i].draw(1);
+        liste_btn[i].draw(1);
         
 }
 
@@ -232,9 +234,9 @@ int main(int argc, char** argv)
     glBindTexture(GL_TEXTURE_2D, 0);
 
     // PEUT ETRE PAS ICI
-    //while (niveau_cpt != NB_NIVEAUX_MAX && choix_joueur != QUITTER_JEU){
-        executer_niveau(niveau_cpt);
-    //}
+    
+    
+    
     
 
     /* Boucle principale */
@@ -253,17 +255,23 @@ while(loop)
         glLoadIdentity();
 
         glTranslatef((-GL_VIEW_SIZE / 2. * aspectRatio),(-GL_VIEW_SIZE / 2.), 0.0);
-
+        /*
+        while (niveau_cpt != NB_NIVEAUX_MAX && choix_joueur != QUITTER_JEU){
+            executer_niveau(niveau_cpt);
+        }*/
+        charger_niveau();
+        afficher_frame();
         
         glEnable(GL_TEXTURE_2D);
         //glBindTexture(GL_TEXTURE_2D, texture);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         test();
-        
+        //if on est sur le menu
+        /*
         for(int i=0; i<4; i++){
             drawBTN(textures[i], i);
-        }
+        }*/
         
         //drawBTN(textures[1], 0);
 

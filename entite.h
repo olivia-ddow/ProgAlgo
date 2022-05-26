@@ -55,7 +55,7 @@ private:
 
 
 public:
-    Personnage(int x, int y, int l, int h, Color3f c);
+    Personnage(int x, int y, int l, int h, Color3f c, int a_h, int a_v);
     const int quisuisje();
     int GetXarrivee();
     int GetYarrivee();
