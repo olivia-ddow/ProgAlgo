@@ -1,0 +1,19 @@
+#dimension du jeu (puissance de 2)
+D 640 320
+#gravite, frottement, vitesse max personnages
+A 9 2 10 10
+#nombre de personnages
+O 1
+#liste des personnages
+P 10 150 10 10 1 0 0 10 10
+#nombre de plateformes
+L 0
+#liste des plateformes
+#nombre de rectangles statiques comprenant aussi les portails (ENT)
+Q 4
+#liste des rectangles statiques
+R 0 0 270 15 0 0.4 1
+R 0 270 100 5 0 1 1
+R 0 370 270 15 1 0 1
+#pour les portails
+T 54 15 100 10 0 1 0 
