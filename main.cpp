@@ -105,27 +105,7 @@ void drawOrigin()
 
     glColor3fv(currentColor);
 }
-/*
-void drawSquare(int filled) 
-{
-    if(filled) 
-    {
-        glBegin(GL_TRIANGLE_FAN);
-        glVertex2f(0.0, 0.0);
-    }
-    else 
-    {
-        glBegin(GL_LINE_STRIP);
-    }
 
-    glVertex2f( 0.5 , -0.5);
-    glVertex2f( 0.5 , 0.5);
-    glVertex2f( -0.5 , 0.5);
-    glVertex2f( -0.5 , -0.5);
-    glVertex2f( 0.5 , -0.5);
-
-    glEnd();
-}*/
 void drawBTN(GLuint texture, int i){
 
         glBindTexture(GL_TEXTURE_2D, texture);
@@ -259,8 +239,6 @@ while(loop)
         while (niveau_cpt != NB_NIVEAUX_MAX && choix_joueur != QUITTER_JEU){
             executer_niveau(niveau_cpt);
         }*/
-        charger_niveau();
-        afficher_frame();
         
         glEnable(GL_TEXTURE_2D);
         //glBindTexture(GL_TEXTURE_2D, texture);
@@ -268,14 +246,16 @@ while(loop)
         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         test();
         //if on est sur le menu
-        /*
-        for(int i=0; i<4; i++){
+        if (current_niveau == 0){
+            for(int i=0; i<4; i++){
             drawBTN(textures[i], i);
-        }*/
-        
-        //drawBTN(textures[1], 0);
-
-
+        }
+        }
+        if (current_niveau > 0){
+            charger_niveau();
+            afficher_frame();
+            deplacer_joueur();
+        }
 
         /* Boucle traitant les evenements */
         SDL_Event e;
@@ -285,13 +265,27 @@ while(loop)
 			if(e.type == SDL_QUIT) 
 			{
 				loop = 0;
+                for (int i=0; i<4; i++){
+                        SDL_FreeSurface(image[i]);
+                    }
+                    SDL_GL_DeleteContext(context);
+                    SDL_DestroyWindow(window);
+                    SDL_Quit();
+                    return EXIT_SUCCESS;
 				break;
 			}
 		
 			if(	e.type == SDL_KEYDOWN 
-				&& (e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_ESCAPE))
+				&& (e.key.keysym.sym == QUITTER_JEU || e.key.keysym.sym == SDLK_ESCAPE))
 			{
 				loop = 0; 
+                for (int i=0; i<4; i++){
+                        SDL_FreeSurface(image[i]);
+                    }
+                    SDL_GL_DeleteContext(context);
+                    SDL_DestroyWindow(window);
+                    SDL_Quit();
+                    return EXIT_SUCCESS;
 				break;
 			}
             
@@ -321,22 +315,25 @@ while(loop)
                             printf("Bravo tu commences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
                         }*/
                         // Les Y sont inversés
-                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
-                            printf("Bravo tu commences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
-                            
-                        };
-                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
-                            printf("Tu choisis ton niveau! clic en (%d, %d)\n", e.button.x, e.button.y);
-                        };
-                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
-                            printf("Tu quittes le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
-                            for (int i=0; i<4; i++){
-                                SDL_FreeSurface(image[i]);
+                        if (current_niveau == 0){
+                            if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
+                                printf("Bravo tu commences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
+                                current_niveau++;
+                            };
+                            if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
+                                printf("Tu choisis ton niveau! clic en (%d, %d)\n", e.button.x, e.button.y);
+                            };
+                            if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
+                                printf("Tu quittes le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
+                                loop=0;
+                                for (int i=0; i<4; i++){
+                                    SDL_FreeSurface(image[i]);
+                                }
+                                SDL_GL_DeleteContext(context);
+                                SDL_DestroyWindow(window);
+                                SDL_Quit();
+                                return EXIT_SUCCESS;
                             }
-                            SDL_GL_DeleteContext(context);
-                            SDL_DestroyWindow(window);
-                            SDL_Quit();
-                            return EXIT_SUCCESS;
                         }
                     }
                      // Au clic droit
@@ -376,16 +373,31 @@ while(loop)
                     printf("touche pressee (code = %d)\n", e.key.keysym.sym);
                     switch(e.key.keysym.sym)
                     {
-                        //Quand on clique sur echap on exit
-                        case 46:
-                            for (int i=0; i<4; i++){
-                                SDL_FreeSurface(image[i]);
-                            }
-                            SDL_GL_DeleteContext(context);
-                            SDL_DestroyWindow(window);
-                            SDL_Quit();
-                            return EXIT_SUCCESS;
+                        //Quand on clique sur suppr on exit
+                        case GAUCHE:{
+                            printf("gauche");
+                            liste_pers[pers_select].PutAccelerationH(- liste_pers[pers_select].GetValAccelH());    
+                        }
                         break;
+                        case DROITE:{
+                            printf("droite");
+                            liste_pers[pers_select].PutAccelerationH(liste_pers[pers_select].GetValAccelH());
+                        }
+                        break;
+                        case SAUT:{
+                            printf("saut");
+                            liste_pers[pers_select].PutAccelerationV(liste_pers[pers_select].GetValAccelV());
+                        }
+                        break;
+                        case MENU:{
+                            
+                        }
+                        break;
+                        case SELECT:{
+                            
+                        }
+                        break;
+
                     }
                     break;
                     
