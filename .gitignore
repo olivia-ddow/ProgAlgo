@@ -1,3 +1,5 @@
 build/
+.vscode/
 CMakeFiles/
 CMakeCache.txt
+*.log
