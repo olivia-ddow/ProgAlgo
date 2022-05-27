@@ -36,10 +36,10 @@ void afficher_frame() {
 
     //DECORS et PORTAILS
     for(int i = 0; i < NB_ENT; i++){
-        if(liste_ent[i].quisuisje() == PORTAIL){
-            liste_ent[i].draw(2);
+        if(liste_ent[i]->quisuisje() == PORTAIL){
+            liste_ent[i]->draw(2);
         }else{
-            liste_ent[i].draw(0);
+            liste_ent[i]->draw(0);
         }
         
 
@@ -51,7 +51,7 @@ void afficher_frame() {
     //PLATEFORMES
     if(NB_PLAT > 0){
         for(int i = 0; i < NB_PLAT; i++){
-        liste_ent[i].draw(0);
+        liste_plat[i].draw(0);
         }
     }
     

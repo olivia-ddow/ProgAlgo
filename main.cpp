@@ -9,6 +9,7 @@
 #include "interf_graph.h"
 #include "fakesdlimage.h"
 #include "gestion_frame.h"
+#include "memory"
 
 #include <SDL2/SDL.h>
 // use lodepng instead
@@ -53,7 +54,7 @@ static const float GL_VIEW_SIZE = 540;
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
-vector<Entite> liste_ent;
+vector<shared_ptr<Entite>> liste_ent;
 vector<Entite> liste_btn;
 vector<Personnage> liste_pers;
 

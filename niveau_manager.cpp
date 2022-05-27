@@ -99,7 +99,7 @@ void charger_niveau(){
                 int x, y, l, h, a_h, a_v;
                 float r, g, b;
                 fscanf(current_level, " %d %d %d %d %f %f %f %d %d", &x, &y, &l, &h, &r, &g, &b, &a_h, &a_v);
-                liste_pers.push_back(Personnage({x, y, l, h, {r, g, b},a_h, a_v}));
+                liste_pers.push_back(Personnage(x, y, l, h, {r, g, b},a_h, a_v));
                 if(!perso_ok) {
                     perso_ok=true;
                 }
@@ -125,7 +125,7 @@ void charger_niveau(){
             std::cout << x << " - " << y << " - " << w << " - " << h << " - " << r << " - " << g << " - " << b << " - " << v_h << " - " << v_v << std::endl;
             // std::cout << x << std::endl;
             // PAS DE VITESSES DANS LE PUSH BACK ?
-            liste_ent.push_back(Plateforme({x,y,w,h, {r,g,b}}));
+            liste_plat.push_back(Plateforme(x,y,w,h,{r,g,b},v_h,v_v));
             qtree.insert_id_entite(countEnt);
             countEnt++;
         break;
@@ -146,7 +146,7 @@ void charger_niveau(){
                 fscanf(current_level, " %d %d %d %d %f %f %f", &x, &y, &w, &h, &r, &g, &b);
                 std::cout << x << " - " << y << " - " << w << " - " << h << " - " << r << " - " << g << " - " << b << std::endl;
                 // std::cout << x << std::endl;
-                liste_ent.push_back(Decors({x, y, w, h, {r, g, b}}));
+                liste_ent.push_back(make_shared<Decors>(x, y, w, h, Color3f{r, g, b}));
                 qtree.insert_id_entite(countEnt);
                 countEnt++;
                 if(!decor_ok) {
@@ -164,7 +164,7 @@ void charger_niveau(){
                 fscanf(current_level, " %d %d %d %d %f %f %f", &x, &y, &w, &h, &r, &g, &b);
                 std::cout << x << " - " << y << " - " << w << " - " << h << " - " << r << " - " << g << " - " << b << std::endl;
                 // std::cout << x << std::endl;
-                liste_ent.push_back(Portail({x, y, w, h, {r, g, b}}));
+                liste_ent.push_back(make_shared<Portail>(x, y, w, h, Color3f{r, g, b}));
                 qtree.insert_id_entite(countEnt);
                 countEnt++;
             }

@@ -4,16 +4,16 @@
 #include "structs_gen.h"
 
 //Detection Collision
-bool intersection_strict_non_nulle(Rect r1, Rect r2){
+bool intersection_strict_non_nulle(Rect *r1, Rect *r2){
     //si r1 est completemnt a gauche de r2 OU completement en dessous OU completement a droite OU completement audessus
     //+ negation du resultat si dessus ->donne indication s'il y a zone commune entre r1 et r2 même cote a cote
-    return !(r1.getX() + r1.getWidth() < r2.getX() || r1.getY() + r1.getHeight() < r2.getY() || r1.getX() > r2.getX() + r2.getWidth() || r1.getY() > r2.getY() + r2.getHeight());
+    return !(r1->getX() + r1->getWidth() < r2->getX() || r1->getY() + r1->getHeight() < r2->getY() || r1->getX() > r2->getX() + r2->getWidth() || r1->getY() > r2->getY() + r2->getHeight());
 }
 //Detection Collision
-bool intersection_non_nulle(Rect r1, Rect r2){
+bool intersection_non_nulle(Rect *r1, Rect *r2){
     //si r1 est a gauche de r2 (ou à la limite respectivement gauche de r2) OU en dessous OU a droite OU au dessus
     //+ negation du resultat si dessus -> donne indication s'il y a zone commune entre r1 et r2 mais pas cote a cote
-    return !(r1.getX() + r1.getWidth() <= r2.getX() || r1.getY() + r1.getHeight() <= r2.getY() || r1.getX() >= r2.getX() + r2.getWidth() || r1.getY() >= r2.getY() + r2.getHeight());
+    return !(r1->getX() + r1->getWidth() <= r2->getX() || r1->getY() + r1->getHeight() <= r2->getY() || r1->getX() >= r2->getX() + r2->getWidth() || r1->getY() >= r2->getY() + r2->getHeight());
 }
 
 //change le personnage selectionne
@@ -27,8 +27,8 @@ int changer_selection(int pers_selectionne){
 }
 
 //Retourne si deux rectangles ont les memes dimensions
-bool taille_rec_est_identique(Rect rec1, Rect rec2){
-    return (rec1.getWidth()==rec2.getWidth() && rec1.getHeight()==rec2.getHeight());
+bool taille_rec_est_identique(Rect *rec1, Rect *rec2){
+    return (rec1->getWidth()==rec2->getWidth() && rec1->getHeight()==rec2->getHeight());
 }
 
 //Retourne le nombre de personnages qui sont dans les portails
@@ -70,14 +70,14 @@ void deplacer_plateformes(){
         liste_plat[i].PutYarrivee(liste_plat[i].getY() + liste_plat[i].GetVitesseV());
         
         //recuperation de la liste des entites susceptibles de causer une collision
-        liste_colli_plat = qtree.recupere_id_entites(liste_colli_plat, liste_plat[i].RendRectArrivee());
+        liste_colli_plat = qtree.recupere_id_entites(liste_colli_plat, &liste_plat[i].RendRectArrivee());
 
         //S'il y a un pers sur la plateforme
         if (liste_plat[i].PersEstSurPlateforme()){
             //on recupère l'id du pers
             id_pers = liste_plat[i].GetIdPersSurPlateforme();
             //on recupère la liste des ids des entités susceptibles d'avoir une collision avec le pers
-            liste_colli_pers = qtree.recupere_id_entites(liste_colli_plat, liste_pers[id_pers].RendRectArrivee());
+            liste_colli_pers = qtree.recupere_id_entites(liste_colli_plat, &liste_pers[id_pers].RendRectArrivee());
             //calcul de la nouvelle position du personnnage à partir de la vitesse de la plateforme
             liste_pers[id_pers].PutXarrivee(liste_pers[id_pers].getX() + liste_plat[i].GetVitesseH());
             liste_pers[id_pers].PutYarrivee(liste_pers[id_pers].getY() + liste_plat[i].GetVitesseV());
@@ -85,19 +85,19 @@ void deplacer_plateformes(){
 
         //on teste la collision de la plateforme avec chaque entite
         for (auto j: liste_colli_plat){
-            if (intersection_non_nulle(liste_plat[i].RendRectArrivee(), liste_ent[j])){
+            if (intersection_non_nulle(&liste_plat[i].RendRectArrivee(),liste_ent[j].get())){
                 //si la vitesse horizontale n'est pas nulle
                 if (liste_plat[i].GetVitesseH() != 0){
                     if (liste_plat[i].GetVitesseH() < 0){
                         //Si il va a gauche et collision, on le positionne sur le bord droit du rect ou il y a collision
-                        var_tmp = liste_ent[j].getX()+liste_ent[j].getWidth();
+                        var_tmp = liste_ent[j]->getX()+liste_ent[j]->getWidth();
                         //cas ou la plateforme rencontre plrs objets
                         if (liste_plat[i].GetXarrivee() < var_tmp){
                             liste_plat[i].PutXarrivee(var_tmp);
                         }                      
                     } else {
                         //Sinon il va a droite et on le positionne a gauche du rectangle a collision
-                        var_tmp = liste_ent[j].getX()-liste_plat[i].getWidth();
+                        var_tmp = liste_ent[j]->getX()-liste_plat[i].getWidth();
                         //cas ou la plateforme rencontre plrs objets
                         if (liste_plat[i].GetXarrivee() > var_tmp){
                             liste_plat[i].PutXarrivee(var_tmp);
@@ -109,14 +109,14 @@ void deplacer_plateformes(){
                 if (liste_plat[i].GetVitesseV() != 0){
                     if (liste_plat[i].GetVitesseV() < 0){
                         //Si il va en bas et collision, on le positionne sur le bord haut du rect ou il y a collision
-                        var_tmp = liste_ent[j].getY()+liste_ent[j].getHeight();
+                        var_tmp = liste_ent[j]->getY()+liste_ent[j]->getHeight();
                         //cas ou la plateforme rencontre plrs objets
                         if (liste_plat[i].GetYarrivee() < var_tmp){
                             liste_plat[i].PutYarrivee(var_tmp);
                         }
                     } else {
                         //Sinon il va en haut et on le positionne sur le bord bas du rectangle a collision
-                        var_tmp = liste_ent[j].getY()-liste_plat[i].getHeight();
+                        var_tmp = liste_ent[j]->getY()-liste_plat[i].getHeight();
                         //cas ou la plateforme rencontre plrs objets
                         if (liste_plat[i].GetYarrivee() > var_tmp){
                             liste_plat[i].PutYarrivee(var_tmp);
@@ -132,19 +132,19 @@ void deplacer_plateformes(){
         //on teste la collision du pers sur la plateforme avec chaque entite
         if (liste_plat[i].PersEstSurPlateforme()){
             for (auto j: liste_colli_pers){
-                if (intersection_non_nulle(liste_pers[id_pers].RendRectArrivee(), liste_ent[j])){
+                if (intersection_non_nulle(&liste_pers[id_pers].RendRectArrivee(),liste_ent[j].get())){
                     //si la vitesse horizontale n'est pas nulle
                     if (liste_pers[id_pers].GetVitesseH() != 0){
                         if (liste_pers[id_pers].GetVitesseH() < 0){
                             //Si il va a gauche et collision, on le positionne sur le bord droit du rect ou il y a collision
-                            var_tmp = liste_ent[j].getX()+liste_ent[j].getWidth();
+                            var_tmp = liste_ent[j]->getX()+liste_ent[j]->getWidth();
                             //cas ou la plateforme rencontre plrs objets
                             if (liste_pers[id_pers].GetXarrivee() < var_tmp){
                                 liste_pers[id_pers].PutXarrivee(var_tmp);
                             }                      
                         } else {
                             //Sinon il va a droite et on le positionne a gauche du rectangle a collision
-                            var_tmp = liste_ent[j].getX()-liste_plat[i].getWidth();
+                            var_tmp = liste_ent[j]->getX()-liste_plat[i].getWidth();
                             //cas ou la plateforme rencontre plrs objets
                             if (liste_pers[id_pers].GetXarrivee() > var_tmp){
                                 liste_pers[id_pers].PutXarrivee(var_tmp);
@@ -156,14 +156,14 @@ void deplacer_plateformes(){
                     if (liste_pers[id_pers].GetVitesseV() != 0){
                         if (liste_pers[id_pers].GetVitesseV() < 0){
                             //Si il va en bas et collision, on le positionne sur le bord haut du rect ou il y a collision
-                            var_tmp = liste_ent[j].getY()+liste_ent[j].getHeight();
+                            var_tmp = liste_ent[j]->getY()+liste_ent[j]->getHeight();
                             //cas ou la plateforme rencontre plrs objets
                             if (liste_pers[id_pers].GetYarrivee() < var_tmp){
                                 liste_pers[id_pers].PutYarrivee(var_tmp);
                             }
                         } else {
                             //Sinon il va en haut et on le positionne sur le bord bas du rectangle a collision
-                            var_tmp = liste_ent[j].getY()-liste_pers[id_pers].getHeight();
+                            var_tmp = liste_ent[j]->getY()-liste_pers[id_pers].getHeight();
                             //cas ou la plateforme rencontre plrs objets
                             if (liste_pers[id_pers].GetYarrivee() > var_tmp){
                                 liste_pers[id_pers].PutYarrivee(var_tmp);
@@ -178,7 +178,7 @@ void deplacer_plateformes(){
 
         ///////////////////////////Check des collisions avec les personnages
         for (int j = 0; j < NB_PERS; j++){
-            if (intersection_non_nulle(liste_plat[i].RendRectArrivee(), liste_pers[j])){
+            if (intersection_non_nulle(&liste_plat[i].RendRectArrivee(),&liste_pers[j])){
             //si la vitesse horizontale n'est pas nulle
                 if (liste_plat[i].GetVitesseH() != 0){
                     if (liste_plat[i].GetVitesseH() < 0){
@@ -224,7 +224,7 @@ void deplacer_plateformes(){
         //on teste la collision du pers sur la plateforme avec chaque pers
         for (int j = 0; j < NB_PERS; j++){
             //Si les personnages sont différents et qu'il y a une intersection
-            if (id_pers != j && intersection_non_nulle(liste_pers[id_pers].RendRectArrivee(), liste_pers[j])){
+            if (id_pers != j && intersection_non_nulle(&liste_pers[id_pers].RendRectArrivee(), &liste_pers[j])){
             //si la vitesse horizontale n'est pas nulle
                 if (liste_pers[id_pers].GetVitesseH() != 0){
                     if (liste_pers[id_pers].GetVitesseH() < 0){
@@ -269,7 +269,7 @@ void deplacer_plateformes(){
 
         ////Check plateformes
         for (int j = 0; j < NB_PLAT; j++){
-            if (i != j && intersection_non_nulle(liste_plat[i].RendRectArrivee(), liste_plat[j])){
+            if (i != j && intersection_non_nulle(&liste_plat[i].RendRectArrivee(), &liste_plat[j])){
             //si la vitesse horizontale n'est pas nulle
                 if (liste_plat[i].GetVitesseH() != 0){
                     if (liste_plat[i].GetVitesseH() < 0){
@@ -314,7 +314,7 @@ void deplacer_plateformes(){
 
         //on teste la collision du pers sur la plateforme avec chaque plateforme
         for (int j = 0; j < NB_PLAT; j++){
-            if (intersection_non_nulle(liste_pers[id_pers].RendRectArrivee(), liste_plat[j])){
+            if (intersection_non_nulle(&liste_pers[id_pers].RendRectArrivee(), &liste_plat[j])){
             //si la vitesse horizontale n'est pas nulle
                 if (liste_pers[id_pers].GetVitesseH() != 0){
                     if (liste_pers[id_pers].GetVitesseH() < 0){
