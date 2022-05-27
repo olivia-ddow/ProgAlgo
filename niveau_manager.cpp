@@ -27,7 +27,7 @@ void charger_niveau(){
     strcat( result, ".txt" );
 
     */
-   std::cout << niveau_cpt << std::endl;
+    std::cout << niveau_cpt << std::endl;
     std::string levelName = "niveau" + std::to_string(niveau_cpt) + ".txt";
 
     std::cout << levelName << std::endl;
@@ -43,13 +43,19 @@ void charger_niveau(){
     char *file_contents;
     int countEnt=0;
     
+    bool dim_ok, constantes_ok, decor_ok, perso_ok;
+    dim_ok=false;
+    constantes_ok=false;
+    decor_ok=false;
+    perso_ok=false;
+
     while (!feof(current_level)) {
         char c;
         fscanf(current_level, "%c", &c); 
         switch (c)
         {
         case '#':
-            
+            cin.ignore(256,'\n');
             //RETOURNER A LA LIGNE
         break;
         case 'D':
@@ -59,6 +65,9 @@ void charger_niveau(){
                 std::cout << l << " - " << h << std::endl;
                 largeur_map = l;
                 hauteur_map = h;
+                if(!dim_ok) {
+                    dim_ok=true;
+                }
             }
             break;
         case 'A':
@@ -69,6 +78,9 @@ void charger_niveau(){
                 val_accel_f = f;
                 val_max_vitesse_h = v_h;
                 val_max_vitesse_v = v_v;
+                if(!constantes_ok) {
+                    constantes_ok=true;
+                }
             }
 
             break;
@@ -86,6 +98,9 @@ void charger_niveau(){
                 float r, g, b;
                 fscanf(current_level, " %d %d %d %d %f %f %f %d %d", &x, &y, &l, &h, &r, &g, &b, &a_h, &a_v);
                 liste_pers.push_back(Personnage({x, y, l, h, {r, g, b},a_h, a_v}));
+                if(!perso_ok) {
+                    perso_ok=true;
+                }
             }
             
             break;
@@ -101,6 +116,16 @@ void charger_niveau(){
 
         //Plateforme
         case 'M':
+            //M <posX> <posY> <largeur> <hauteur> <rouge> <vert> <bleu> <vitesse_h> <vitesse_v>
+            int x, y, w, h, v_h, v_v;
+            float r, g, b;
+            fscanf(current_level, " %d %d %d %d %f %f %f %d %d", &x, &y, &w, &h, &r, &g, &b, &v_h, &v_v);
+            std::cout << x << " - " << y << " - " << w << " - " << h << " - " << r << " - " << g << " - " << b << " - " << v_h << " - " << v_v << std::endl;
+            // std::cout << x << std::endl;
+            // PAS DE VITESSES DANS LE PUSH BACK ?
+            liste_ent.push_back(Plateforme({x,y,w,h, {r,g,b}}));
+            qtree.insert_id_entite(countEnt);
+            countEnt++;
         break;
  
         case 'Q':
@@ -122,6 +147,9 @@ void charger_niveau(){
                 liste_ent.push_back(Decors({x, y, w, h, {r, g, b}}));
                 qtree.insert_id_entite(countEnt);
                 countEnt++;
+                if(!decor_ok) {
+                    decor_ok=true;
+                }
             }
             
             break;
@@ -140,6 +168,11 @@ void charger_niveau(){
             }
             break;
         }
+    }
+
+    if (!dim_ok || !decor_ok || !perso_ok || !constantes_ok) {
+        printf( "Erreur de chargement\n");
+        //exit( -1 );
     }
 
     fclose(current_level);
@@ -175,7 +208,9 @@ void jouer_niveau(){
 void executer_niveau(int niveau_cpt){
     qtree.initialiser_quadtree();
     charger_niveau();
-    jouer_niveau();
+    if (!liste_pers.empty()) {
+        jouer_niveau();
+    }
     //TODO
     //fonction liberer niveau pour delete les tableaux, liste plat et pers et cleart liste_ent, vider tout, clear quadtree
 }
