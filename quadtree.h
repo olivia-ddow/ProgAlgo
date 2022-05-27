@@ -12,7 +12,7 @@ class Quadtree {
  
 private :
     list<int> liste_index_entite;
-    Rect * conteneur;
+    Rect conteneur;
     Quadtree * fils[4] = {nullptr};
     //Separe le conteneur du noeud en 4 parties
     void separer();
@@ -22,12 +22,7 @@ private :
     int donneNbEntites();
 
 public:
-    Quadtree();
-    Quadtree(Rect * cont);
-    //definit le conteneur du quadtree
-    void definir_rect(Rect * cont);
-    void initialiser_quadtree();
-    //efface les enfants du Quadtree
+    Quadtree(Rect cont);
     void effacer_fils();
     //renvoie si le noeud est une feuille
     bool est_feuille();
@@ -36,9 +31,9 @@ public:
     //recupere une liste de noeuds feuille qui contiennent le rectangle cible
     list<Quadtree> recupere_noeuds(list<Quadtree> noeuds_recup, Rect * rect);
     //recupere une liste d'index des entites succeptibles d'avoir une collision avec le rectangle
-    list<int> recupere_id_entites(list<int> l_entites_recup, Rect * rect);
+    void recupere_id_entites(list<int>& l_entites_recup, Rect * rect);
     //recupère la liste des index de toutes les entites à partir du noeud
-    list<int> recupIdToutesEntites(list<int> l_id_entites);
+    void recupIdToutesEntites(list<int>& l_entites_recup); 
     //Supprime l'id d'une entite du quadtree
     void supprime_id_entite(int index_ent);
 };  

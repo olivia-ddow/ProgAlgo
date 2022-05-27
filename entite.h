@@ -103,7 +103,7 @@ private:
 
 public:
     Plateforme();
-    Plateforme(int x, int y, int l, int h, Color3f c);
+    Plateforme(int x, int y, int l, int h, Color3f c, int v_h, int v_v);
 
     const int quisuisje();
     int GetXarrivee();

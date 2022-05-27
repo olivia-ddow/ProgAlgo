@@ -116,13 +116,14 @@ void deplacer_joueur(){
             /***CHECK COLLISION ENTITE STATIQ*****/
             //recuperation de la liste des entites susceptible de causer une collision
             list<int> liste_colli;
-            liste_colli = qtree.recupere_id_entites(liste_colli, liste_pers[i].get());
+            qtree.recupere_id_entites(liste_colli, &liste_pers[i]);
             //on teste la collision avec chaque entite
             for (auto j: liste_colli){
                 //S'il ya une collision
-                if (intersection_non_nulle(&liste_pers[i].RendRectArrivee(), liste_ent[j].get())){
+                Rect rectTemp = liste_pers[i].RendRectArrivee();
+                if (intersection_non_nulle(&rectTemp, liste_ent[j].get())){
                     //On verifie si le rectangle avec qui il collisionne est SON portail
-                    if (liste_ent[j]->quisuisje() == PORTAIL && taille_rec_est_identique(liste_pers[i], liste_ent[j].get())){
+                    if (liste_ent[j]->quisuisje() == PORTAIL && taille_rec_est_identique(&liste_pers[i], liste_ent[j].get())){
                         //on change l'attribut du pers 'dans_portail' à vrai
                         liste_pers[i].PutDansPortail(true);
                         //On met les coordonnées du portail à celle du personnage
@@ -179,7 +180,8 @@ void deplacer_joueur(){
             for (int j = 0; j < NB_PERS; j++){
                 if (i != j){
                     //S'il ya une collision
-                    if (intersection_non_nulle(&liste_pers[i].RendRectArrivee(), liste_pers[j].get())){
+                    Rect rectTemp = liste_pers[i].RendRectArrivee();
+                    if (intersection_non_nulle(&rectTemp, &liste_pers[j])){
                         //si la vitesse horizontale n'est pas nulle
                         if (liste_pers[i].GetVitesseH() != 0){
                             if (liste_pers[i].GetVitesseH() < 0){
@@ -220,7 +222,8 @@ void deplacer_joueur(){
 
             /******CHECK COLLI AVEC PLATEFORMES******/
             for (int j = 0; j < NB_PLAT; j++){
-                if (intersection_strict_non_nulle(&liste_pers[i].RendRectArrivee(), liste_plat[j].get())){
+                Rect rectTemp = liste_pers[i].RendRectArrivee();
+                if (intersection_strict_non_nulle(&rectTemp, &liste_plat[j])){
                 //si la vitesse horizontale n'est pas nulle
                     if (liste_pers[i].GetVitesseH() != 0){
                         if (liste_pers[i].GetVitesseH() < 0){
@@ -267,8 +270,9 @@ void deplacer_joueur(){
                     }
                 }
                 //Si il est sur la plateforme et que l'index de la plateforme est celui noté dans l'attribut du pers ET que l'intersection est nulle
+        
                 if (liste_pers[i].EstSurPlateforme() && (liste_pers[i].GetIdPlateformeDessus() == j) && 
-                                                        (intersection_non_nulle(liste_pers[i].RendRectArrivee(), liste_plat[j]) == false)){
+                                                        (intersection_non_nulle(&rectTemp, &liste_plat[j]) == false)){
                     //on dissocie le personnage de la plateforme 
                     liste_pers[i].AnnuleIdPlateformeDessus();
                     liste_plat[j].AnnuleIdPersDessus();

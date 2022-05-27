@@ -124,7 +124,7 @@ void charger_niveau(){
             fscanf(current_level, " %d %d %d %d %f %f %f %d %d", &x, &y, &w, &h, &r, &g, &b, &v_h, &v_v);
             std::cout << x << " - " << y << " - " << w << " - " << h << " - " << r << " - " << g << " - " << b << " - " << v_h << " - " << v_v << std::endl;
             // std::cout << x << std::endl;
-            // PAS DE VITESSES DANS LE PUSH BACK ?
+            
             liste_plat.push_back(Plateforme(x,y,w,h,{r,g,b},v_h,v_v));
             qtree.insert_id_entite(countEnt);
             countEnt++;
@@ -171,7 +171,7 @@ void charger_niveau(){
             break;
         }
     }
-
+    
     if (!dim_ok || !decor_ok || !perso_ok || !constantes_ok) {
         printf( "Erreur de chargement\n");
         //exit( -1 );
@@ -187,9 +187,25 @@ void charger_niveau(){
     //fscanf
 }
 
+
+
 //fonction accédant aux fonctionnalités du jeu
 void jouer_niveau(){
+
+    if (personnages_sont_dans_portails()) {
+        current_niveau++;
+        niveau_cpt++;
+        return;
+    }
+    afficher_frame();
+    if(NB_PLAT > 0){
+            deplacer_plateformes();
+        }
+    deplacer_joueur();
+    
+
     //Tant que tous les personnages ne sont pas dans les portails et que le joueur n'a pas choisi de quitter le jeu
+    /*
     while (personnages_sont_dans_portails() == false && choix_joueur != QUITTER_JEU){
         afficher_frame(); //TO_DO 
         if(NB_PLAT > 0){
@@ -198,17 +214,16 @@ void jouer_niveau(){
         executer_choix_joueur(); //A finir
         deplacer_joueur();
     }
-    std::cout << "portails:"<< personnages_sont_dans_portails() << std::endl;
-    std::cout << "choixjoueur:"<< choix_joueur << std::endl;
-    if (choix_joueur != QUITTER_JEU){
-        std::cout << "bruuuh" << std::endl;
-        niveau_cpt++;
-    }
+    */
+
+    //std::cout << "portails:"<< personnages_sont_dans_portails() << std::endl;
+    //std::cout << "choixjoueur:"<< choix_joueur << std::endl;
+
 }
 
 //fonction qui execute le niveau
 void executer_niveau(int niveau_cpt){
-    qtree.initialiser_quadtree();
+    //qtree.initialiser_quadtree();
     charger_niveau();
     if (!liste_pers.empty()) {
         jouer_niveau();

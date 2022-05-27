@@ -70,14 +70,16 @@ void deplacer_plateformes(){
         liste_plat[i].PutYarrivee(liste_plat[i].getY() + liste_plat[i].GetVitesseV());
         
         //recuperation de la liste des entites susceptibles de causer une collision
-        liste_colli_plat = qtree.recupere_id_entites(liste_colli_plat, &liste_plat[i].RendRectArrivee());
+        Rect rectTemp = liste_plat[i].RendRectArrivee();
+        qtree.recupere_id_entites(liste_colli_plat, &rectTemp);
 
         //S'il y a un pers sur la plateforme
         if (liste_plat[i].PersEstSurPlateforme()){
             //on recupère l'id du pers
             id_pers = liste_plat[i].GetIdPersSurPlateforme();
             //on recupère la liste des ids des entités susceptibles d'avoir une collision avec le pers
-            liste_colli_pers = qtree.recupere_id_entites(liste_colli_plat, &liste_pers[id_pers].RendRectArrivee());
+            Rect rectTemp = liste_pers[id_pers].RendRectArrivee();
+            qtree.recupere_id_entites(liste_colli_plat, &rectTemp);
             //calcul de la nouvelle position du personnnage à partir de la vitesse de la plateforme
             liste_pers[id_pers].PutXarrivee(liste_pers[id_pers].getX() + liste_plat[i].GetVitesseH());
             liste_pers[id_pers].PutYarrivee(liste_pers[id_pers].getY() + liste_plat[i].GetVitesseV());
@@ -85,7 +87,8 @@ void deplacer_plateformes(){
 
         //on teste la collision de la plateforme avec chaque entite
         for (auto j: liste_colli_plat){
-            if (intersection_non_nulle(&liste_plat[i].RendRectArrivee(),liste_ent[j].get())){
+            Rect rectTemp = liste_plat[i].RendRectArrivee();
+            if (intersection_non_nulle(&rectTemp,liste_ent[j].get())){
                 //si la vitesse horizontale n'est pas nulle
                 if (liste_plat[i].GetVitesseH() != 0){
                     if (liste_plat[i].GetVitesseH() < 0){
@@ -132,7 +135,8 @@ void deplacer_plateformes(){
         //on teste la collision du pers sur la plateforme avec chaque entite
         if (liste_plat[i].PersEstSurPlateforme()){
             for (auto j: liste_colli_pers){
-                if (intersection_non_nulle(&liste_pers[id_pers].RendRectArrivee(),liste_ent[j].get())){
+                Rect rectTemp = liste_pers[id_pers].RendRectArrivee();
+                if (intersection_non_nulle(&rectTemp,liste_ent[j].get())){
                     //si la vitesse horizontale n'est pas nulle
                     if (liste_pers[id_pers].GetVitesseH() != 0){
                         if (liste_pers[id_pers].GetVitesseH() < 0){
@@ -178,7 +182,8 @@ void deplacer_plateformes(){
 
         ///////////////////////////Check des collisions avec les personnages
         for (int j = 0; j < NB_PERS; j++){
-            if (intersection_non_nulle(&liste_plat[i].RendRectArrivee(),&liste_pers[j])){
+            Rect rectTemp = liste_plat[i].RendRectArrivee();
+            if (intersection_non_nulle(&rectTemp,&liste_pers[j])){
             //si la vitesse horizontale n'est pas nulle
                 if (liste_plat[i].GetVitesseH() != 0){
                     if (liste_plat[i].GetVitesseH() < 0){
@@ -224,7 +229,8 @@ void deplacer_plateformes(){
         //on teste la collision du pers sur la plateforme avec chaque pers
         for (int j = 0; j < NB_PERS; j++){
             //Si les personnages sont différents et qu'il y a une intersection
-            if (id_pers != j && intersection_non_nulle(&liste_pers[id_pers].RendRectArrivee(), &liste_pers[j])){
+            Rect rectTemp = liste_pers[id_pers].RendRectArrivee();
+            if (id_pers != j && intersection_non_nulle(&rectTemp, &liste_pers[j])){
             //si la vitesse horizontale n'est pas nulle
                 if (liste_pers[id_pers].GetVitesseH() != 0){
                     if (liste_pers[id_pers].GetVitesseH() < 0){
@@ -269,7 +275,8 @@ void deplacer_plateformes(){
 
         ////Check plateformes
         for (int j = 0; j < NB_PLAT; j++){
-            if (i != j && intersection_non_nulle(&liste_plat[i].RendRectArrivee(), &liste_plat[j])){
+            Rect rectTemp = liste_plat[i].RendRectArrivee();
+            if (i != j && intersection_non_nulle(&rectTemp, &liste_plat[j])){
             //si la vitesse horizontale n'est pas nulle
                 if (liste_plat[i].GetVitesseH() != 0){
                     if (liste_plat[i].GetVitesseH() < 0){
@@ -314,7 +321,8 @@ void deplacer_plateformes(){
 
         //on teste la collision du pers sur la plateforme avec chaque plateforme
         for (int j = 0; j < NB_PLAT; j++){
-            if (intersection_non_nulle(&liste_pers[id_pers].RendRectArrivee(), &liste_plat[j])){
+            Rect rectTemp = liste_pers[id_pers].RendRectArrivee();
+            if (intersection_non_nulle(&rectTemp, &liste_plat[j])){
             //si la vitesse horizontale n'est pas nulle
                 if (liste_pers[id_pers].GetVitesseH() != 0){
                     if (liste_pers[id_pers].GetVitesseH() < 0){

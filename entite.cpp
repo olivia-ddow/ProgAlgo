@@ -199,7 +199,7 @@ Plateforme::Plateforme(){
     posarrivee = POINT2DNUL;
 }
 
-Plateforme::Plateforme(int x, int y, int l, int h, Color3f c) :
+Plateforme::Plateforme(int x, int y, int l, int h, Color3f c, int v_h, int v_v) :
     Entite (x, y, l, h, c) {
 }
 

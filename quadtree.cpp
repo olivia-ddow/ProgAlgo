@@ -2,25 +2,16 @@
 #include "var_globales.h"
 #include "fonctions.h"
 
-Quadtree::Quadtree(){
-    //NORMAL QUE CE SOIT VIDE?
-}
-
-Quadtree::Quadtree(Rect * cont){
+Quadtree::Quadtree(Rect cont){
    conteneur = cont;
 }
-
-//definit le conteneur du quadtree
-void Quadtree::definir_rect(Rect * cont){
-    conteneur = cont;
-}
-
+/*
 void Quadtree::initialiser_quadtree(){
     effacer_fils();
     liste_index_entite.clear();
     conteneur = &RECTNUL;
 }
-
+*/
 //efface les enfants du Quadtree
 void Quadtree::effacer_fils() {
     for (int i = 0; i < 4; i++) {
@@ -35,10 +26,10 @@ void Quadtree::effacer_fils() {
 
 //Separe le conteneur du noeud en 4 parties
 void Quadtree::separer(){
-    int demil = (int)(conteneur->getWidth() / 2);
-    int demih = (int)(conteneur->getHeight() / 2);
-    int x = (int)conteneur->getX();
-    int y = (int)conteneur->getY();
+    int demil = (int)(conteneur.getWidth() / 2);
+    int demih = (int)(conteneur.getHeight() / 2);
+    int x = (int)conteneur.getX();
+    int y = (int)conteneur.getY();
     
     //supdroit
     fils[0] = new Quadtree(Rect(x + demil, y + demih, demil, demih));
@@ -53,8 +44,8 @@ void Quadtree::separer(){
 //renvoie la partie du QuadTree dans lequel se trouve le rectangle, si le rectangle chevauche plusieurs parties retourne -1
 int Quadtree::donnePartieQuad(Rect rect){
     int index = -1;
-    int x_milieu = conteneur->getX() + (conteneur->getWidth() / 2);
-    int y_milieu = conteneur->getY() + (conteneur->getHeight() / 2);
+    int x_milieu = conteneur.getX() + (conteneur.getWidth() / 2);
+    int y_milieu = conteneur.getY() + (conteneur.getHeight() / 2);
     
     // Object can completely fit within the top quadrants
     bool partie_haute = (rect.getY() > y_milieu && rect.getY() + rect.getHeight() > y_milieu);
@@ -108,12 +99,12 @@ void Quadtree::insert_id_entite(int indexTab){
             for (int j = 0; j < 4; j++){
                 for (auto i: liste_index_entite){
                     //on regarde dans quel(s) sous rectangle(s) il faut mettre l'element
-                    if (intersection_non_nulle(liste_ent[i].get(), fils[j]->conteneur)){
+                    if (intersection_non_nulle(liste_ent[i].get(), &(fils[j]->conteneur))){
                         //On insere l'entite dans le fils s'il y a une intersection entre lui et le conteneur du sous noeud
                         fils[j]->insert_id_entite(i);
                     } 
                 }
-                if (intersection_non_nulle(liste_ent[indexTab].get(), fils[j]->conteneur)){
+                if (intersection_non_nulle(liste_ent[indexTab].get(), &(fils[j]->conteneur))){
                     //On insere la nouvelle entite dans le fils s'il y a une intersection entre lui et le conteneur du sous noeud
                     fils[j]->insert_id_entite(indexTab);
                 } 
@@ -125,7 +116,7 @@ void Quadtree::insert_id_entite(int indexTab){
     //Si c'est pas une feuille
     } else {
         for (int j = 0; j < 4; j++){
-            if (intersection_non_nulle(liste_ent[indexTab].get(), fils[j]->conteneur)){
+            if (intersection_non_nulle(liste_ent[indexTab].get(), &(fils[j]->conteneur))){
                 //On insere la nouvelle entite dans le fils s'il y a une intersection entre lui et le conteneur du sous noeud
                 fils[j]->insert_id_entite(indexTab);
             } 
@@ -136,12 +127,12 @@ void Quadtree::insert_id_entite(int indexTab){
 //recupere une liste de noeuds feuille qui contiennent le rectangle cible
 list<Quadtree> Quadtree::recupere_noeuds(list<Quadtree> l_noeuds_recup, Rect * rect){
     if (est_feuille()){
-        if (intersection_non_nulle(rect, conteneur)){
+        if (intersection_non_nulle(rect,&conteneur)){
             l_noeuds_recup.push_back(*this);
         }
     } else {
         for (int i = 0; i < 4; i++){
-            if (intersection_non_nulle(rect, fils[i]->conteneur)){
+            if (intersection_non_nulle(rect, &(fils[i]->conteneur))){
                 fils[i]->recupere_noeuds(l_noeuds_recup, rect);
             }
         }
@@ -150,7 +141,8 @@ list<Quadtree> Quadtree::recupere_noeuds(list<Quadtree> l_noeuds_recup, Rect * r
 }
 
 //recupère la liste des index de toutes les entites à partir du noeud
-list<int> Quadtree::recupIdToutesEntites(list<int> l_id_entites){
+
+void Quadtree::recupIdToutesEntites(list<int> &l_id_entites){
     if (est_feuille()){
         for (auto j: liste_index_entite){
             l_id_entites.push_back(j);
@@ -160,25 +152,23 @@ list<int> Quadtree::recupIdToutesEntites(list<int> l_id_entites){
             fils[i]->recupIdToutesEntites(l_id_entites);
         }
     }
-    return l_id_entites;
 }
 
 //recupere une liste d'index des entites succeptibles d'avoir une collision avec le rectangle
-list<int> Quadtree::recupere_id_entites(list<int> l_entites_recup, Rect * rect){
+void Quadtree::recupere_id_entites(list<int>& l_entites_recup, Rect * rect){
     if (est_feuille()){
-        if (intersection_non_nulle(rect, conteneur)){
+        if (intersection_non_nulle(rect, &conteneur)){
             for (auto j: liste_index_entite){
                 l_entites_recup.push_back(j);
             }
         }
     } else {
         for (int i = 0; i < 4; i++){
-            if (intersection_non_nulle(rect, fils[i]->conteneur)){
+            if (intersection_non_nulle(rect, &(fils[i]->conteneur))){
                 fils[i]->recupere_id_entites(l_entites_recup, rect);
             }
         }
     }
-    return l_entites_recup;
 }
 
 
@@ -206,7 +196,7 @@ void Quadtree::supprime_id_entite(int index_ent){
         //Si le nombre d'entité est inférieur au nb d'objet max
         if (donneNbEntites() < NB_OBJ_MAX){
             list<int> liste_index;
-            liste_index = recupIdToutesEntites(liste_index);
+            recupIdToutesEntites(liste_index);
             //on deplace les index de liste_index a la fin de liste_index_entite et on vide liste_index
             liste_index_entite.splice(liste_index_entite.end(), liste_index);   
         }
