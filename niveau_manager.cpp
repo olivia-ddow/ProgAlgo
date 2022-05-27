@@ -13,6 +13,8 @@
 
 //Variable compteur de niveau initalisé à 0 (premier niveau)
 int niveau_cpt = 0;
+int current_niveau = 0;
+//current_niveau comprends également les menus
 
 void charger_niveau(){
     //TO_DO

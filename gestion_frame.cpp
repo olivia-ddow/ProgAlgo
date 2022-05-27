@@ -36,7 +36,13 @@ void afficher_frame() {
 
     //DECORS et PORTAILS
     for(int i = 0; i < NB_ENT; i++){
-        liste_ent[i].draw(0);
+        if(liste_ent[i].quisuisje() == PORTAIL){
+            liste_ent[i].draw(2);
+        }else{
+            liste_ent[i].draw(0);
+        }
+        
+
     }
     //PERSONNAGES
     for(int i = 0; i < NB_PERS; i++){

@@ -31,11 +31,14 @@ void Entite::draw(int i){
             // si i=0 on va attribuer une couleur à notre entité, si il est égal à autre chose (1) alors on lui appliquera une texture
             if (i==0){
                 glColor3f(GetColorR(), GetColorV(), GetColorB());
+                glBegin(GL_QUADS);
+            }else if(i==2){
+                //stroke pour le portail
+                glBegin(GL_LINE_LOOP);
+            }else{
+                glBegin(GL_QUADS);
             }
-            
-            glBegin(GL_QUADS);
-                
-                
+
 
                 glTexCoord2f(0,0); 
                 glVertex2f(0,getHeight());

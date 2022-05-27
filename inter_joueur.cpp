@@ -18,6 +18,7 @@ void executer_choix_joueur(){
     //acceleration a NUL quand on appuie pas sur une touche de direction
     liste_pers[pers_select].PutAccelerationH(0);
     liste_pers[pers_select].PutAccelerationV(0);
+    
 
     switch (choix_joueur){
     case GAUCHE:
@@ -70,7 +71,7 @@ void deplacer_joueur(){
                 if (var_tmp > 0){
                     var_tmp = 0;
                 }
-                //si la vitesse calculee depasse la vitesse max on ramène à la valeur max
+                //si la vitesse calcule depasse la vitesse max on ramène à la valeur max
                 if (var_tmp < -val_max_vitesse_h){
                     var_tmp = -val_max_vitesse_h;
                 }

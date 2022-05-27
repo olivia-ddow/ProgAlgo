@@ -21,13 +21,8 @@ extern int NB_PLAT;
 extern int NB_PORT;
 extern int NB_ENT;
 
-//variable de niveaux
-//int NB_NIV=1;
-//int niveaux[NB_NIV] = [0,1,2,3];
-//0 menu
-//1 intro
-//2 premier niveau
-//3 page de fin
+
+
 
 //Creer avec un new liste_plat à clear la liste à la fn du niveau
 extern vector<Plateforme> liste_plat;
