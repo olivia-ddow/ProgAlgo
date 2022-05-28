@@ -64,12 +64,14 @@ void deplacer_joueur(){
             //calcul de la vitesse H avant frottement en fonction de l'acceleration horizontale 
 
             std::cout <<"ACCEL HORIZON AVANT "<< liste_pers[i].GetAccelerationH() << std::endl;
-            liste_pers[i].PutVitesseH(liste_pers[i].GetVitesseH() + liste_pers[i].GetAccelerationH());
+            var_tmp = liste_pers[i].GetVitesseH() + liste_pers[i].GetAccelerationH();
+            
             std::cout <<"VITESSE HORIZON DEBUT "<< liste_pers[i].GetVitesseH() << std::endl;
+
             //calcul de la vitesse H en fonction des frottements et verif de la vitesse max
-            if (liste_pers[i].GetVitesseH() < 0){
+            if (var_tmp < 0){
                 //calcul de la vitesse H en fonction des frottements
-                var_tmp = liste_pers[i].GetVitesseH() + val_accel_f;
+                var_tmp = var_tmp + val_accel_f;
                 //Si la vitesse devient positive avec les frottements on la met à zero
                 if (var_tmp > 0){
                     var_tmp = 0;
@@ -78,9 +80,9 @@ void deplacer_joueur(){
                 if (var_tmp < -val_max_vitesse_h){
                     var_tmp = -val_max_vitesse_h;
                 }
-            } else if (liste_pers[i].GetVitesseH() > 0){
+            } else if (var_tmp > 0){
                 //calcul de la vitesse H en fonction des frottements
-                var_tmp = liste_pers[i].GetVitesseH() - val_accel_f;
+                var_tmp = var_tmp - val_accel_f;
                 //Si la vitesse devient negative avec les frottements on la met à zero
                 if (var_tmp < 0){
                     var_tmp = 0;
@@ -90,7 +92,7 @@ void deplacer_joueur(){
                     var_tmp = val_max_vitesse_h;
                 }
             }
-            //Sinon si la vitesse est nulle on fait rien
+            liste_pers[i].PutVitesseH(var_tmp);
 
             /*******VITESSE VERTICALE*****/
             //calcul de la vitesse V avant frottement en fonction de l'acceleration verticale et de la gravite
@@ -106,8 +108,7 @@ void deplacer_joueur(){
                 //on la ramène à la valeur max
                 liste_pers[i].PutVitesseV(val_max_vitesse_v);
             }
-            //Sinon si la vitesse est nulle on fait rien
-                
+               
             /***CALCUL DE LA NOUVELLE POSITION***/
             
             liste_pers[i].PutXarrivee(liste_pers[i].getX() + liste_pers[i].GetVitesseH());
@@ -137,9 +138,9 @@ void deplacer_joueur(){
                         liste_pers[i].PutXarrivee(liste_ent[j]->getX());
                         liste_pers[i].PutYarrivee(liste_ent[j]->getY());                    
                     } else {
-                        //si la vitesse horizontale n'est pas nulle
+                        //si la vitesse horizontale n'est pas nulle ET qu'il y a une collision à l'horizontale
                         Rect rectTempora(liste_pers[i].GetXarrivee(), liste_pers[i].getY(), liste_pers[i].getWidth(), liste_pers[i].getHeight());
-                        if (liste_pers[i].GetVitesseH() != 0 && intersection_non_nulle(&rectTempora, liste_ent[j].get()) == false){
+                        if (liste_pers[i].GetVitesseH() != 0 && intersection_non_nulle(&rectTempora, liste_ent[j].get()) == true){
                             
                             if (liste_pers[i].GetVitesseH() < 0){
                                 
@@ -148,29 +149,24 @@ void deplacer_joueur(){
                                 //cas ou le pers rencontre plrs objets
                                 if (liste_pers[i].GetXarrivee() < var_tmp){
                                     liste_pers[i].PutXarrivee(var_tmp);
-
                                 }
-                                //on met la vitesse à zéro pour que le pers s'arrête horizontalement
-                                liste_pers[i].PutVitesseH(0);
-
                             } else {
                                 //Sinon il va a droite et on le positionne a gauche du rectangle a collision
-                                
-
                                 var_tmp = liste_ent[j]->getX()-liste_pers[i].getWidth();
                                 //cas ou le pers rencontre plrs objets
                                 if (liste_pers[i].GetXarrivee() > var_tmp){
-                                    liste_pers[i].PutXarrivee(var_tmp);
-                                    
+                                    liste_pers[i].PutXarrivee(var_tmp);    
                                 }
-                                //on met la vitesse à zéro pour que le pers s'arrête horizontalement
-                                liste_pers[i].PutVitesseH(0);
                             }
-            
+                            //on met la vitesse à zéro pour que le pers s'arrête horizontalement
+                            liste_pers[i].PutVitesseH(0);
                         }
-                        //On fait pareil pour la vitesse verticale
-                        if (liste_pers[i].GetVitesseV() != 0){
-                            if (liste_pers[i].GetVitesseV() < 0 && intersection_cote(&liste_pers[i], liste_ent[j].get())!= CHAUT){
+                        
+                        //On fait pareil pour la vitesse verticale  Et qu'il y a une collision à la verticale
+                        Rect rectTempora2(liste_pers[i].getX(), liste_pers[i].GetYarrivee(), liste_pers[i].getWidth(), liste_pers[i].getHeight());
+                        if (liste_pers[i].GetVitesseV() != 0 && intersection_non_nulle(&rectTempora2, liste_ent[j].get()) == true){
+
+                            if (liste_pers[i].GetVitesseV() < 0){
                                 //Si il va en bas et collision, on le positionne sur le bord haut du rect ou il y a collision
                                 var_tmp = liste_ent[j]->getY()+liste_ent[j]->getHeight();
                                 //cas ou le pers rencontre plrs objets
@@ -178,10 +174,10 @@ void deplacer_joueur(){
                                     liste_pers[i].PutYarrivee(var_tmp);
                                 }
                                 //seulement si on va en bas on se met à la vitess h 0 
-                                liste_pers[i].PutVitesseH(0);
+                                //liste_pers[i].PutVitesseH(0);
                                 //on met la vitesse à zéro pour que le pers s'arrête verticalement et horizontalement
                                 liste_pers[i].PutVitesseV(0);
-                            } else if(intersection_cote(&liste_pers[i], liste_ent[j].get())!= CBAS){
+                            } else {
                                 //Sinon il va en haut et on le positionne sur le bord bas du rectangle a collision
                                 var_tmp = liste_ent[j]->getY()-liste_pers[i].getHeight();
                                 //cas ou le pers rencontre plrs objets
@@ -203,8 +199,9 @@ void deplacer_joueur(){
                     //S'il ya une collision
                     Rect rectTemp = liste_pers[i].RendRectArrivee();
                     if (intersection_non_nulle(&rectTemp, &liste_pers[j])){
-                        //si la vitesse horizontale n'est pas nulle
-                        if (liste_pers[i].GetVitesseH() != 0){
+                        //si la vitesse horizontale n'est pas nulle et il y a une collision à l'horizontale
+                        Rect rectTempora(liste_pers[i].GetXarrivee(), liste_pers[i].getY(), liste_pers[i].getWidth(), liste_pers[i].getHeight());
+                        if (liste_pers[i].GetVitesseH() != 0 && intersection_non_nulle(&rectTempora, &liste_pers[j]) == true){
                             if (liste_pers[i].GetVitesseH() < 0){
                                 //Si il va a gauche et collision, on le positionne sur le bord droit du rect ou il y a collision
                                 liste_pers[i].PutXarrivee(liste_pers[j].getX()+liste_pers[j].getWidth());
@@ -215,8 +212,9 @@ void deplacer_joueur(){
                             //on met la vitesse à zéro pour que le pers s'arrête horizontalement
                             liste_pers[i].PutVitesseH(0);
                         }
-                        //On fait pareil pour la vitesse verticale
-                        if (liste_pers[i].GetVitesseV() != 0){
+                        //On fait pareil pour la vitesse verticale et il ya une collision verticale
+                        Rect rectTempora2(liste_pers[i].getX(), liste_pers[i].GetYarrivee(), liste_pers[i].getWidth(), liste_pers[i].getHeight());
+                        if (liste_pers[i].GetVitesseV() != 0 && intersection_non_nulle(&rectTempora2, &liste_pers[j]) == true){
                             if (liste_pers[i].GetVitesseV() < 0){
                                 //Si il va en bas et collision, on le positionne sur le bord haut du rect ou il y a collision
                                 var_tmp = liste_pers[j].getY()+liste_pers[j].getHeight();
@@ -246,8 +244,9 @@ void deplacer_joueur(){
                 for (int j = 0; j < NB_PLAT; j++){
                 Rect rectTemp = liste_pers[i].RendRectArrivee();
                 if (intersection_strict_non_nulle(&rectTemp, &liste_plat[j])){
-                //si la vitesse horizontale n'est pas nulle
-                    if (liste_pers[i].GetVitesseH() != 0){
+                    //si la vitesse horizontale n'est pas nulle et il ya une collision horizontale
+                    Rect rectTempora(liste_pers[i].GetXarrivee(), liste_pers[i].getY(), liste_pers[i].getWidth(), liste_pers[i].getHeight());
+                    if (liste_pers[i].GetVitesseH() != 0 && intersection_non_nulle(&rectTempora, &liste_plat[j]) == true){
                         if (liste_pers[i].GetVitesseH() < 0){
                             //Si il va a gauche et collision, on le positionne sur le bord droit du rect ou il y a collision
                             var_tmp = liste_plat[j].getX()+liste_plat[j].getWidth();
@@ -265,8 +264,9 @@ void deplacer_joueur(){
                         }
                     }
 
-                    //On fait pareil pour la vitesse verticale
-                    if (liste_pers[i].GetVitesseV() != 0){
+                    //On fait pareil pour la vitesse verticale et il y a une collision verticale
+                    Rect rectTempora2(liste_pers[i].getX(), liste_pers[i].GetYarrivee(), liste_pers[i].getWidth(), liste_pers[i].getHeight());
+                    if (liste_pers[i].GetVitesseV() != 0 && intersection_non_nulle(&rectTempora2, &liste_plat[j]) == true){
                         //si on descend;
                         if (liste_pers[i].GetVitesseV() < 0){
                             //Si il va en bas et collision, on le positionne sur le bord haut du rect ou il y a collision

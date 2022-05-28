@@ -22,7 +22,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
 #include <vector>
 #include <iostream>
 using namespace std;
@@ -263,7 +262,7 @@ while(loop)
 
         
         /* Boucle traitant les evenements */
-
+        SDL_Delay(25);
         while(SDL_PollEvent(&e)) 
         {
             liste_pers[pers_select].PutAccelerationH(0);
@@ -340,6 +339,28 @@ while(loop)
                                     return EXIT_SUCCESS;
                             }
                         }
+                        if (current_niveau == 2){
+                                if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
+                                    printf("Bravo tu recommences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
+                                    current_niveau = 0;
+                                };
+
+                                if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
+                                    printf("Tu quittes le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
+                                    loop=0;
+                                    for (int i=0; i<4; i++){
+                                        SDL_FreeSurface(image[i]);
+                                    }
+                                    SDL_GL_DeleteContext(context);
+                                    SDL_DestroyWindow(window);
+                                    SDL_Quit();
+                                    return EXIT_SUCCESS;
+                            }
+
+                        }
+
+
+
                     }
                      // Au clic droit
                     if(e.button.button == SDL_BUTTON_RIGHT){
@@ -409,6 +430,8 @@ while(loop)
                         
                         break;
 
+                        default:
+                            break;
                     }
 
                 break;
@@ -433,6 +456,10 @@ while(loop)
         }
         if(current_niveau == 2){
             //page de fin
+            for(int i=0; i<4; i++){
+                drawBTN(textures[i], i);
+            }
+
         }
 
 
