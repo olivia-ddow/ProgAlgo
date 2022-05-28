@@ -2,6 +2,7 @@
 #include "interf_graph.h"
 #include "fonctions.h"
 #include "var_globales.h"
+#include <iostream>
 using namespace std;
 
 //on déclare CHOIX_JOUEUR à indéfini
@@ -61,8 +62,10 @@ void deplacer_joueur(){
         if (liste_pers[i].est_dans_portail() == false){
             /*******VITESSE HORIZONTALE*****/
             //calcul de la vitesse H avant frottement en fonction de l'acceleration horizontale 
+
+            std::cout <<"ACCEL HORIZON AVANT "<< liste_pers[i].GetAccelerationH() << std::endl;
             liste_pers[i].PutVitesseH(liste_pers[i].GetVitesseH() + liste_pers[i].GetAccelerationH());
-            
+            std::cout <<"VITESSE HORIZON DEBUT "<< liste_pers[i].GetVitesseH() << std::endl;
             //calcul de la vitesse H en fonction des frottements et verif de la vitesse max
             if (liste_pers[i].GetVitesseH() < 0){
                 //calcul de la vitesse H en fonction des frottements
@@ -106,10 +109,14 @@ void deplacer_joueur(){
             //Sinon si la vitesse est nulle on fait rien
                 
             /***CALCUL DE LA NOUVELLE POSITION***/
+            
             liste_pers[i].PutXarrivee(liste_pers[i].getX() + liste_pers[i].GetVitesseH());
+            std::cout <<"VITESSE HORIZON "<< liste_pers[i].GetVitesseH() << std::endl;
+            
             //SI le Personnage n'est pas sur la plateforme OU s'il saute alors on calcule sa nouvelle position verticale
             if (liste_pers[i].EstSurPlateforme() == false || liste_pers[i].GetVitesseV() > 0) { //VOIR si ca fonctionne sinon réfléchir 
                 liste_pers[i].PutYarrivee(liste_pers[i].getY() + liste_pers[i].GetVitesseV());
+                
             }
 
 
@@ -131,28 +138,39 @@ void deplacer_joueur(){
                         liste_pers[i].PutYarrivee(liste_ent[j]->getY());                    
                     } else {
                         //si la vitesse horizontale n'est pas nulle
-                        if (liste_pers[i].GetVitesseH() != 0){
+                        Rect rectTempora(liste_pers[i].GetXarrivee(), liste_pers[i].getY(), liste_pers[i].getWidth(), liste_pers[i].getHeight());
+                        if (liste_pers[i].GetVitesseH() != 0 && intersection_non_nulle(&rectTempora, liste_ent[j].get()) == false){
+                            
                             if (liste_pers[i].GetVitesseH() < 0){
+                                
                                 //Si il va a gauche et collision, on le positionne sur le bord droit du rect ou il y a collision
                                 var_tmp = liste_ent[j]->getX()+liste_ent[j]->getWidth();
                                 //cas ou le pers rencontre plrs objets
                                 if (liste_pers[i].GetXarrivee() < var_tmp){
                                     liste_pers[i].PutXarrivee(var_tmp);
+
                                 }
+                                //on met la vitesse à zéro pour que le pers s'arrête horizontalement
+                                liste_pers[i].PutVitesseH(0);
+
                             } else {
                                 //Sinon il va a droite et on le positionne a gauche du rectangle a collision
+                                
+
                                 var_tmp = liste_ent[j]->getX()-liste_pers[i].getWidth();
                                 //cas ou le pers rencontre plrs objets
                                 if (liste_pers[i].GetXarrivee() > var_tmp){
                                     liste_pers[i].PutXarrivee(var_tmp);
+                                    
                                 }
+                                //on met la vitesse à zéro pour que le pers s'arrête horizontalement
+                                liste_pers[i].PutVitesseH(0);
                             }
-                            //on met la vitesse à zéro pour que le pers s'arrête horizontalement
-                            liste_pers[i].PutVitesseH(0);
+            
                         }
                         //On fait pareil pour la vitesse verticale
                         if (liste_pers[i].GetVitesseV() != 0){
-                            if (liste_pers[i].GetVitesseV() < 0){
+                            if (liste_pers[i].GetVitesseV() < 0 && intersection_cote(&liste_pers[i], liste_ent[j].get())!= CHAUT){
                                 //Si il va en bas et collision, on le positionne sur le bord haut du rect ou il y a collision
                                 var_tmp = liste_ent[j]->getY()+liste_ent[j]->getHeight();
                                 //cas ou le pers rencontre plrs objets
@@ -161,16 +179,19 @@ void deplacer_joueur(){
                                 }
                                 //seulement si on va en bas on se met à la vitess h 0 
                                 liste_pers[i].PutVitesseH(0);
-                            } else {
+                                //on met la vitesse à zéro pour que le pers s'arrête verticalement et horizontalement
+                                liste_pers[i].PutVitesseV(0);
+                            } else if(intersection_cote(&liste_pers[i], liste_ent[j].get())!= CBAS){
                                 //Sinon il va en haut et on le positionne sur le bord bas du rectangle a collision
                                 var_tmp = liste_ent[j]->getY()-liste_pers[i].getHeight();
                                 //cas ou le pers rencontre plrs objets
                                 if (liste_pers[i].GetYarrivee() > var_tmp){
                                     liste_pers[i].PutYarrivee(var_tmp);
                                 }
+                                //on met la vitesse à zéro pour que le pers s'arrête verticalement et horizontalement
+                                liste_pers[i].PutVitesseV(0);
                             }
-                            //on met la vitesse à zéro pour que le pers s'arrête verticalement et horizontalement
-                            liste_pers[i].PutVitesseV(0);
+                            
                         }
                     }    
                 }
@@ -221,7 +242,8 @@ void deplacer_joueur(){
 
 
             /******CHECK COLLI AVEC PLATEFORMES******/
-            for (int j = 0; j < NB_PLAT; j++){
+            if(NB_PLAT>0){
+                for (int j = 0; j < NB_PLAT; j++){
                 Rect rectTemp = liste_pers[i].RendRectArrivee();
                 if (intersection_strict_non_nulle(&rectTemp, &liste_plat[j])){
                 //si la vitesse horizontale n'est pas nulle
@@ -278,9 +300,16 @@ void deplacer_joueur(){
                     liste_plat[j].AnnuleIdPersDessus();
                 }
             }
+            }
+            
 
         }
-        //liste_pers[i].putX(liste_pers[i].GetXarrivee());
-        //liste_pers[i].putY(liste_pers[i].GetYarrivee()); //Faire dans les boucles des frames : pos.courante = posarrivee
+        liste_pers[i].putX(liste_pers[i].GetXarrivee());
+        liste_pers[i].putY(liste_pers[i].GetYarrivee()); //Faire dans les boucles des frames : pos.courante = posarrivee
+
+        std::cout <<"pos X fin"<< liste_pers[i].getX() << std::endl;
+        std::cout <<"pos Y fin"<< liste_pers[i].getY() << std::endl;
+        std::cout <<"GETX fin"<< liste_pers[i].GetXarrivee() << std::endl;
+        std::cout <<"GETY fin"<< liste_pers[i].GetYarrivee() << std::endl;
     }
 }

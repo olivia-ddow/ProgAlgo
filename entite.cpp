@@ -79,6 +79,7 @@ const int Decors::quisuisje() {
 Personnage::Personnage(int x, int y, int l, int h, Color3f c, int a_h, int a_v) :
     Entite (x, y, l, h, c) {
         dans_portail = false;
+        id_plateforme_dessus = -1;
         val_accel_h = a_h;
         val_accel_v = a_v;
 }

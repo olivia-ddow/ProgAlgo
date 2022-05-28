@@ -22,9 +22,6 @@ extern int NB_PLAT;
 extern int NB_PORT;
 extern int NB_ENT;
 
-
-
-
 //Creer avec un new liste_plat à clear la liste à la fn du niveau
 extern vector<Plateforme> liste_plat;
 extern vector<Personnage> liste_pers;

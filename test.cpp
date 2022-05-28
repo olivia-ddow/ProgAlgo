@@ -15,13 +15,14 @@ using namespace std;
 void test(){
     
     liste_btn.push_back(Entite({0,0,1040,540, {0.1,0.4,0.9}}));
-    qtree.insert_id_entite(0);
+  
     liste_btn.push_back(Entite({370,250,300,70, {0.3,0.7,0.9}}));
-    qtree.insert_id_entite(1);
+
     liste_btn.push_back(Entite({370,160,300,70, {0.5,0.7,0.9}}));
-    qtree.insert_id_entite(2);
+
     liste_btn.push_back(Entite({370,70,300,70, {0.7,0.7,0.9}}));
-    qtree.insert_id_entite(3);
+
+    
     /*
     liste_ent.push_back(Entite({0,0,512,10, {0.3,0.4,0.9}}));
     qtree.insert_id_entite(0);
@@ -57,5 +58,4 @@ void test(){
         liste_ent[i].draw();
     }*/
 
-    charger_niveau();
 }

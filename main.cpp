@@ -41,7 +41,7 @@ int NB_PLAT = 0;
 int NB_PORT = 0;
 int NB_ENT = 0;
 
-int loop = 1;
+
 SDL_Event e;
 
 /* Dimensions initiales et titre de la fenetre */
@@ -50,6 +50,7 @@ static const unsigned int WINDOW_HEIGHT = 1080;
 static const char WINDOW_TITLE[] = "Through the seasons";
 
 /* Espace fenetre virtuelle */
+
 static const float GL_VIEW_SIZE = 540;
 
 /* Nombre minimal de millisecondes separant le rendu de deux images */
@@ -235,7 +236,8 @@ int main(int argc, char** argv)
     
     /* Boucle principale */
     int loop = 1;
-
+    charger_niveau();
+    
 while(loop) 
     {
         /* Recuperation du temps au debut de la boucle */
@@ -259,24 +261,13 @@ while(loop)
         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
         test();
 
-        //if on est sur le menu
-        if (current_niveau == 0){
-            //drawMenu(textures);
-            for(int i=0; i<4; i++){
-                drawBTN(textures[i], i);
-            }
-        }
-
-        if (current_niveau > 0) {
-            
-            afficher_frame();
-            deplacer_joueur();
-        }
-
-        /* Boucle traitant les evenements */
         
+        /* Boucle traitant les evenements */
+
         while(SDL_PollEvent(&e)) 
         {
+            liste_pers[pers_select].PutAccelerationH(0);
+            liste_pers[pers_select].PutAccelerationV(0);
             /* L'utilisateur ferme la fenetre : */
 			if(e.type == SDL_QUIT) 
 			{
@@ -306,6 +297,7 @@ while(loop)
                 return EXIT_SUCCESS;
 				break;
 			}
+          
             
             switch(e.type) 
             {
@@ -371,6 +363,7 @@ while(loop)
                             
                         }
                     }
+                break;
                 //POUR CHANGER DE PERSO CE SERA UTILE
                 case SDL_MOUSEWHEEL:
 
@@ -379,44 +372,71 @@ while(loop)
                     }else if(e.wheel.y <0){
                          printf("Tu changes de personnage aussi");
                     }
-
+                break;
                 /* Touche clavier */
                 case SDL_KEYDOWN:
 
                     printf("touche pressee (code = %d)\n", e.key.keysym.sym);
                     switch(e.key.keysym.sym)
                     {
-                        case GAUCHE:{
+                        case GAUCHE:
                             printf("gauche");
+                            std::cout << "perso:" << pers_select <<std::endl;
                             liste_pers[pers_select].PutAccelerationH(- liste_pers[pers_select].GetValAccelH());    
-                        }
+                            std::cout <<liste_pers[pers_select].GetAccelerationH() << std::endl;
+                            //vider buffer
+                            while(SDL_PollEvent (&e));
+                        
                         break;
-                        case DROITE:{
+                        case DROITE:
                             printf("droite");
                             liste_pers[pers_select].PutAccelerationH(liste_pers[pers_select].GetValAccelH());
-                        }
+                            //vider buffer
+                            while(SDL_PollEvent (&e));
                         break;
-                        case SAUT:{
+                        case SAUT:
                             printf("saut");
                             liste_pers[pers_select].PutAccelerationV(liste_pers[pers_select].GetValAccelV());
-                        }
+                            //vider buffer
+                            while(SDL_PollEvent (&e));
                         break;
-                        case MENU:{
+                        case MENU:
                             
-                        }
+                        
                         break;
-                        case SELECT:{
+                        case SELECT:
                             
-                        }
+                        
                         break;
 
                     }
-                    break;
+
+                break;
                     
                 default:
                     break;
             }
         }
+        std::cout << "current level" << current_niveau <<std::endl;
+        //if on est sur le menu
+        if (current_niveau == 0){
+            //drawMenu(textures);
+            for(int i=0; i<4; i++){
+                drawBTN(textures[i], i);
+            }
+            
+        }
+
+        if (current_niveau == 1) {
+            //niveau 1;
+            jouer_niveau();
+        }
+        if(current_niveau == 2){
+            //page de fin
+        }
+
+
+
         glBindTexture(GL_TEXTURE_2D, 0);
         glDisable(GL_TEXTURE_2D);
         /* Echange du front et du back buffer : mise a jour de la fenetre */

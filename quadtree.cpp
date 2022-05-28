@@ -4,6 +4,8 @@
 
 Quadtree::Quadtree(Rect cont){
    conteneur = cont;
+  // liste_index_entite.clear();
+
 }
 /*
 void Quadtree::initialiser_quadtree(){
@@ -187,6 +189,7 @@ int Quadtree::donneNbEntites(){
 
 //Supprime l'id d'une entite du quadtree
 void Quadtree::supprime_id_entite(int index_ent){
+    
     if (est_feuille()){
         liste_index_entite.remove(index_ent);
     } else {

@@ -2,9 +2,12 @@
 #define FONCTIONS_H
 #include "entite.h"
 
+enum cote {CNEUTRE, CBAS, CHAUT, CGAUCHE, CDROIT};
+
 //Detection Collision
 bool intersection_non_nulle(Rect * r1, Rect *r2);
 bool intersection_strict_non_nulle(Rect *r1, Rect *r2);
+cote intersection_cote(Rect *r1, Rect *r2);
 //change le personnage selectionne
 int changer_selection(int pers_selectionne);
 //Retourne si deux rectangles ont les memes dimensions

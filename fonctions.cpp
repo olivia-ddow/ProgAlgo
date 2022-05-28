@@ -15,6 +15,21 @@ bool intersection_non_nulle(Rect *r1, Rect *r2){
     //+ negation du resultat si dessus -> donne indication s'il y a zone commune entre r1 et r2 mais pas cote a cote
     return !(r1->getX() + r1->getWidth() <= r2->getX() || r1->getY() + r1->getHeight() <= r2->getY() || r1->getX() >= r2->getX() + r2->getWidth() || r1->getY() >= r2->getY() + r2->getHeight());
 }
+cote intersection_cote(Rect *r1, Rect *r2){
+    if (r1->getX() + r1->getWidth() < r2->getX()){
+        return CGAUCHE;
+    }
+    if (r1->getX() < r2->getX() + r2->getWidth()){
+        return CDROIT;
+    }
+    if (r1->getY() + r1->getHeight() > r2->getY()){
+        return CBAS;
+    }
+    if (r1->getY() < r2->getY() + r2->getHeight()){
+        return CHAUT;
+    }
+    return CNEUTRE;
+}
 
 //change le personnage selectionne
 int changer_selection(int pers_selectionne){
