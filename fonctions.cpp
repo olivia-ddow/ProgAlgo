@@ -2,6 +2,7 @@
 #include "quadtree.h"
 #include "var_globales.h"
 #include "structs_gen.h"
+#include <iostream>
 
 //Detection Collision
 bool intersection_strict_non_nulle(Rect *r1, Rect *r2){
@@ -62,6 +63,7 @@ bool personnages_sont_dans_portails(){
         }
     }
     //on retourne si il ya tous les pers dans leur portail ou no
+   
     return (cpt == NB_PERS);
 }
 

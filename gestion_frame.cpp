@@ -2,7 +2,7 @@
 #include "quadtree.h"
 #include "entite.h"
 #include "structs_gen.h"
-#include "test.h"
+#include "menu.h"
 #include "var_globales.h"
 #include "niveau_manager.h"
 #include "fonctions.h"

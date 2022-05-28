@@ -1,7 +1,7 @@
 #include "quadtree.h"
 #include "entite.h"
 #include "structs_gen.h"
-#include "test.h"
+#include "menu.h"
 #include "var_globales.h"
 #include "niveau_manager.h"
 #include "fonctions.h"
@@ -51,7 +51,7 @@ static const char WINDOW_TITLE[] = "Through the seasons";
 /* Espace fenetre virtuelle */
 
 static const float GL_VIEW_SIZE = 540;
-
+//static const float GL_VIEW_SIZE = 1920;
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
@@ -198,12 +198,11 @@ int main(int argc, char** argv)
 
     //Textures Menu
     
-    SDL_Surface *image[4];
+    SDL_Surface *image[5];
     
     char chemin[250];
     for(int i = 0; i < 4; i++){
 
-        // CHANGER LA MANIERE DE RECUP LES IMAGES, TROP LONG
         sprintf(chemin,"../texture/menu-%d.png",i);
 
         image[i] = IMG_Load(chemin);
@@ -215,13 +214,13 @@ int main(int argc, char** argv)
             printf("l'image n'a pas chargé\n");
         }
     }
-    /*
-    image[1]= IMG_Load("../texture/menu-1.png");
-    */
-    GLuint textures[4];
-    glGenTextures(4,textures);
+    
+    image[4]= IMG_Load("../texture/fin-0.png");
+    
+    GLuint textures[5];
+    glGenTextures(5,textures);
 
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 5; i++){
 
         glBindTexture(GL_TEXTURE_2D, textures[i]);
 
@@ -236,7 +235,7 @@ int main(int argc, char** argv)
     /* Boucle principale */
     int loop = 1;
     charger_niveau();
-    
+    int posJBase = liste_pers[pers_select].getY();
 while(loop) 
     {
         /* Recuperation du temps au debut de la boucle */
@@ -248,7 +247,14 @@ while(loop)
 
         glLoadIdentity();
 
-        glTranslatef((-GL_VIEW_SIZE / 2. * aspectRatio),(-GL_VIEW_SIZE / 2.), 0.0);
+        if(current_niveau==0 || current_niveau==2){
+            glTranslatef((-GL_VIEW_SIZE / 2. * aspectRatio),(-GL_VIEW_SIZE / 2.), 0.0);
+        }else {
+            //glTranslatef(-liste_pers[pers_select].GetXarrivee()-(GL_VIEW_SIZE)+100 ,liste_pers[pers_select].getY()-(GL_VIEW_SIZE) ,0);
+            glTranslatef(-liste_pers[pers_select].GetXarrivee()-(GL_VIEW_SIZE)+100 ,posJBase-liste_pers[pers_select].getY()-(GL_VIEW_SIZE) ,0);
+        }
+        
+        
         /*
         while (niveau_cpt != NB_NIVEAUX_MAX && choix_joueur != QUITTER_JEU){
             executer_niveau(niveau_cpt);
@@ -258,7 +264,7 @@ while(loop)
         //glBindTexture(GL_TEXTURE_2D, texture);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-        test();
+        menu();
 
         
         /* Boucle traitant les evenements */
@@ -344,8 +350,7 @@ while(loop)
                                     printf("Bravo tu recommences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
                                     current_niveau = 0;
                                 };
-
-                                if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
+                                if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
                                     printf("Tu quittes le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
                                     loop=0;
                                     for (int i=0; i<4; i++){
@@ -355,7 +360,9 @@ while(loop)
                                     SDL_DestroyWindow(window);
                                     SDL_Quit();
                                     return EXIT_SUCCESS;
-                            }
+                                };
+                               
+    
 
                         }
 
@@ -386,6 +393,7 @@ while(loop)
                     }
                 break;
                 //POUR CHANGER DE PERSO CE SERA UTILE
+                /*
                 case SDL_MOUSEWHEEL:
 
                     if(e.wheel.y >0){
@@ -393,7 +401,7 @@ while(loop)
                     }else if(e.wheel.y <0){
                          printf("Tu changes de personnage aussi");
                     }
-                break;
+                break;*/
                 /* Touche clavier */
                 case SDL_KEYDOWN:
 
@@ -422,12 +430,12 @@ while(loop)
                             while(SDL_PollEvent (&e));
                         break;
                         case MENU:
-                            
-                        
+                            current_niveau = 0;
+                            printf("Vous êtes de retour sur le menu");
                         break;
-                        case SELECT:
-                            
-                        
+                        case TAB:
+                            pers_select++;
+                            printf("Tu changes de personnage");
                         break;
 
                         default:
@@ -440,7 +448,7 @@ while(loop)
                     break;
             }
         }
-        std::cout << "current level" << current_niveau <<std::endl;
+        
         //if on est sur le menu
         if (current_niveau == 0){
             //drawMenu(textures);
@@ -452,13 +460,13 @@ while(loop)
 
         if (current_niveau == 1) {
             //niveau 1;
+
             jouer_niveau();
         }
         if(current_niveau == 2){
             //page de fin
-            for(int i=0; i<4; i++){
-                drawBTN(textures[i], i);
-            }
+        
+            drawBTN(textures[4], 4);
 
         }
 

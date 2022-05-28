@@ -17,8 +17,8 @@ enum TypeChoix {CHOIX_INDEFINI = 0,
                 MENU = SDLK_m,
                 GAUCHE = SDLK_q,
                 DROITE = SDLK_d, 
-                SAUT = SDLK_SPACE, 
-                SELECT = SDLK_RETURN};
+                SAUT = SDLK_z, 
+                TAB = SDLK_TAB};
 
 extern TypeChoix choix_joueur;
 

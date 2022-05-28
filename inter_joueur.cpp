@@ -63,10 +63,10 @@ void deplacer_joueur(){
             /*******VITESSE HORIZONTALE*****/
             //calcul de la vitesse H avant frottement en fonction de l'acceleration horizontale 
 
-            std::cout <<"ACCEL HORIZON AVANT "<< liste_pers[i].GetAccelerationH() << std::endl;
+           
             var_tmp = liste_pers[i].GetVitesseH() + liste_pers[i].GetAccelerationH();
             
-            std::cout <<"VITESSE HORIZON DEBUT "<< liste_pers[i].GetVitesseH() << std::endl;
+           
 
             //calcul de la vitesse H en fonction des frottements et verif de la vitesse max
             if (var_tmp < 0){
@@ -103,8 +103,9 @@ void deplacer_joueur(){
                 //on la ramène à la valeur max
                 liste_pers[i].PutVitesseV(-val_max_vitesse_v);
 
+            
             //Sinon si la vitesse est positive et qu'elle est sup à la vitesse max
-            } else if (liste_pers[i].GetVitesseV() > 0 && liste_pers[i].GetVitesseV() > val_max_vitesse_v){
+            } else if (liste_pers[i].GetVitesseV() > 0 && liste_pers[i].GetVitesseV() > val_max_vitesse_v ){
                 //on la ramène à la valeur max
                 liste_pers[i].PutVitesseV(val_max_vitesse_v);
             }
@@ -112,11 +113,13 @@ void deplacer_joueur(){
             /***CALCUL DE LA NOUVELLE POSITION***/
             
             liste_pers[i].PutXarrivee(liste_pers[i].getX() + liste_pers[i].GetVitesseH());
-            std::cout <<"VITESSE HORIZON "<< liste_pers[i].GetVitesseH() << std::endl;
-            
+          
             //SI le Personnage n'est pas sur la plateforme OU s'il saute alors on calcule sa nouvelle position verticale
             if (liste_pers[i].EstSurPlateforme() == false || liste_pers[i].GetVitesseV() > 0) { //VOIR si ca fonctionne sinon réfléchir 
-                liste_pers[i].PutYarrivee(liste_pers[i].getY() + liste_pers[i].GetVitesseV());
+              
+                    liste_pers[i].PutYarrivee(liste_pers[i].getY() + liste_pers[i].GetVitesseV());
+                
+                
                 
             }
 
@@ -134,9 +137,16 @@ void deplacer_joueur(){
                     if (liste_ent[j]->quisuisje() == PORTAIL && taille_rec_est_identique(&liste_pers[i], liste_ent[j].get())){
                         //on change l'attribut du pers 'dans_portail' à vrai
                         liste_pers[i].PutDansPortail(true);
+                        //std::cout<<"dasn : "<<liste_pers[i].est_dans_portail()<<std::endl;
                         //On met les coordonnées du portail à celle du personnage
                         liste_pers[i].PutXarrivee(liste_ent[j]->getX());
-                        liste_pers[i].PutYarrivee(liste_ent[j]->getY());                    
+                        liste_pers[i].PutYarrivee(liste_ent[j]->getY());  
+                        //on change de pesonnage
+
+                        if (i+1 != NB_PERS){
+                            pers_select++; 
+                        }
+                                         
                     } else {
                         //si la vitesse horizontale n'est pas nulle ET qu'il y a une collision à l'horizontale
                         Rect rectTempora(liste_pers[i].GetXarrivee(), liste_pers[i].getY(), liste_pers[i].getWidth(), liste_pers[i].getHeight());
@@ -307,9 +317,5 @@ void deplacer_joueur(){
         liste_pers[i].putX(liste_pers[i].GetXarrivee());
         liste_pers[i].putY(liste_pers[i].GetYarrivee()); //Faire dans les boucles des frames : pos.courante = posarrivee
 
-        std::cout <<"pos X fin"<< liste_pers[i].getX() << std::endl;
-        std::cout <<"pos Y fin"<< liste_pers[i].getY() << std::endl;
-        std::cout <<"GETX fin"<< liste_pers[i].GetXarrivee() << std::endl;
-        std::cout <<"GETY fin"<< liste_pers[i].GetYarrivee() << std::endl;
     }
 }
