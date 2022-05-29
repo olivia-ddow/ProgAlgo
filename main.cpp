@@ -434,7 +434,7 @@ while(loop)
                             printf("Vous êtes de retour sur le menu");
                         break;
                         case TAB:
-                            pers_select++;
+                            pers_select = changer_selection(pers_select);
                             printf("Tu changes de personnage");
                         break;
 
@@ -460,8 +460,9 @@ while(loop)
 
         if (current_niveau == 1) {
             //niveau 1;
-
-            jouer_niveau();
+            if (!liste_pers.empty()) {
+                    jouer_niveau();
+            }
         }
         if(current_niveau == 2){
             //page de fin

@@ -137,14 +137,15 @@ void deplacer_joueur(){
                     if (liste_ent[j]->quisuisje() == PORTAIL && taille_rec_est_identique(&liste_pers[i], liste_ent[j].get())){
                         //on change l'attribut du pers 'dans_portail' à vrai
                         liste_pers[i].PutDansPortail(true);
-                        //std::cout<<"dasn : "<<liste_pers[i].est_dans_portail()<<std::endl;
+                        std::cout<<"est dans le portail : "<<liste_pers[i].est_dans_portail()<<std::endl;
                         //On met les coordonnées du portail à celle du personnage
                         liste_pers[i].PutXarrivee(liste_ent[j]->getX());
                         liste_pers[i].PutYarrivee(liste_ent[j]->getY());  
                         //on change de pesonnage
 
                         if (i+1 != NB_PERS){
-                            pers_select++; 
+                            
+                            pers_select = changer_selection(pers_select);
                         }
                                          
                     } else {

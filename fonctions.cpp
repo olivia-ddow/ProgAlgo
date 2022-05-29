@@ -58,7 +58,9 @@ bool personnages_sont_dans_portails(){
             //si le personnage est dans son portail
             if (liste_pers[i].est_dans_portail()){
                 //on incrémente le compteur
+                //ICI ON ENTRE PAS
                 cpt++;
+                std::cout <<"perso dans portail" << cpt <<std::endl;
             }
         }
     }

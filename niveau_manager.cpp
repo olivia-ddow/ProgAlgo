@@ -192,11 +192,13 @@ void charger_niveau(){
 //fonction accédant aux fonctionnalités du jeu
 void jouer_niveau(){
     std::cout<<"dasn : "<<liste_pers[pers_select].est_dans_portail()<<std::endl;
+    std::cout<<"tous dasn : "<<personnages_sont_dans_portails()<<std::endl;
     if (personnages_sont_dans_portails()==true) {
         current_niveau++;
         niveau_cpt++;
         std::cout <<"current : "<< current_niveau << std::endl;
         std::cout <<"niveau cpt : "<< niveau_cpt << std::endl;
+        charger_niveau();
         return;
     }
     afficher_frame();
