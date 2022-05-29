@@ -14,6 +14,7 @@
 //Variable compteur de niveau initalisé à 0 (premier niveau)
 int niveau_cpt = 0;
 int current_niveau = 0;
+
 //current_niveau comprends également les menus
 
 void charger_niveau(){
@@ -200,8 +201,6 @@ void charger_niveau(){
 void jouer_niveau(){
     
     
-    std::cout<<"tous dasn : "<<personnages_sont_dans_portails()<<std::endl;
-    std::cout<<"dans : "<<liste_pers[pers_select].est_dans_portail()<<std::endl; 
     //on retourne si il ya tous les pers dans leur portail ou no
     if(personnages_sont_dans_portails()){
         liberer_niveau();
@@ -209,16 +208,33 @@ void jouer_niveau(){
         current_niveau++;
         if(niveau_cpt<NB_NIVEAUX_MAX){
             niveau_cpt++;
-            std::cout <<"current : "<< current_niveau << std::endl;
-            std::cout <<"niveau cpt : "<< niveau_cpt << std::endl;
-            SDL_Delay(2000);
+            SDL_Delay(1000);
+            
             charger_niveau();
+            /*
+            for(int i = 0; i<NB_PERS; i++){
+            int vh_prov = liste_pers[pers_select].GetValAccelH();
+            int vv_prov = liste_pers[pers_select].GetValAccelV();
+            liste_pers[pers_select].PutValAccelH(0);
+            liste_pers[pers_select].PutValAccelV(0);
+            liste_pers[pers_select].PutValAccelH(vh_prov);
+            liste_pers[pers_select].PutValAccelV(vv_prov);
+            }
+            */
+            /*
+            liste_pers[pers_select].PutAccelerationH(0);
+            liste_pers[pers_select].PutAccelerationV(0);
+            */
+            
+                   
         }
-        
-        liste_pers[pers_select].PutAccelerationH(0);
-        liste_pers[pers_select].PutAccelerationV(0);
-        //return;
+        /*
+        liste_pers[pers_select].PutValAccelH(A_H);
+        liste_pers[pers_select].PutValAccelV(A_V);
+        */
+       return;
     }
+
     afficher_frame();
     if(NB_PLAT > 0){
             deplacer_plateformes();
@@ -252,6 +268,7 @@ void liberer_niveau() {
     liste_ent.clear();
     liste_pers.clear();
     liste_plat.clear();
+    liste_btn.clear();
     //qtree.clear();
     qtree.effacer_fils();
 

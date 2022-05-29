@@ -45,6 +45,7 @@ private:
     int val_accel_v; //equivalent constante 
 
     //var calculees
+    Color3f couleurPerso;
     Point2D posarrivee;
     int vitesse_h; //horizontale
     int vitesse_v; //verticale
@@ -57,6 +58,7 @@ private:
 public:
     Personnage(int x, int y, int l, int h, Color3f c, int a_h, int a_v);
     const int quisuisje();
+    void PutC(float rouge);
     int GetXarrivee();
     int GetYarrivee();
     void PutXarrivee(int x);

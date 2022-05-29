@@ -21,7 +21,8 @@ int changer_selection(int pers_selectionne){
     //On passe au personnage suivant dans la liste, si c'est le dernier on revient à 0
     int proch_pers = (pers_selectionne+1)%NB_PERS;
     while (liste_pers[proch_pers].est_dans_portail()){
-        proch_pers = (pers_selectionne+1)%NB_PERS;
+        proch_pers = (proch_pers+1)%NB_PERS;
+       
     }
     return proch_pers;
 }

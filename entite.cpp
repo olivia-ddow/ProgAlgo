@@ -78,6 +78,7 @@ const int Decors::quisuisje() {
 
 Personnage::Personnage(int x, int y, int l, int h, Color3f c, int a_h, int a_v) :
     Entite (x, y, l, h, c) {
+        couleurPerso = c;
         dans_portail = false;
         id_plateforme_dessus = -1;
         val_accel_h = a_h;
@@ -87,7 +88,9 @@ Personnage::Personnage(int x, int y, int l, int h, Color3f c, int a_h, int a_v) 
 const int Personnage::quisuisje() {
     return PERSONNAGE;
 }
-
+void Personnage::PutC(float rouge){
+    couleurPerso.r += rouge;
+}
 int Personnage::GetXarrivee(){
     return posarrivee.x;
 }

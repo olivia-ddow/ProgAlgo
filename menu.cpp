@@ -12,7 +12,7 @@ using namespace std;
 
 
 
-void menu(){
+void menudebut(){
     
     //menu debut
     liste_btn.push_back(Entite({0,0,1040,540, {0.1,0.4,0.9}}));
@@ -21,10 +21,11 @@ void menu(){
 
     liste_btn.push_back(Entite({370,160,300,70, {0.5,0.7,0.9}}));
 
-    liste_btn.push_back(Entite({370,70,300,70, {0.7,0.7,0.9}}));
 
-
-    //menu fin
+}
+    
+void menufin(){
+//menu fin
     liste_btn.push_back(Entite({0,0,1040,540, {0.1,0.7,0.1}}));
 
 }

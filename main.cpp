@@ -197,10 +197,10 @@ int main(int argc, char** argv)
 
     //Textures Menu
     
-    SDL_Surface *image[5];
+    SDL_Surface *image[4];
     
     char chemin[250];
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 3; i++){
 
         sprintf(chemin,"../texture/menu-%d.png",i);
 
@@ -214,12 +214,12 @@ int main(int argc, char** argv)
         }
     }
     
-    image[4]= IMG_Load("../texture/fin-0.png");
+    image[3]= IMG_Load("../texture/fin-0.png");
     
-    GLuint textures[5];
-    glGenTextures(5,textures);
+    GLuint textures[4];
+    glGenTextures(4,textures);
 
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 4; i++){
 
         glBindTexture(GL_TEXTURE_2D, textures[i]);
 
@@ -263,7 +263,7 @@ while(loop)
         //glBindTexture(GL_TEXTURE_2D, texture);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-        menu();
+        
 
         
         /* Boucle traitant les evenements */
@@ -330,9 +330,6 @@ while(loop)
                                     current_niveau++;
                                 };
                                 if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
-                                    printf("Tu choisis ton niveau! clic en (%d, %d)\n", e.button.x, e.button.y);
-                                };
-                                if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
                                     printf("Tu quittes le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
                                     loop=0;
                                     for (int i=0; i<4; i++){
@@ -342,12 +339,14 @@ while(loop)
                                     SDL_DestroyWindow(window);
                                     SDL_Quit();
                                     return EXIT_SUCCESS;
-                            }
+                                };
+                                
                         }
                         if (current_niveau == 4){
                                 if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
                                     printf("Bravo tu recommences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
                                     current_niveau = 0;
+                                    
                                     
                                 };
                                 if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
@@ -380,28 +379,17 @@ while(loop)
                     if(e.button.button == SDL_BUTTON_LEFT){
 
                         if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
-                            printf("En train de cliquer commencer clic en (%d, %d)\n", e.button.x, e.button.y);
-                            drawBTN(textures[3], 1);
+                            printf("En train de cliquer commencer le jeu : clic en (%d, %d)\n", e.button.x, e.button.y);
+                            drawBTN(textures[2], 1);
                         };
                         if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
-                            printf("En train de cliquer choisis ton niveau! clic en (%d, %d)\n", e.button.x, e.button.y);
-                        };
-                        if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
-                            printf("En train de cliquer le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
+                            printf("En train de cliquer quitter le jeu le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
                             
-                        }
+                        };
+
                     }
                 break;
-                //POUR CHANGER DE PERSO CE SERA UTILE
-                /*
-                case SDL_MOUSEWHEEL:
-
-                    if(e.wheel.y >0){
-                        printf("Tu changes de personnage");
-                    }else if(e.wheel.y <0){
-                         printf("Tu changes de personnage aussi");
-                    }
-                break;*/
+              
                 /* Touche clavier */
                 case SDL_KEYDOWN:
 
@@ -430,7 +418,9 @@ while(loop)
                             while(SDL_PollEvent (&e));
                         break;
                         case TAB:
+                            liste_pers[pers_select].PutC(-0.2);
                             pers_select = changer_selection(pers_select);
+                            liste_pers[pers_select].PutC(0.2);
                             printf("Tu changes de personnage");
                         break;
 
@@ -448,7 +438,8 @@ while(loop)
         //if on est sur le menu
         if (current_niveau == 0){
             //drawMenu(textures);
-            for(int i=0; i<4; i++){
+            menudebut();
+            for(int i=0; i<3; i++){
                 drawBTN(textures[i], i);
             }
             
@@ -463,15 +454,16 @@ while(loop)
         
         if(current_niveau == 4){
             //page de fin
-        
-            drawBTN(textures[4], 4);
+            
+            menufin();
+            drawBTN(textures[3], 3);
 
         }
 
 
-
         glBindTexture(GL_TEXTURE_2D, 0);
-        glDisable(GL_TEXTURE_2D);
+            glDisable(GL_TEXTURE_2D);
+        
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapWindow(window);
         
@@ -495,7 +487,7 @@ while(loop)
     /* Liberation des ressources associees a la SDL */ 
     //quitter();
     loop = 0;
-    for (int i=0; i<4; i++){
+    for (int i=0; i<5; i++){
             SDL_FreeSurface(image[i]);
     }
     SDL_GL_DeleteContext(context);
