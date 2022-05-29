@@ -6,7 +6,6 @@
 #include "niveau_manager.h"
 #include "fonctions.h"
 #include "inter_joueur.h"
-#include "interf_graph.h"
 #include "fakesdlimage.h"
 #include "gestion_frame.h"
 #include "memory"
@@ -247,7 +246,7 @@ while(loop)
 
         glLoadIdentity();
 
-        if(current_niveau==0 || current_niveau==2){
+        if(current_niveau==0 || current_niveau==4){
             glTranslatef((-GL_VIEW_SIZE / 2. * aspectRatio),(-GL_VIEW_SIZE / 2.), 0.0);
         }else {
             //glTranslatef(-liste_pers[pers_select].GetXarrivee()-(GL_VIEW_SIZE)+100 ,liste_pers[pers_select].getY()-(GL_VIEW_SIZE) ,0);
@@ -349,6 +348,7 @@ while(loop)
                                 if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
                                     printf("Bravo tu recommences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
                                     current_niveau = 0;
+                                    
                                 };
                                 if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
                                     printf("Tu quittes le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
@@ -429,10 +429,6 @@ while(loop)
                             //vider buffer
                             while(SDL_PollEvent (&e));
                         break;
-                        case MENU:
-                            current_niveau = 0;
-                            printf("Vous êtes de retour sur le menu");
-                        break;
                         case TAB:
                             pers_select = changer_selection(pers_select);
                             printf("Tu changes de personnage");
@@ -459,14 +455,13 @@ while(loop)
         }
 
        if (current_niveau == 1 || current_niveau == 2 || current_niveau == 3 ) {
-         //  if (current_niveau == 1 ) {
-            //niveau 1;
+       // if (current_niveau == 1 || current_niveau == 2 ) {
             if (!liste_pers.empty()) {
                     jouer_niveau();
             }
         }
         
-        if(current_niveau == 4){
+        if(current_niveau == 3){
             //page de fin
         
             drawBTN(textures[4], 4);

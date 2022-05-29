@@ -14,7 +14,6 @@
 
 enum TypeChoix {CHOIX_INDEFINI = 0, 
                 QUITTER_JEU = SDLK_DELETE,
-                MENU = SDLK_m,
                 GAUCHE = SDLK_q,
                 DROITE = SDLK_d, 
                 SAUT = SDLK_z, 

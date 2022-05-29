@@ -1,5 +1,4 @@
 #include "inter_joueur.h"
-#include "interf_graph.h"
 #include "fonctions.h"
 #include "var_globales.h"
 #include <iostream>
@@ -11,44 +10,6 @@ TypeChoix choix_joueur = CHOIX_INDEFINI;
 //Rectangle personnage selectionne
 int pers_select = 0;
 
-//execute le choix du joueur
-void executer_choix_joueur(){
-    
-    choix_joueur = retourner_appui_touche(); //TODO
-
-    //acceleration a NUL quand on appuie pas sur une touche de direction
-    liste_pers[pers_select].PutAccelerationH(0);
-    liste_pers[pers_select].PutAccelerationV(0);
-    
-
-    switch (choix_joueur){
-    case GAUCHE:
-        //on met l'acceleration horizontale à gauche
-        liste_pers[pers_select].PutAccelerationH(- liste_pers[pers_select].GetValAccelH());
-        break;
-
-    case DROITE:
-        //on met l'acceleration horizontale à droite
-        liste_pers[pers_select].PutAccelerationH(liste_pers[pers_select].GetValAccelH());
-        break;
-
-    case SAUT:
-        //on met l'acceleration verticale
-        liste_pers[pers_select].PutAccelerationV(liste_pers[pers_select].GetValAccelV());
-        break;
-        
-    case MENU:
-        //TODO
-        break;
-
-    case QUITTER_JEU:
-        //TODO
-        break;
-
-    default:
-        break;
-    }
-}
 
 //deplacements du joueur
 void deplacer_joueur(){

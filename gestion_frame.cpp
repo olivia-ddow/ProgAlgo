@@ -7,7 +7,7 @@
 #include "niveau_manager.h"
 #include "fonctions.h"
 #include "inter_joueur.h"
-#include "interf_graph.h"
+
 
 
 #include <SDL2/SDL.h>
@@ -44,6 +44,7 @@ void afficher_frame() {
         
 
     }
+
     //PERSONNAGES
     for(int i = 0; i < NB_PERS; i++){
         liste_pers[i].draw(0);

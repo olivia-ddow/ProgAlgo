@@ -140,36 +140,46 @@ void charger_niveau(){
         
             break;
         case 'R':
-            {
-                int x, y, w, h;
-                float r, g, b;
-                fscanf(current_level, " %d %d %d %d %f %f %f", &x, &y, &w, &h, &r, &g, &b);
-                std::cout << x << " - " << y << " - " << w << " - " << h << " - " << r << " - " << g << " - " << b << std::endl;
+            
+                int x1, y1, w1, h1;
+                float r1, g1, b1;
+                fscanf(current_level, " %d %d %d %d %f %f %f", &x1, &y1, &w1, &h1, &r1, &g1, &b1);
+                std::cout << x1 << " - " << y1 << " - " << w1 << " - " << h1 << " - " << r1 << " - " << g1 << " - " << b1 << std::endl;
                 // std::cout << x << std::endl;
-                liste_ent.push_back(make_shared<Decors>(x, y, w, h, Color3f{r, g, b}));
+                liste_ent.push_back(make_shared<Decors>(x1, y1, w1, h1, Color3f{r1, g1, b1}));
                 qtree.insert_id_entite(countEnt);
                 countEnt++;
                 if(!decor_ok) {
                     decor_ok=true;
                 }
-            }
+            
             
             break;
         
         //PORTAILS (en stroke)
         case 'T':
-            {
-                int x, y, w, h;
-                float r, g, b;
-                fscanf(current_level, " %d %d %d %d %f %f %f", &x, &y, &w, &h, &r, &g, &b);
-                std::cout << x << " - " << y << " - " << w << " - " << h << " - " << r << " - " << g << " - " << b << std::endl;
+            
+                int x2, y2, w2, h2;
+                float r2, g2, b2;
+                fscanf(current_level, " %d %d %d %d %f %f %f", &x2, &y2, &w2, &h2, &r2, &g2, &b2);
+                std::cout << x2 << " - " << y2 << " - " << w2 << " - " << h2 << " - " << r2 << " - " << g2 << " - " << b2 << std::endl;
                 // std::cout << x << std::endl;
-                liste_ent.push_back(make_shared<Portail>(x, y, w, h, Color3f{r, g, b}));
+                liste_ent.push_back(make_shared<Portail>(x2, y2, w2, h2, Color3f{r2, g2, b2}));
                 qtree.insert_id_entite(countEnt);
                 countEnt++;
-            }
+            
             break;
+        case 'N':
+            {
+                int x;
+                fscanf(current_level,"%d", &x);
+                NB_PORT = x;
+            }
+        
+        break;
+
         }
+        
     }
     
     if (!dim_ok || !decor_ok || !perso_ok || !constantes_ok) {
@@ -191,22 +201,28 @@ void charger_niveau(){
 
 //fonction accédant aux fonctionnalités du jeu
 void jouer_niveau(){
-    std::cout<<"dasn : "<<liste_pers[pers_select].est_dans_portail()<<std::endl;
+    deplacer_joueur();
+    
     std::cout<<"tous dasn : "<<personnages_sont_dans_portails()<<std::endl;
-    if (personnages_sont_dans_portails()==true) {
+    std::cout<<"dans : "<<liste_pers[pers_select].est_dans_portail()<<std::endl; 
+    //on retourne si il ya tous les pers dans leur portail ou no
+    if(personnages_sont_dans_portails()){
+        liberer_niveau();
         current_niveau++;
         niveau_cpt++;
         std::cout <<"current : "<< current_niveau << std::endl;
         std::cout <<"niveau cpt : "<< niveau_cpt << std::endl;
         charger_niveau();
-        return;
+        liste_pers[pers_select].PutAccelerationH(0);
+        liste_pers[pers_select].PutAccelerationV(0);
+        //return;
     }
     afficher_frame();
     if(NB_PLAT > 0){
             deplacer_plateformes();
-        }
+    }
  
-    deplacer_joueur();
+    
     
 
     //Tant que tous les personnages ne sont pas dans les portails et que le joueur n'a pas choisi de quitter le jeu
@@ -226,21 +242,15 @@ void jouer_niveau(){
 
 }
 
-//fonction qui execute le niveau
-void executer_niveau(int niveau_cpt){
-    //qtree.initialiser_quadtree();
-    charger_niveau();
-    if (!liste_pers.empty()) {
-        jouer_niveau();
-    }
-    //TODO
-    //fonction liberer niveau pour delete les tableaux, liste plat et pers et cleart liste_ent, vider tout, clear quadtree
-}
+
 
 void liberer_niveau() {
     //TODO
     //fonction liberer niveau pour delete les tableaux, liste plat et pers et cleart liste_ent, vider tout, clear quadtree
     liste_ent.clear();
-    delete[] &liste_pers;
-    delete[] &liste_plat;
+    liste_pers.clear();
+    liste_plat.clear();
+    //qtree.clear();
+    qtree.effacer_fils();
+
 }

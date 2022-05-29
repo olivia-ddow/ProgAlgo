@@ -2,6 +2,7 @@
 #include "quadtree.h"
 #include "var_globales.h"
 #include "structs_gen.h"
+
 #include <iostream>
 
 //Detection Collision
@@ -56,7 +57,7 @@ bool personnages_sont_dans_portails(){
         //on parcourt les portails
         for (int j = 0; j < NB_PORT; j++){
             //si le personnage est dans son portail
-            if (liste_pers[i].est_dans_portail()){
+            if (liste_pers[0].est_dans_portail()){
                 //on incrémente le compteur
                 //ICI ON ENTRE PAS
                 cpt++;
