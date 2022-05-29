@@ -21,18 +21,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
 #include <vector>
-#include <iostream>
-using namespace std;
 
 void afficher_frame() {
-    //TODO NE PAS OUBLIER DE METTRE A JOUR LA POSITION COURANTE DES PERS ET PLATEFORMES A LA FIN DU TRAITEMENT
-    //draw ici, dessin toute la carte
-    //Puis camera, juste au noeud
-    //parcours toutes les listes et je les dessines, entite, plateforme (si i ly a des plateforme on les dessins), liste personnage
-    //liste_ent[i].draw(1);
-    //quisuieje portail
+    //parcours toutes les listes et je les dessine, entite, plateforme (si i ly a des plateforme on les dessins), liste personnage
 
     //DECORS et PORTAILS
     for(int i = 0; i < NB_ENT; i++){
@@ -41,14 +33,13 @@ void afficher_frame() {
         }else{
             liste_ent[i]->draw(0);
         }
-        
-
     }
 
     //PERSONNAGES
     for(int i = 0; i < NB_PERS; i++){
         liste_pers[i].draw(0);
     }
+
     //PLATEFORMES
     if(NB_PLAT > 0){
         for(int i = 0; i < NB_PLAT; i++){
@@ -56,5 +47,4 @@ void afficher_frame() {
         }
     }
     
-
 }

@@ -4,16 +4,9 @@
 
 Quadtree::Quadtree(Rect cont){
    conteneur = cont;
-  // liste_index_entite.clear();
 
 }
-/*
-void Quadtree::initialiser_quadtree(){
-    effacer_fils();
-    liste_index_entite.clear();
-    conteneur = &RECTNUL;
-}
-*/
+
 //efface les enfants du Quadtree
 void Quadtree::effacer_fils() {
     for (int i = 0; i < 4; i++) {
@@ -41,41 +34,6 @@ void Quadtree::separer(){
     fils[2] = new Quadtree(Rect(x + demil, y, demil, demih));
     //infgauche
     fils[3] = new Quadtree(Rect(x, y, demil, demih));
-}
-
-//renvoie la partie du QuadTree dans lequel se trouve le rectangle, si le rectangle chevauche plusieurs parties retourne -1
-int Quadtree::donnePartieQuad(Rect rect){
-    int index = -1;
-    int x_milieu = conteneur.getX() + (conteneur.getWidth() / 2);
-    int y_milieu = conteneur.getY() + (conteneur.getHeight() / 2);
-    
-    // Object can completely fit within the top quadrants
-    bool partie_haute = (rect.getY() > y_milieu && rect.getY() + rect.getHeight() > y_milieu);
-    // Object can completely fit within the bottom quadrants
-    bool partie_basse = (rect.getY() < y_milieu);
-    
-    bool partie_gauche = (rect.getX() < x_milieu && rect.getX() + rect.getWidth() < x_milieu);
-
-    bool partie_droite = (rect.getX() > x_milieu);
-    // Object can completely fit within the left quadrants
-    if (partie_gauche) {
-        if (partie_haute) {
-            index = 1;
-        }
-        else if (partie_basse) {
-            index = 3;
-        }
-    }
-    // Object can completely fit within the right quadrants
-    else if (partie_droite) {
-        if (partie_haute) {
-            index = 0;
-        }
-        else if (partie_basse) {
-            index = 2;
-        }
-    }
-    return index;
 }
 
 //renvoie si le noeud est une feuille
@@ -124,22 +82,6 @@ void Quadtree::insert_id_entite(int indexTab){
             } 
         }
     }
-}
-
-//recupere une liste de noeuds feuille qui contiennent le rectangle cible
-list<Quadtree> Quadtree::recupere_noeuds(list<Quadtree> l_noeuds_recup, Rect * rect){
-    if (est_feuille()){
-        if (intersection_non_nulle(rect,&conteneur)){
-            l_noeuds_recup.push_back(*this);
-        }
-    } else {
-        for (int i = 0; i < 4; i++){
-            if (intersection_non_nulle(rect, &(fils[i]->conteneur))){
-                fils[i]->recupere_noeuds(l_noeuds_recup, rect);
-            }
-        }
-    }
-    return l_noeuds_recup;
 }
 
 //recupère la liste des index de toutes les entites à partir du noeud

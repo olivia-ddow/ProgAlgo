@@ -13,27 +13,15 @@
 
 //Variable compteur de niveau initalisé à 0 (premier niveau)
 int niveau_cpt = 0;
+//current_niveau comprend également les menus
 int current_niveau = 0;
 
-//current_niveau comprends également les menus
 
 void charger_niveau(){
-    //TO_DO
-    //mettre les valeurs (fichier textes) des variables ici)
-    /*
-    FILE * current_level;
-    char* result = (char*)"niveau"; 
-    std::string tmp = std::to_string(niveau_cpt);
-    char const *num_char = tmp.c_str();
 
-    strcat( result, num_char );
-    strcat( result, ".txt" );
-
-    */
-    std::cout << niveau_cpt << std::endl;
+    //On récupère le fichier
     std::string levelName = "niveau" + std::to_string(niveau_cpt) + ".txt";
 
-    std::cout << levelName << std::endl;
     FILE * current_level = fopen (levelName.c_str(),"r");
 
     if ( current_level == NULL ) {
@@ -52,6 +40,8 @@ void charger_niveau(){
     decor_ok=false;
     perso_ok=false;
 
+    //On parcourt le fichier en analysant la première lettre.
+    // En fonction de la première lettre, on initialise nos valeurs et objets qui vont former notre carte. 
     while (!feof(current_level)) {
         char c;
         fscanf(current_level, "%c", &c); 
@@ -61,11 +51,12 @@ void charger_niveau(){
             cin.ignore(256,'\n');
             //RETOURNER A LA LIGNE
         break;
+
+            //les dimensions
         case 'D':
             {
                 int l, h;
                 fscanf(current_level, " %d %d", &l, &h);
-                std::cout << l << " - " << h << std::endl;
                 largeur_map = l;
                 hauteur_map = h;
                 if(!dim_ok) {
@@ -73,6 +64,7 @@ void charger_niveau(){
                 }
             }
             break;
+            //gravite, frottement, vitesse max personnages
         case 'A':
             {
                 int g, f, v_h, v_v;
@@ -85,16 +77,19 @@ void charger_niveau(){
                     constantes_ok=true;
                 }
             }
-
             break;
+
+            //nombre de personnages
         case 'O':
             {
                 int x;
                 fscanf(current_level,"%d", &x);
                 NB_PERS = x;
             }
-            
+ 
             break;
+
+            //liste de personnages
         case 'P':
             {
                 int x, y, l, h, a_h, a_v;
@@ -108,6 +103,7 @@ void charger_niveau(){
             
             break;
 
+            //nombre de plateformes
         case 'L':
             {
                 int x;
@@ -117,17 +113,15 @@ void charger_niveau(){
         
         break;
 
-        //Plateforme
+            //liste de plateformes
         case 'M':
-            //M <posX> <posY> <largeur> <hauteur> <rouge> <vert> <bleu> <vitesse_h> <vitesse_v>
             int x, y, w, h, v_h, v_v;
             float r, g, b;
-            fscanf(current_level, " %d %d %d %d %f %f %f %d %d", &x, &y, &w, &h, &r, &g, &b, &v_h, &v_v);
-            std::cout << x << " - " << y << " - " << w << " - " << h << " - " << r << " - " << g << " - " << b << " - " << v_h << " - " << v_v << std::endl;
-            // std::cout << x << std::endl;           
+            fscanf(current_level, " %d %d %d %d %f %f %f %d %d", &x, &y, &w, &h, &r, &g, &b, &v_h, &v_v);          
             liste_plat.push_back(Plateforme(x,y,w,h,{r,g,b},v_h,v_v));
         break;
- 
+
+            //nombre d'entités
         case 'Q':
             {
                 int x;
@@ -135,15 +129,14 @@ void charger_niveau(){
                 NB_ENT = x;
             }
 
-        
             break;
+
+            //liste des entités
         case 'R':
             
                 int x1, y1, w1, h1;
                 float r1, g1, b1;
                 fscanf(current_level, " %d %d %d %d %f %f %f", &x1, &y1, &w1, &h1, &r1, &g1, &b1);
-                std::cout << x1 << " - " << y1 << " - " << w1 << " - " << h1 << " - " << r1 << " - " << g1 << " - " << b1 << std::endl;
-                // std::cout << x << std::endl;
                 liste_ent.push_back(make_shared<Decors>(x1, y1, w1, h1, Color3f{r1, g1, b1}));
                 qtree.insert_id_entite(countEnt);
                 countEnt++;
@@ -154,27 +147,26 @@ void charger_niveau(){
             
             break;
         
-        //PORTAILS (en stroke)
+            //liste des portails
         case 'T':
             
                 int x2, y2, w2, h2;
                 float r2, g2, b2;
                 fscanf(current_level, " %d %d %d %d %f %f %f", &x2, &y2, &w2, &h2, &r2, &g2, &b2);
-                std::cout << x2 << " - " << y2 << " - " << w2 << " - " << h2 << " - " << r2 << " - " << g2 << " - " << b2 << std::endl;
-                // std::cout << x << std::endl;
                 liste_ent.push_back(make_shared<Portail>(x2, y2, w2, h2, Color3f{r2, g2, b2}));
                 qtree.insert_id_entite(countEnt);
                 countEnt++;
             
             break;
+
+            //nombre de portails
         case 'N':
             {
                 int x;
                 fscanf(current_level,"%d", &x);
                 NB_PORT = x;
             }
-        
-        break;
+            break;
 
         }
         
@@ -182,94 +174,28 @@ void charger_niveau(){
     
     if (!dim_ok || !decor_ok || !perso_ok || !constantes_ok) {
         printf( "Erreur de chargement\n");
-        //exit( -1 );
     }
 
     fclose(current_level);
-
-    //exit(0); // PROVISOIRE POUR PAS QUE JOUER NIVEAU BOUCLE POUR L'INSTANT
-    //Initialisation des entites
-
-    //initialisation des plateformes
-    
-    //fscanf
 }
 
 
 
 //fonction accédant aux fonctionnalités du jeu
 void jouer_niveau(){
-    
-    
-    //on retourne si il ya tous les pers dans leur portail ou no
-    if(personnages_sont_dans_portails()){
-        liberer_niveau();
-
-        current_niveau++;
-        if(niveau_cpt<NB_NIVEAUX_MAX){
-            niveau_cpt++;
-            SDL_Delay(1000);
-            
-            charger_niveau();
-            /*
-            for(int i = 0; i<NB_PERS; i++){
-            int vh_prov = liste_pers[pers_select].GetValAccelH();
-            int vv_prov = liste_pers[pers_select].GetValAccelV();
-            liste_pers[pers_select].PutValAccelH(0);
-            liste_pers[pers_select].PutValAccelV(0);
-            liste_pers[pers_select].PutValAccelH(vh_prov);
-            liste_pers[pers_select].PutValAccelV(vv_prov);
-            }
-            */
-            /*
-            liste_pers[pers_select].PutAccelerationH(0);
-            liste_pers[pers_select].PutAccelerationV(0);
-            */
-            
-                   
-        }
-        /*
-        liste_pers[pers_select].PutValAccelH(A_H);
-        liste_pers[pers_select].PutValAccelV(A_V);
-        */
-       return;
-    }
-
     afficher_frame();
+    //S'il y a des plateformes
     if(NB_PLAT > 0){
-            deplacer_plateformes();
+        deplacer_plateformes();
     }
- 
     deplacer_joueur();
-    
-
-    //Tant que tous les personnages ne sont pas dans les portails et que le joueur n'a pas choisi de quitter le jeu
-    /*
-    while (personnages_sont_dans_portails() == false && choix_joueur != QUITTER_JEU){
-        afficher_frame(); //TO_DO 
-        if(NB_PLAT > 0){
-            deplacer_plateformes();
-        }
-        executer_choix_joueur(); //A finir
-        deplacer_joueur();
-    }
-    */
-
-    //std::cout << "portails:"<< personnages_sont_dans_portails() << std::endl;
-    //std::cout << "choixjoueur:"<< choix_joueur << std::endl;
-
 }
 
 
-
+//fonction permettant de libérer la mémoire entre chaque niveau.
 void liberer_niveau() {
-    //TODO
-    //fonction liberer niveau pour delete les tableaux, liste plat et pers et cleart liste_ent, vider tout, clear quadtree
     liste_ent.clear();
     liste_pers.clear();
     liste_plat.clear();
-    liste_btn.clear();
-    //qtree.clear();
     qtree.effacer_fils();
-
 }

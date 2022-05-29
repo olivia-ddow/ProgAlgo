@@ -16,8 +16,6 @@ private :
     Quadtree * fils[4] = {nullptr};
     //Separe le conteneur du noeud en 4 parties
     void separer();
-    //renvoie la partie du QuadTree dans lequel se trouve le rectangle, si le rectangle chevauche plusieurs parties retourne -1
-    int donnePartieQuad(Rect rect);
     //renvoie le nb d'entites dans le quadtree
     int donneNbEntites();
 
@@ -28,8 +26,6 @@ public:
     bool est_feuille();
     //insere l'index de l'entite dans le quadtree
     void insert_id_entite(int indexTab);
-    //recupere une liste de noeuds feuille qui contiennent le rectangle cible
-    list<Quadtree> recupere_noeuds(list<Quadtree> noeuds_recup, Rect * rect);
     //recupere une liste d'index des entites succeptibles d'avoir une collision avec le rectangle
     void recupere_id_entites(list<int>& l_entites_recup, Rect * rect);
     //recupère la liste des index de toutes les entites à partir du noeud

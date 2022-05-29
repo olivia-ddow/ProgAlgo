@@ -21,5 +21,4 @@ public:
     
 };
 
-//Rect RECTNUL = {0,0,0,0};
 #endif

@@ -29,17 +29,15 @@ void Entite::draw(int i){
         glTranslatef(getX(), getY(),0.0);
 
             // si i=0 on va attribuer une couleur à notre entité, si il est égal à autre chose (1) alors on lui appliquera une texture
-            if (i==0){
+            if (i == 0){
                 glColor3f(GetColorR(), GetColorV(), GetColorB());
                 glBegin(GL_QUADS);
-            }else if(i==2){
+            }else if(i == 2){
                 //stroke pour le portail
                 glBegin(GL_LINE_LOOP);
             }else{
                 glBegin(GL_QUADS);
             }
-
-
                 glTexCoord2f(0,0); 
                 glVertex2f(0,getHeight());
                 
@@ -53,8 +51,7 @@ void Entite::draw(int i){
                 
                 glVertex2f(getWidth(),getHeight());
             glEnd();
-        glPopMatrix();
-    
+        glPopMatrix();    
 }
 
 const int Entite::quisuisje() {
@@ -68,7 +65,6 @@ Decors::Decors(int x, int y, int l, int h, Color3f c) :
     Entite (x, y, l, h, c) {
 }
 
-
 const int Decors::quisuisje() {
     return DECORS;
 }
@@ -78,9 +74,14 @@ const int Decors::quisuisje() {
 
 Personnage::Personnage(int x, int y, int l, int h, Color3f c, int a_h, int a_v) :
     Entite (x, y, l, h, c) {
-        couleurPerso = c;
         dans_portail = false;
         id_plateforme_dessus = -1;
+        posarrivee = {x,y};
+        vitesse_h = 0; //horizontale
+        vitesse_v = 0; //verticale
+        acceleration_h = 0;
+        acceleration_v = 0;
+
         val_accel_h = a_h;
         val_accel_v = a_v;
 }
@@ -88,9 +89,7 @@ Personnage::Personnage(int x, int y, int l, int h, Color3f c, int a_h, int a_v) 
 const int Personnage::quisuisje() {
     return PERSONNAGE;
 }
-void Personnage::PutC(float rouge){
-    couleurPerso.r += rouge;
-}
+
 int Personnage::GetXarrivee(){
     return posarrivee.x;
 }

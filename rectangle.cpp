@@ -6,6 +6,7 @@ Rect::Rect(){
     largeur = 0;
     hauteur = 0 ;
 }
+
 Rect::Rect(int x, int y, int l, int h){
     poscourante.x = x;
     poscourante.y =y;

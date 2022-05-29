@@ -28,4 +28,17 @@ void executer_choix_joueur();
 //deplacements du joueur
 void deplacer_joueur();
 
+//VITESSE HORIZONTALE
+void calcule_vitesse_h_pers(int i);
+//VITESSE VERTICALE
+void calcule_vitesse_v_pers(int i);
+//CHECK COLLISION ENTITE STATIQ
+void check_collision_pers_ent(int i);
+//CHECK COLLI AVEC AUTRES PERSONNAGES
+void check_collision_pers_pers(int i);
+//CHECK COLLI AVEC PLATEFORMES
+void check_collision_pers_plat(int i);
+
+
+
 #endif

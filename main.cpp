@@ -39,6 +39,7 @@ int NB_PLAT = 0;
 int NB_PORT = 0;
 int NB_ENT = 0;
 
+int attente_chg_niveau = 0;
 
 SDL_Event e;
 
@@ -51,6 +52,7 @@ static const char WINDOW_TITLE[] = "Through the seasons";
 
 static const float GL_VIEW_SIZE = 540;
 //static const float GL_VIEW_SIZE = 1920;
+
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
@@ -115,25 +117,7 @@ void drawBTN(GLuint texture, int i){
         liste_btn[i].draw(1);
         
 }
-/*
-void drawMenu(GLuint texture){
-    for(int i=0; i<4; i++){
-            drawBTN(texture[i], i);
-    }
-}
-*/
 
-/*
-void quitter(){
-    loop = 0;
-    for (int i=0; i<4; i++){
-            SDL_FreeSurface(image[i]);
-    }
-    SDL_GL_DeleteContext(context);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-    return EXIT_SUCCESS;
-}*/
 int main(int argc, char** argv) 
 {
     //* Initialisation de la SDL */
@@ -230,12 +214,11 @@ int main(int argc, char** argv)
     
     glBindTexture(GL_TEXTURE_2D, 0);
     
-    
     /* Boucle principale */
     int loop = 1;
     charger_niveau();
     int posJBase = liste_pers[pers_select].getY();
-while(loop) 
+    while(loop) 
     {
         /* Recuperation du temps au debut de la boucle */
         Uint32 startTime = SDL_GetTicks();
@@ -250,7 +233,7 @@ while(loop)
             glTranslatef((-GL_VIEW_SIZE / 2. * aspectRatio),(-GL_VIEW_SIZE / 2.), 0.0);
         }else {
             //glTranslatef(-liste_pers[pers_select].GetXarrivee()-(GL_VIEW_SIZE)+100 ,liste_pers[pers_select].getY()-(GL_VIEW_SIZE) ,0);
-            glTranslatef(-liste_pers[pers_select].GetXarrivee()-(GL_VIEW_SIZE)+300 ,posJBase-liste_pers[pers_select].getY()-(GL_VIEW_SIZE) ,0);
+            glTranslatef(-liste_pers[pers_select].GetXarrivee()-(GL_VIEW_SIZE)+300 ,posJBase-liste_pers[pers_select].getY()-(GL_VIEW_SIZE) , 0);
         }
         
         
@@ -263,7 +246,7 @@ while(loop)
         //glBindTexture(GL_TEXTURE_2D, texture);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-        
+        menu();
 
         
         /* Boucle traitant les evenements */
@@ -330,6 +313,9 @@ while(loop)
                                     current_niveau++;
                                 };
                                 if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
+                                    printf("Tu choisis ton niveau! clic en (%d, %d)\n", e.button.x, e.button.y);
+                                };
+                                if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 740 && e.button.y <= 870)){
                                     printf("Tu quittes le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
                                     loop=0;
                                     for (int i=0; i<4; i++){
@@ -339,17 +325,10 @@ while(loop)
                                     SDL_DestroyWindow(window);
                                     SDL_Quit();
                                     return EXIT_SUCCESS;
-                                };
-                                
+                            }
                         }
                         if (current_niveau == 4){
                                 if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
-                                    printf("Bravo tu recommences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
-                                    current_niveau = 0;
-                                    
-                                    
-                                };
-                                if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
                                     printf("Tu quittes le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
                                     loop=0;
                                     for (int i=0; i<4; i++){
@@ -359,8 +338,8 @@ while(loop)
                                     SDL_DestroyWindow(window);
                                     SDL_Quit();
                                     return EXIT_SUCCESS;
+                                    
                                 };
-                               
     
 
                         }
@@ -377,19 +356,21 @@ while(loop)
                     break;               
                 case SDL_MOUSEBUTTONDOWN:
                     if(e.button.button == SDL_BUTTON_LEFT){
+                    
+                    if (current_niveau == 0){
 
                         if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
-                            printf("En train de cliquer commencer le jeu : clic en (%d, %d)\n", e.button.x, e.button.y);
-                            drawBTN(textures[2], 1);
+                            printf("En train de cliquer commencer clic en (%d, %d)\n", e.button.x, e.button.y);
+                            drawBTN(textures[3], 1);
                         };
                         if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 570 && e.button.y <= 700)){
-                            printf("En train de cliquer quitter le jeu le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
-                            
+                            printf("En train de cliquer le jeu! clic en (%d, %d)\n", e.button.x, e.button.y);
                         };
-
+                      }  
+                       
                     }
                 break;
-              
+
                 /* Touche clavier */
                 case SDL_KEYDOWN:
 
@@ -398,9 +379,7 @@ while(loop)
                     {
                         case GAUCHE:
                             printf("gauche");
-                            std::cout << "perso:" << pers_select <<std::endl;
                             liste_pers[pers_select].PutAccelerationH(- liste_pers[pers_select].GetValAccelH());    
-                            std::cout <<liste_pers[pers_select].GetAccelerationH() << std::endl;
                             //vider buffer
                             while(SDL_PollEvent (&e));
                         
@@ -418,9 +397,7 @@ while(loop)
                             while(SDL_PollEvent (&e));
                         break;
                         case TAB:
-                            liste_pers[pers_select].PutC(-0.2);
                             pers_select = changer_selection(pers_select);
-                            liste_pers[pers_select].PutC(0.2);
                             printf("Tu changes de personnage");
                         break;
 
@@ -436,39 +413,58 @@ while(loop)
         }
         
         //if on est sur le menu
+
         if (current_niveau == 0){
-            //drawMenu(textures);
-            menudebut();
+            
             for(int i=0; i<3; i++){
                 drawBTN(textures[i], i);
             }
             
         }
-
-       if (current_niveau == 1 || current_niveau == 2 || current_niveau == 3 ) {
-       // if (current_niveau == 1 || current_niveau == 2 ) {
+        if (current_niveau == 1 || current_niveau == 2 || current_niveau == 3 ) {
             if (!liste_pers.empty()) {
-                    jouer_niveau();
+                jouer_niveau();
             }
         }
         
+
+
+        //Changement de niveau
+        if(personnages_sont_dans_portails()){
+            //on attend un moment avant de changer un niveau
+            if (attente_chg_niveau > 50){
+                
+                attente_chg_niveau = 0;
+                while(SDL_PollEvent (&e));
+
+                liberer_niveau();
+
+                current_niveau++;
+                if(niveau_cpt<NB_NIVEAUX_MAX){
+                    niveau_cpt++;               
+                    charger_niveau();
+                }
+                
+                for (int i = 0; i < NB_PERS; i++){
+                    liste_pers[i].PutAccelerationH(0);
+                    liste_pers[i].PutAccelerationV(0);
+                }
+            } else {
+                attente_chg_niveau++;
+            }  
+        }
         if(current_niveau == 4){
             //page de fin
-            
-            menufin();
             drawBTN(textures[3], 3);
-
+            SDL_Delay(5000);
         }
-
-
-        glBindTexture(GL_TEXTURE_2D, 0);
-            glDisable(GL_TEXTURE_2D);
         
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glDisable(GL_TEXTURE_2D);
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapWindow(window);
         
         
-
         /* Calcul du temps ecoule */
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
         
@@ -487,7 +483,7 @@ while(loop)
     /* Liberation des ressources associees a la SDL */ 
     //quitter();
     loop = 0;
-    for (int i=0; i<5; i++){
+    for (int i=0; i<4; i++){
             SDL_FreeSurface(image[i]);
     }
     SDL_GL_DeleteContext(context);

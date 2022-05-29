@@ -79,10 +79,8 @@ void check_collision_pers_ent(int i){
                         //On met les coordonnées du portail à celle du personnage
                         liste_pers[i].PutXarrivee(liste_ent[j]->getX());
                         liste_pers[i].PutYarrivee(liste_ent[j]->getY());  
-                        //on change de pesonnage
-
+                        //on change de personnage
                         if (i+1 != NB_PERS){
-                            
                             pers_select = changer_selection(pers_select);
                         }                 
             } else {
