@@ -198,10 +198,15 @@ Plateforme::Plateforme(){
     vitesse_h = 0;
     vitesse_v = 0;
     posarrivee = POINT2DNUL;
+    id_pers_sur_plateforme = -1;
 }
 
 Plateforme::Plateforme(int x, int y, int l, int h, Color3f c, int v_h, int v_v) :
     Entite (x, y, l, h, c) {
+    vitesse_h = v_h;
+    vitesse_v = v_v;
+    posarrivee = POINT2DNUL;
+    id_pers_sur_plateforme = -1;
 }
 
 const int Plateforme::quisuisje() {

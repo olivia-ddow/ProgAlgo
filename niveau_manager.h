@@ -3,7 +3,7 @@
 
 //variable de niveaux
 
-const int NB_NIVEAUX_MAX = 4;
+const int NB_NIVEAUX_MAX = 2;
 //0 menu
 //1 intro
 //2 premier niveau

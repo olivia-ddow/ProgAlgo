@@ -123,11 +123,8 @@ void charger_niveau(){
             float r, g, b;
             fscanf(current_level, " %d %d %d %d %f %f %f %d %d", &x, &y, &w, &h, &r, &g, &b, &v_h, &v_v);
             std::cout << x << " - " << y << " - " << w << " - " << h << " - " << r << " - " << g << " - " << b << " - " << v_h << " - " << v_v << std::endl;
-            // std::cout << x << std::endl;
-            
+            // std::cout << x << std::endl;           
             liste_plat.push_back(Plateforme(x,y,w,h,{r,g,b},v_h,v_v));
-            qtree.insert_id_entite(countEnt);
-            countEnt++;
         break;
  
         case 'Q':
@@ -201,18 +198,23 @@ void charger_niveau(){
 
 //fonction accédant aux fonctionnalités du jeu
 void jouer_niveau(){
-    deplacer_joueur();
+    
     
     std::cout<<"tous dasn : "<<personnages_sont_dans_portails()<<std::endl;
     std::cout<<"dans : "<<liste_pers[pers_select].est_dans_portail()<<std::endl; 
     //on retourne si il ya tous les pers dans leur portail ou no
     if(personnages_sont_dans_portails()){
         liberer_niveau();
+
         current_niveau++;
-        niveau_cpt++;
-        std::cout <<"current : "<< current_niveau << std::endl;
-        std::cout <<"niveau cpt : "<< niveau_cpt << std::endl;
-        charger_niveau();
+        if(niveau_cpt<NB_NIVEAUX_MAX){
+            niveau_cpt++;
+            std::cout <<"current : "<< current_niveau << std::endl;
+            std::cout <<"niveau cpt : "<< niveau_cpt << std::endl;
+            SDL_Delay(2000);
+            charger_niveau();
+        }
+        
         liste_pers[pers_select].PutAccelerationH(0);
         liste_pers[pers_select].PutAccelerationV(0);
         //return;
@@ -222,7 +224,7 @@ void jouer_niveau(){
             deplacer_plateformes();
     }
  
-    
+    deplacer_joueur();
     
 
     //Tant que tous les personnages ne sont pas dans les portails et que le joueur n'a pas choisi de quitter le jeu

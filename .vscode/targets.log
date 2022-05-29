@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun May 29 10:52:34 2022
+# Make data base, printed on Sun May 29 13:10:55 2022
 
 # Variables
 
@@ -87,7 +87,7 @@ SESSION_MANAGER = local/MandoGrogu:@/tmp/.ICE-unix/998,unix/MandoGrogu:/tmp/.ICE
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
-WINDOWID = 52428944
+WINDOWID = 52429214
 # environment
 UBUNTU_MENUPROXY = 1
 # environment
@@ -159,7 +159,7 @@ MAKECMDGOALS := all
 # environment
 SHLVL = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-56ebde34-5c15-4050-9b3b-9db719f4e15e.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-e261ffc7-e93d-4e39-b6e3-0592888a7351.sock
 # environment
 COMPIZ_CONFIG_PROFILE = mate
 # environment
@@ -225,7 +225,7 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 14120
+VSCODE_PID = 30580
 # variable set hash-table stats:
 # Load=108/1024=11%, Rehash=0, Collisions=13/143=9%
 
@@ -235,9 +235,9 @@ VSCODE_PID = 14120
 
 # Directories
 
-# . (device 2054, inode 24651): 39 files, no impossibilities.
+# . (device 2054, inode 24651): 37 files, no impossibilities.
 
-# 39 files, no impossibilities in 1 directories.
+# 37 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -291,9 +291,9 @@ entite.o: entite.cpp.o
 #  File has not been updated.
 
 all: cmake_check_build_system
+ 
 #  Phony target (prerequisite of .PHONY).
 #  Command line target.
- 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
@@ -584,6 +584,7 @@ help:
 
 quadtree.s: quadtree.cpp.s
 #  Phony target (prerequisite of .PHONY).
+ 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
@@ -592,7 +593,6 @@ preinstall: all
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
- 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 100):
 	$(MAKE) -f CMakeFiles/Makefile2 preinstall
@@ -881,6 +881,7 @@ ProgAlgo: cmake_check_build_system
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 119):
+ 
 	$(MAKE) -f CMakeFiles/Makefile2 ProgAlgo
 
 rebuild_cache:
@@ -893,7 +894,6 @@ rebuild_cache:
 	/usr/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 
 # files hash-table stats:
- 
 # Load=83/1024=8%, Rehash=0, Collisions=8/317=3%
 # VPATH Search Paths
 
@@ -901,12 +901,12 @@ rebuild_cache:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 124 / storage = 1634 B / avg = 13 B
-# current buf: size = 8162 B / used = 1634 B / count = 124 / avg = 13 B
+# strcache buffers: 1 (0) / strings = 122 / storage = 1602 B / avg = 13 B
+# current buf: size = 8162 B / used = 1602 B / count = 122 / avg = 13 B
 
-# strcache performance: lookups = 476 / hit rate = 73%
+# strcache performance: lookups = 474 / hit rate = 74%
 # hash-table stats:
-# Load=124/8192=2%, Rehash=0, Collisions=2/476=0%
-# Finished Make data base on Sun May 29 10:52:34 2022
+# Load=122/8192=1%, Rehash=0, Collisions=2/474=0%
+# Finished Make data base on Sun May 29 13:10:55 2022
 
  

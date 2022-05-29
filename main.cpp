@@ -344,7 +344,7 @@ while(loop)
                                     return EXIT_SUCCESS;
                             }
                         }
-                        if (current_niveau == 2){
+                        if (current_niveau == 4){
                                 if((e.button.x >= 680 && e.button.x <= 1240)&&(e.button.y >= 410 && e.button.y <= 530)){
                                     printf("Bravo tu recommences le jeu ! clic en (%d, %d)\n", e.button.x, e.button.y);
                                     current_niveau = 0;
@@ -461,7 +461,7 @@ while(loop)
             }
         }
         
-        if(current_niveau == 3){
+        if(current_niveau == 4){
             //page de fin
         
             drawBTN(textures[4], 4);
