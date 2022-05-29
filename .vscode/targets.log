@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun May 29 09:33:45 2022
+# Make data base, printed on Sun May 29 10:42:56 2022
 
 # Variables
 
@@ -87,7 +87,7 @@ SESSION_MANAGER = local/MandoGrogu:@/tmp/.ICE-unix/998,unix/MandoGrogu:/tmp/.ICE
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
-WINDOWID = 52428807
+WINDOWID = 52428883
 # environment
 UBUNTU_MENUPROXY = 1
 # environment
@@ -159,7 +159,7 @@ MAKECMDGOALS := all
 # environment
 SHLVL = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-8a4d14ab-df5e-4c7a-b508-2e78a5162aa8.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-04aceb42-62d9-4842-b45b-f22c99391b06.sock
 # environment
 COMPIZ_CONFIG_PROFILE = mate
 # environment
@@ -225,7 +225,7 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 1779
+VSCODE_PID = 12077
 # variable set hash-table stats:
 # Load=108/1024=11%, Rehash=0, Collisions=13/143=9%
 
@@ -294,8 +294,8 @@ all: cmake_check_build_system
 #  Phony target (prerequisite of .PHONY).
 #  Command line target.
 #  Implicit rule search has not been done.
-#  File does not exist.
  
+#  File does not exist.
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
@@ -570,6 +570,7 @@ help:
 	@echo "... main.i"
 	@echo "... main.s"
 	@echo "... niveau_manager.o"
+ 
 	@echo "... niveau_manager.i"
 	@echo "... niveau_manager.s"
 	@echo "... quadtree.o"
@@ -581,7 +582,6 @@ help:
 	@echo "... test.o"
 	@echo "... test.i"
 	@echo "... test.s"
- 
 
 quadtree.s: quadtree.cpp.s
 #  Phony target (prerequisite of .PHONY).
@@ -863,6 +863,7 @@ interf_graph.cpp.o:
 
 fonctions.cpp.o:
 #  Phony target (prerequisite of .PHONY).
+ 
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
@@ -874,7 +875,6 @@ inter_joueur.s: inter_joueur.cpp.s
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
- 
 
 ProgAlgo: cmake_check_build_system
 #  Phony target (prerequisite of .PHONY).
@@ -907,6 +907,6 @@ rebuild_cache:
 # strcache performance: lookups = 476 / hit rate = 73%
 # hash-table stats:
 # Load=124/8192=2%, Rehash=0, Collisions=2/476=0%
-# Finished Make data base on Sun May 29 09:33:45 2022
+# Finished Make data base on Sun May 29 10:42:56 2022
 
  

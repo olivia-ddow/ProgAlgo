@@ -458,13 +458,15 @@ while(loop)
             
         }
 
-        if (current_niveau == 1) {
+       if (current_niveau == 1 || current_niveau == 2 || current_niveau == 3 ) {
+         //  if (current_niveau == 1 ) {
             //niveau 1;
             if (!liste_pers.empty()) {
                     jouer_niveau();
             }
         }
-        if(current_niveau == 2){
+        
+        if(current_niveau == 4){
             //page de fin
         
             drawBTN(textures[4], 4);
