@@ -251,7 +251,7 @@ while(loop)
             glTranslatef((-GL_VIEW_SIZE / 2. * aspectRatio),(-GL_VIEW_SIZE / 2.), 0.0);
         }else {
             //glTranslatef(-liste_pers[pers_select].GetXarrivee()-(GL_VIEW_SIZE)+100 ,liste_pers[pers_select].getY()-(GL_VIEW_SIZE) ,0);
-            glTranslatef(-liste_pers[pers_select].GetXarrivee()-(GL_VIEW_SIZE)+100 ,posJBase-liste_pers[pers_select].getY()-(GL_VIEW_SIZE) ,0);
+            glTranslatef(-liste_pers[pers_select].GetXarrivee()-(GL_VIEW_SIZE)+300 ,posJBase-liste_pers[pers_select].getY()-(GL_VIEW_SIZE) ,0);
         }
         
         
