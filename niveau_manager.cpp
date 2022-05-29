@@ -236,3 +236,11 @@ void executer_niveau(int niveau_cpt){
     //TODO
     //fonction liberer niveau pour delete les tableaux, liste plat et pers et cleart liste_ent, vider tout, clear quadtree
 }
+
+void liberer_niveau() {
+    //TODO
+    //fonction liberer niveau pour delete les tableaux, liste plat et pers et cleart liste_ent, vider tout, clear quadtree
+    liste_ent.clear();
+    delete[] &liste_pers;
+    delete[] &liste_plat;
+}
